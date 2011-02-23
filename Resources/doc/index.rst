@@ -97,19 +97,19 @@ Expose your controller methods to ExtDirect Api
 
     class TestController extends Controller
     {
-        /**
-         \* Single exposed method.
-         \*
-         \* @remote
-         \* @param  array $params
-         \* @return string
-         \*/
+        /*
+         * Single exposed method.
+         *
+         * @remote
+         * @param  array $params
+         * @return string
+         */
         public function indexAction($params)
         {
             return 'Hello '.$params['name'];
         }
 
-        /**
+        /*
          * An action to handle forms.
          *
          * @remote
@@ -119,7 +119,8 @@ Expose your controller methods to ExtDirect Api
          */
         public function testFormAction($params, $files)
         {
-
+            // your proccessing
+            return true;
         }
     }
 
