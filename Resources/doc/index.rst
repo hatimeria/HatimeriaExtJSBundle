@@ -70,3 +70,72 @@ Define the ExtDirect Api url to your application
             #namespace:        Actions     default value, not required
             #id:               API         default value, not required
     # ...
+
+How to use
+----------
+
+Add the ExtDirect API into your page
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you is using Twig engine, only add the follow line in your views page at the
+script section:
+
+::
+    <script type="text/javascript" src="{{ url('api')}}"></script>
+
+Or if you are not using a template engine:
+
+::
+    <script type="text/javascript" src="http://localhost/symfony-sandbox/web/app.php/api.js"></script>
+
+Expose your controller methods to ExtDirect Api
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+    // ...
+    namespace Neton\HelloBundle\Controller;
+
+    class TestController extends Controller
+    {
+        /**
+         * Single exposed method.
+         *
+         * @remote
+         * @param  array $params
+         * @return string
+         */
+        public function indexAction($params)
+        {
+            return 'Hello '.$params['name'];
+        }
+
+        /**
+         * An action to handle forms.
+         *
+         * @remote
+         * @form
+         * @param array $params Form submited values
+         * @param array $files  Uploaded files like $_FILES
+         */
+        public function testFormAction($params, $files)
+        {
+
+        }
+    }
+
+Call the exposed methods from JavaScript
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+    // Hello is the Bundle name without 'Bundle'
+    // Test is the Controller name without 'Controller'
+    // index is the method name without 'Action'
+    Actions.Hello_Test.index({name: 'Otavio'}, function(r){
+       alert(r);
+    });
+
+Finished
+~~~~~~~~
+
+Well, this all to DirectBundle work. Suggestions, bug reports and observations
+are wellcome.
