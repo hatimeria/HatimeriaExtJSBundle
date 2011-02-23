@@ -91,19 +91,19 @@ Or if you are not using a template engine:
 Expose your controller methods to ExtDirect Api
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-:: php
+::
     // ...
     namespace Neton\HelloBundle\Controller;
 
     class TestController extends Controller
     {
-        /*
-         * Single exposed method.
-         *
-         * @remote
-         * @param  array $params
-         * @return string
-         */
+|       /*
+|        * Single exposed method.
+|        *
+|        * @remote
+|        * @param  array $params
+|        * @return string
+|        */
         public function indexAction($params)
         {
             return 'Hello '.$params['name'];
@@ -129,8 +129,11 @@ Call the exposed methods from JavaScript
 
 ::
     // Hello is the Bundle name without 'Bundle'
+
     // Test is the Controller name without 'Controller'
+
     // index is the method name without 'Action'
+
     Actions.Hello_Test.index({name: 'Otavio'}, function(r){
        alert(r);
     });
