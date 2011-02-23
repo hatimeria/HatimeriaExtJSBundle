@@ -133,11 +133,8 @@ Call the exposed methods from JavaScript
 ::
 
     // Hello is the Bundle name without 'Bundle'
-
     // Test is the Controller name without 'Controller'
-
     // index is the method name without 'Action'
-
     Actions.Hello_Test.index({name: 'Otavio'}, function(r){
        alert(r);
     });
