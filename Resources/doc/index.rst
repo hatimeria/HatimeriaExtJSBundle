@@ -91,7 +91,7 @@ Or if you are not using a template engine:
 Expose your controller methods to ExtDirect Api
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+:: php
     // ...
     namespace Neton\HelloBundle\Controller;
 
