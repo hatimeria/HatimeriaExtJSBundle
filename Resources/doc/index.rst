@@ -9,7 +9,7 @@ Installing
 
 The best way to install DirectBundle into your project is add as a git submodule.
 To do it, in the terminal go to your main  Symfony2 application directory
-(e.g. /home/htdocs/symfony-sandbox or c:\wamp\www\symfony-sandbox) and run:
+(e.g. /home/htdocs/symfony-sandbox or c:\\wamp\\www\\symfony-sandbox) and run:
 
 ::
 
