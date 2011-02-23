@@ -17,7 +17,7 @@ To do it, in the terminal, go to your main  Symfony2 application directory
     $ git submodule add git://github.com/oaugustus/DirectBundle.git src/Neton/DirectBundle
 
 Register the Neton namespace into your autoloader
--------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
