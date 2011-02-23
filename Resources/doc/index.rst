@@ -81,17 +81,20 @@ If you is using Twig engine, only add the follow line in your views page at the
 script section:
 
 ::
+
     <script type="text/javascript" src="{{ url('api')}}"></script>
 
 Or if you are not using a template engine:
 
 ::
+
     <script type="text/javascript" src="http://localhost/symfony-sandbox/web/app.php/api.js"></script>
 
 Expose your controller methods to ExtDirect Api
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
+
     // ...
     namespace Neton\HelloBundle\Controller;
 
