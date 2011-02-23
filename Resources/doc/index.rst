@@ -98,7 +98,7 @@ Expose your controller methods to ExtDirect Api
     class TestController extends Controller
     {
         /**
-         * Single exposed method.
+         \* Single exposed method.
          *
          * @remote
          * @param  array $params
