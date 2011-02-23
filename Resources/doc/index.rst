@@ -99,15 +99,10 @@ Expose your controller methods to ExtDirect Api
     {
         /**
          \* Single exposed method.
-
          \*
-
          \* @remote
-
          \* @param  array $params
-
          \* @return string
-
          \*/
         public function indexAction($params)
         {
