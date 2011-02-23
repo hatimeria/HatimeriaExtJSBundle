@@ -103,7 +103,7 @@ Expose your controller methods to ExtDirect Api
        /*
         * Single exposed method.
         *
-        * @remote
+        * @remote    // this annotation expose the method to API
         * @param  array $params
         * @return string
         */
@@ -115,8 +115,8 @@ Expose your controller methods to ExtDirect Api
         /*
          * An action to handle forms.
          *
-         * @remote
-         * @form
+         * @remote   // this annotation expose the method to API
+         * @form     // this annotation expose the method to API with formHandler option
          * @param array $params Form submited values
          * @param array $files  Uploaded files like $_FILES
          */
