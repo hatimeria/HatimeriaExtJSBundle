@@ -1,13 +1,10 @@
 <?php
 namespace Neton\DirectBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\Alias;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\DependencyInjection\Resource\FileResource;
+use Symfony\Component\Config\FileLocator;
 
 /**
  * DirectExtension is an extension for the ExtDirect.
@@ -22,18 +19,19 @@ class DirectExtension extends Extension
      * @param array $config An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
      */
-    public function configLoad(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container)
     {
-        $loader = new XmlFileLoader($container, __DIR__.'/../Resources/config');
+        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('direct.xml');
 
         foreach ($configs as $config) {
             $this->registerApiConfiguration($config, $container);
         }
+        
     }
 
     /**
-     * Loads the api configuration.
+     * Register the api configuration to container.
      *
      * @param array            $config    An array of configuration settings
      * @param ContainerBuilder $container A ContainerBuilder instance
@@ -80,10 +78,4 @@ class DirectExtension extends Extension
     {
         return 'http://www.neton.com.br/schema/dic/direct';
     }
-
-    public function getAlias()
-    {
-        return 'direct';
-    }
-
 }
