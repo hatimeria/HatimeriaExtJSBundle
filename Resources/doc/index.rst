@@ -36,11 +36,14 @@ Register DirectBundle into your application kernel
     // app/AppKernel.php
     public function registerBundles()
     {
-        return array(
+        $bundles = array(
             // ...,
             new Neton\DirectBundle\DirectBundle(),
             // ...,
         );
+
+        //..
+        return $bundles;
     }
 
 Register DirectBundle route into your route config
@@ -61,7 +64,7 @@ Define the ExtDirect Api url to your application
     // app/config/config.yml
     # ...
     # Direct Configuration
-    direct.config:
+    direct:
         api:
             url: http://localhost/symfony-sandbox/web/app.php/route # required
             #remote_attrinute: '@remote'   default value, not required
