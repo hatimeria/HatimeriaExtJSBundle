@@ -33,8 +33,7 @@ class Api
 
         if ($container->get('kernel')->isDebug()) {
             $this->api = json_encode($this->createApi());
-        } else {
-            //@todo: implement the cache mechanism
+        } else {            
             $this->api = $this->getApiFromCache();
         }        
     }
@@ -79,6 +78,17 @@ class Api
             'id' => $this->container->getParameter('direct.api.id'),
             'actions' => $actions
         );
+    }
+
+    /**
+     * Return the cached ExtDirect API.
+     *
+     * @return string JSON description of Direct API
+     */
+    protected function getApiFromCache()
+    {
+        //@todo: implement the cache mechanism
+        return json_encode($this->createApi());
     }
 
     /**
