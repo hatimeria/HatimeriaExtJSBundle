@@ -56,23 +56,6 @@ Register DirectBundle route into your route config
     direct:
         resource: "@DirectBundle/Resources/config/routing.yml"
 
-Define the ExtDirect Api url to your application
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-::
-
-    // app/config/config.yml
-    # ...
-    # Direct Configuration
-    direct:
-        api:
-            url: http://localhost/symfony-sandbox/web/app.php/route # required
-            #remote_attrinute: '@remote'   default value, not required
-            #form_attribute:   '@form'     default value, not required
-            #type:             remoting    default value, not required
-            #namespace:        Actions     default value, not required
-            #id:               API         default value, not required
-    # ...
 
 How to use
 ----------
