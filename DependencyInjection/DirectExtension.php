@@ -38,8 +38,8 @@ class DirectExtension extends Extension
      */
     protected function registerApiConfiguration($config, ContainerBuilder $container)
     {
-        if (isset($config['api']['url'])) {
-            $container->setParameter('direct.api.url', $config['api']['url']);
+        if (isset($config['api']['route_pattern'])) {
+            $container->setParameter('direct.api.route_pattern', $config['api']['route_pattern']);
         }
 
         if (isset($config['api']['type'])) {

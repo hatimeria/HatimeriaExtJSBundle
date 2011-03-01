@@ -72,7 +72,8 @@ class Api
         }
 
         return array(
-            'url' => $this->container->getParameter('direct.api.url'),
+            'url' => $this->container->get('request')->getBaseUrl().
+                     $this->container->getParameter('direct.api.route_pattern'),
             'type' => $this->container->getParameter('direct.api.type'),
             'namespace' => $this->container->getParameter('direct.api.namespace'),
             'id' => $this->container->getParameter('direct.api.id'),

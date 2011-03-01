@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="direct.api.url">URL</parameter>
+        <parameter key="direct.api.route_pattern">/route</parameter>
         <parameter key="direct.api.type">remoting</parameter>
         <parameter key="direct.api.namespace">Actions</parameter>
         <parameter key="direct.api.id">API</parameter>
