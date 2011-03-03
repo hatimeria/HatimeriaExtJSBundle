@@ -17,7 +17,7 @@ class ControllerFinder
      */
     public function getControllers($bundle)
     {
-        $dir = $bundle->getPath()."\\Controller";
+        $dir = $bundle->getPath()."/Controller";
         $controllers = array();
         
         if (is_dir($dir)) {
