@@ -114,6 +114,8 @@ class Request
         } else {
             $decoded = json_decode($this->rawPost);
             $decoded = !is_array($decoded) ? array($decoded) : $decoded;
+            
+            array_walk_recursive($decoded, array($this, 'parseRawToArray'));
 
             foreach ($decoded as $call) {
                 $calls[] = new Call((array)$call, 'single');
@@ -122,4 +124,32 @@ class Request
         
         return $calls;
     }
+
+    /**
+     * Parse a raw http post to a php array.
+     * 
+     * @param mixed  $value
+     * @param string $key
+     */
+    private function parseRawToArray(&$value, &$key)
+    {
+        // parse a json string to an array
+        if (is_string($value)) {
+            $json = json_decode($value,true);
+            
+            if ($json) {
+                $value = $json;
+            }
+        }
+
+        // if the value is an object, parse it to an array
+        if (is_object($value)) {
+            $value = (array)$value;
+        }
+
+        // call the recursive function to all keys of array
+        if (is_array($value)) {
+            array_walk_recursive($value, array($this, 'parseRawToArray'));
+        }
+  }
 }
