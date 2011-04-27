@@ -1,12 +1,14 @@
 <?php
 namespace Neton\DirectBundle\Router;
 
+use Symfony\Component\HttpFoundation\Response as BaseResponse;
+
 /**
  * Response encapsule the ExtDirect response to Direct call.
  *
  * @author Otavio Fernandes <otavio@neton.com.br>
  */
-class Response
+class Response extends BaseResponse
 {
     /**
      * Call type to respond. Where values in ('form','single).
@@ -33,10 +35,6 @@ class Response
      */
     public function encode($result)
     {
-        if ('form' == $this->type) {
-            return "<html><body><textarea>".json_encode($result[0])."</textarea></body></html>";
-        } else {
-            return json_encode($result);
-        }
+        return json_encode($result);
     }
 }

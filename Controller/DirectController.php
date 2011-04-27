@@ -20,7 +20,10 @@ class DirectController extends Controller
         $api = new Api($this->container);
 
         // return the json api description
-        return new Response("Ext.Direct.addProvider(".$api.");");
+        $r = new Response("Ext.Direct.addProvider(".$api.");");
+        $r->headers->set("Content-Type","text/javascript");
+        
+        return $r;
     }
 
     /**
@@ -34,7 +37,9 @@ class DirectController extends Controller
         $router = new Router($this->container);
 
         // return the routing result
-        return new Response($router->route());
-        //echo $router->route();
+        $r = new Response($router->route());
+        $r->headers->set("Content-Type","application/json");
+        
+        return $r;
     }
 }
