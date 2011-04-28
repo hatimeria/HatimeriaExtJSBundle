@@ -133,7 +133,13 @@ class Call
         $this->method = $call['method'];
         $this->type   = $call['type'];
         $this->tid    = $call['tid'];
-        $this->data   = (array)$call['data'][0];
+        
+        if(isset($call['data'][0])){
+            $this->data = (array)$call['data'][0];
+        } else {
+            $this->data = array();
+        }
+        
     }
 
     /**

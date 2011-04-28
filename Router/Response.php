@@ -1,14 +1,12 @@
 <?php
 namespace Neton\DirectBundle\Router;
 
-use Symfony\Component\HttpFoundation\Response as BaseResponse;
-
 /**
  * Response encapsule the ExtDirect response to Direct call.
  *
  * @author Otavio Fernandes <otavio@neton.com.br>
  */
-class Response extends BaseResponse
+class Response
 {
     /**
      * Call type to respond. Where values in ('form','single).
