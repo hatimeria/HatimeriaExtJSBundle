@@ -36,9 +36,20 @@ class DirectController extends Controller
         // instantiate the router object
         $router = new Router($this->container);
 
+        $content = $router->route();
         // return the routing result
-        $r = new Response($router->route());
-        $r->headers->set("Content-Type","application/json");
+        $r = new Response($content);
+        $hasFiles = count($_FILES) > 0;
+        
+        if ($hasFiles) {
+           $content = sprintf("<html><body><textarea>%s</textarea></body></html>", $content);
+           $contentType = "text/html";
+        } else {
+           $contentType = "application/json";
+        }
+        
+        $r = new Response($content);
+        $r->headers->set("Content-Type", $contentType);
         
         return $r;
     }
