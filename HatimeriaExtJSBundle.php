@@ -4,8 +4,8 @@ namespace Hatimeria\ExtJSBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-use Hatimeria\ExtJSBundle\DependencyInjection\ExtJSExtension;
+use Hatimeria\ExtJSBundle\DependencyInjection\HatimeriaExtJSExtension;
 
-class ExtJSBundle extends Bundle
+class HatimeriaExtJSBundle extends Bundle
 {
 }
