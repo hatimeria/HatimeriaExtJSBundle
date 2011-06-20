@@ -12,5 +12,9 @@
         <parameter key="direct.api.remote_attribute">@remote</parameter>
         <parameter key="direct.api.form_attribute">@form</parameter>
     </parameters>
-
+    <services>
+        <service id="ext.pager" class="Hatimeria\ExtJSBundle\Doctrine\Pager">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+    </services>
 </container>
