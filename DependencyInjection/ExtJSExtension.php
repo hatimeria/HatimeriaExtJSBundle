@@ -1,17 +1,12 @@
 <?php
-namespace Neton\DirectBundle\DependencyInjection;
+namespace Hatimeria\ExtJSBundle\DependencyInjection;
 
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 
-/**
- * DirectExtension is an extension for the ExtDirect.
- *
- * @author Otavio Fernandes <otavio@neton.com.br>
- */
-class DirectExtension extends Extension
+class ExtJSExtension extends Extension
 {
     /**
      * Loads the Direct configuration.
@@ -76,6 +71,6 @@ class DirectExtension extends Extension
 
     public function getNamespace()
     {
-        return 'http://www.neton.com.br/schema/dic/direct';
+        return 'extjs';
     }
 }

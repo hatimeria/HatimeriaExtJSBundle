@@ -1,14 +1,10 @@
 <?php
-namespace Neton\DirectBundle\Tests\Controller;
+namespace Hatimeria\ExtJSBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Neton\DirectBundle\Controller\DirectController;
 
-/**
- * Test class DirectBundle Direct controller.
- *
- * @author Otavio Fernandes <otavio@neton.com.br>
- */
+use Hatimeria\ExtJSBundle\Controller\DirectController;
+
 class DirectControllerTest extends WebTestCase
 {
     /**

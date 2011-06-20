@@ -1,11 +1,7 @@
 <?php
-namespace Neton\DirectBundle\Router;
 
-/**
- * Call encapsule an single ExtDirect call.
- *
- * @author Otavio Fernandes <otavio@neton.com.br>
- */
+namespace Hatimeria\ExtJSBundle\Router;
+
 class Call
 {
     /**

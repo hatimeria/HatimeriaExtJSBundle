@@ -1,11 +1,7 @@
 <?php
-namespace Neton\DirectBundle\Api;
 
-/**
- * ControllerApi encapsulate methods to get the Controller exposed Api.
- *
- * @author Otavio Fernandes <otabio@neton.com.br>
- */
+namespace Hatimeria\ExtJSBundle\Api;
+
 class ControllerApi
 {
     /**

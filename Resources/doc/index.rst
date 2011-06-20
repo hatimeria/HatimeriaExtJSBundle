@@ -1,22 +1,22 @@
-DirectBundle
+ExtJSBundle
 ============
 
-DirectBundle is an implementation of ExtDirect specification to Symfony2
+ExtJSBundle is an implementation of ExtDirect specification to Symfony2
 framework.
 
 Installing
 ----------
 
-The best way to install DirectBundle into your project is add it as a git submodule.
+The best way to install ExtJSBundle into your project is add it as a git submodule.
 To do it, in the terminal, go to your main  Symfony2 application directory
 (e.g. /home/htdocs/symfony-sandbox or c:\\wamp\\www\\symfony-sandbox) and run:
 
 ::
 
-    # add DirectBundle as a git submodule into your project
-    $ git submodule add git://github.com/oaugustus/DirectBundle.git src/Neton/DirectBundle
+    # add ExtJSBundle as a git submodule into your project
+    $ git submodule add git://github.com/hatimeria/ExtJSBundle.git vendor/Hatimeria/ExtJSBundle
 
-Register the Neton namespace into your autoloader
+Register the Hatimeria namespace into your autoloader
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -24,11 +24,11 @@ Register the Neton namespace into your autoloader
     // app/autoload.php
     $loader->registerNamespaces(array(
         // ...,
-        'Neton' => __DIR__.'/../src',
+        'Hatimeria' => __DIR__.'/../vendor/bundles',
         // ...,
     );
 
-Register DirectBundle into your application kernel
+Register ExtJSBundle into your application kernel
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -38,7 +38,7 @@ Register DirectBundle into your application kernel
     {
         $bundles = array(
             // ...,
-            new Neton\DirectBundle\DirectBundle(),
+            new Hatimeria\ExtJSBundle\ExtJSBundle(),
             // ...,
         );
 
@@ -46,7 +46,7 @@ Register DirectBundle into your application kernel
         return $bundles;
     }
 
-Register DirectBundle route into your route config
+Register ExtJSBundle route into your route config
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
@@ -54,7 +54,7 @@ Register DirectBundle route into your route config
     // app/config/routing.yml
     # ... your other routes here
     direct:
-        resource: "@DirectBundle/Resources/config/routing.yml"
+        resource: "@ExtJSBundle/Resources/config/routing.yml"
 
 
 How to use
@@ -82,7 +82,7 @@ Expose your controller methods to ExtDirect Api
 ::
 
     // ...
-    namespace Neton\HelloBundle\Controller;
+    namespace Hatimeria\HelloBundle\Controller;
 
     class TestController extends Controller
     {
@@ -121,12 +121,12 @@ Call the exposed methods from JavaScript
     // Hello is the Bundle name without 'Bundle'
     // Test is the Controller name without 'Controller'
     // index is the method name without 'Action'
-    Actions.Hello_Test.index({name: 'Otavio'}, function(r){
+    Actions.Hello_Test.index({name: 'test'}, function(r){
        alert(r);
     });
 
 Finished
 ~~~~~~~~
 
-Well, this all to DirectBundle work. Suggestions, bug reports and observations
+Well, this all to ExtJSBundle work. Suggestions, bug reports and observations
 are wellcome.

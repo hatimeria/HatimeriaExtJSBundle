@@ -1,11 +1,7 @@
 <?php
-namespace Neton\DirectBundle\Router;
 
-/**
- * Request encapsule the ExtDirect request call.
- *
- * @author Otavio Fernandes <otavio@neton.com.br>
- */
+namespace Hatimeria\ExtJSBundle\Router;
+
 class Request
 {
     /**

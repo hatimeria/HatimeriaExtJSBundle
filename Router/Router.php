@@ -1,28 +1,22 @@
 <?php
-namespace Neton\DirectBundle\Router;
+
+namespace Hatimeria\ExtJSBundle\Router;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 
-/**
- * Router is the ExtDirect Router class.
- *
- * It provide the ExtDirect Router mechanism.
- *
- * @author Otavio Fernandes <otavio@neton.com.br>
- */
 class Router
 {
     /**
      * The ExtDirect Request object.
      * 
-     * @var Neton\DirectBundle\Request
+     * @var Hatimeria\ExtJSBundle\Request
      */
     protected $request;
     
     /**
      * The ExtDirect Response object.
      * 
-     * @var Neton\DirectBundle\Response
+     * @var Hatimeria\ExtJSBundle\Response
      */
     protected $response;
     
@@ -64,7 +58,7 @@ class Router
     /**
      * Dispatch a remote method call.
      * 
-     * @param  Neton\DirectBundle\Router\Call $call
+     * @param  Hatimeria\ExtJSBundle\Router\Call $call
      * @return Mixed
      */
     private function dispatch($call)

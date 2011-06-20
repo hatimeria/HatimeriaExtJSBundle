@@ -1,14 +1,10 @@
 <?php
-namespace Neton\DirectBundle\Tests\Api;
+namespace Hatimeria\ExtJSBundle\Tests\Api;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Neton\DirectBundle\Api\Api;
 
-/**
- * Test class of ExtDirect Api.
- *
- * @author Otavio Fernandes <otavio@neton.com.br>
- */
+use Hatimeria\ExtJSBundle\Api\Api;
+
 class ApiTest extends WebTestCase
 {
     /**

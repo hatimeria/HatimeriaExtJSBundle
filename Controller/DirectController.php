@@ -1,11 +1,12 @@
 <?php
 
-namespace Neton\DirectBundle\Controller;
+namespace Hatimeria\ExtJSBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Neton\DirectBundle\Api\Api;
-use Neton\DirectBundle\Router\Router;
+
+use Hatimeria\ExtJSBundle\Api\Api;
+use Hatimeria\ExtJSBundle\Router\Router;
 
 class DirectController extends Controller
 {
