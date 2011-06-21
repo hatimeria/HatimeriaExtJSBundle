@@ -15,6 +15,7 @@
     <services>
         <service id="ext.pager" class="Hatimeria\ExtJSBundle\Doctrine\Pager">
             <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="security.context" />
         </service>
     </services>
 </container>
