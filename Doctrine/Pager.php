@@ -90,7 +90,7 @@ class Pager
 
 		
 		foreach($entities as $entity) {
-			$records[] = $entity->toStoreArray($this->security->isGranted('ROLE_SUPERADMIN') || $this->security->isGranted('IS_AUTHENTICATED_REMEMBERED'));
+			$records[] = $entity->toStoreArray($this->security->isGranted('ROLE_ADMIN') || $this->security->isGranted('ROLE_USER'));
 		}
 
 		if ($count == null) {
