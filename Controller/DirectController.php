@@ -38,11 +38,10 @@ class DirectController extends Controller
         $router = new Router($this->container);
 
         $content = $router->route();
-        // return the routing result
-        $r = new Response($content);
         $hasFiles = count($_FILES) > 0;
+
         
-        if ($hasFiles) {
+        if ($router->getRequest()->isFormCallType()) {
            $content = sprintf("<html><body><textarea>%s</textarea></body></html>", $content);
            $contentType = "text/html";
         } else {

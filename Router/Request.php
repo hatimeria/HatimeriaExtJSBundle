@@ -73,6 +73,26 @@ class Request
     }
 
     /**
+     * Returns true if request is form call type
+     *
+     * @return bool
+     */
+    public function isFormCallType()
+    {
+        return 'form' == $this->getCallType();
+    }
+
+    /**
+     * Returns true if request is batch call type
+     *
+     * @return bool
+     */
+    public function isBatchCallType()
+    {
+        return 'batch' == $this->getCallType();
+    }
+
+    /**
      * Return the files from call.
      * 
      * @return array

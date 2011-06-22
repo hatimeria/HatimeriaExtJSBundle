@@ -40,6 +40,14 @@ class Router
     }
 
     /**
+     * @return \Hatimeria\ExtJSBundle\Router\Request
+     */
+    public function getRequest()
+    {
+        return $this->request;
+    }
+
+    /**
      * Do the ExtDirect routing processing.
      *
      * @return JSON
