@@ -2,6 +2,8 @@
 
 namespace Hatimeria\ExtJSBundle\Router;
 
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 class Router
@@ -78,10 +80,21 @@ class Router
             //todo: throw an execption method not callable
         }
 
-        if ('form' == $this->request->getCallType()) {
-            $result = $call->getResponse($controller->$method($call->getData(), $this->request->getFiles()));
-        } else {
-            $result = $call->getResponse($controller->$method($call->getData()));
+        try
+        {
+            if ('form' == $this->request->getCallType()) {
+                $result = $call->getResponse($controller->$method($call->getData(), $this->request->getFiles()));
+            } else {
+                $result = $call->getResponse($controller->$method($call->getData()));
+            }
+        }
+        catch (NotFoundHttpException $e)
+        {
+            $result = $call->getResponse(array('success' => false, 'exception' => true, 'code' => $e->getStatusCode(), 'msg' => $e->getMessage()));
+        }
+        catch (AccessDeniedException $e)
+        {
+            $result = $call->getResponse(array('success' => false, 'exception' => true, 'code' => $e->getCode(), 'msg' => $e->getMessage()));
         }
 
         return $result;
