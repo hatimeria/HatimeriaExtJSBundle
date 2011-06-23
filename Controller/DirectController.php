@@ -19,9 +19,31 @@ class DirectController extends Controller
     {
         // instantiate the api object
         $api = new Api($this->container);
+        $url = '/';
 
         // return the json api description
-        $r = new Response("Ext.Direct.addProvider(".$api.");");
+        //$r = new Response("Ext.Direct.addProvider(".$api.");");
+        $response = "
+            Ext.Direct.addProvider(".$api.");
+            Ext.Direct.on('event', function(response) {
+                if (!response.result.success)
+                {
+                    if (response.result.exception)
+                    {
+                        switch(response.result.code)
+                        {
+                            case 404:
+                                console.log('404');
+                                break;
+                            case 403:
+                                window.location = '".$url."';
+                                break;
+                        }
+                    }
+                }
+            });
+        ";
+        $r = new Response($response);
         $r->headers->set("Content-Type","text/javascript");
         
         return $r;
