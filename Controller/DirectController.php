@@ -19,7 +19,7 @@ class DirectController extends Controller
     {
         // instantiate the api object
         $api = new Api($this->container);
-        $url = '/';
+        $url = $this->container->get('router')->generate('fos_user_security_login');
 
         // return the json api description
         //$r = new Response("Ext.Direct.addProvider(".$api.");");
