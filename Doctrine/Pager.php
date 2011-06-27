@@ -8,7 +8,10 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
+
 use Symfony\Component\Security\Core\SecurityContext;
+
+use Closure;
 
 class Pager
 {
@@ -30,7 +33,7 @@ class Pager
 	 *
 	 * @return array data in ext direct format
 	 */
-	public function getResults($entity, array $params = array(), array $mapping = array(), $filter = null)
+	public function getResults($entity, array $params = array(), array $mapping = array(), $filter = null, $toStore = null)
 	{
 		$qb = $this->em->createQueryBuilder();
 		$qb->add('select','e');
@@ -72,7 +75,7 @@ class Pager
 		$paginateQuery = Paginate::getPaginateQuery($query, $offset, $limit);
 		$entities = $paginateQuery->getResult();
 
-		return $this->collectionToArray($entities, $count, $limit);
+		return $this->collectionToArray($entities, $count, $limit, $toStore);
 	}
 
 	/**
@@ -84,13 +87,16 @@ class Pager
 	 *
 	 * @return array
 	 */
-	public function collectionToArray($entities, $count = null, $limit = null)
+	public function collectionToArray($entities, $count = null, $limit = null, $toStore = null)
 	{
 		$records = array();
 
-		
 		foreach($entities as $entity) {
-			$records[] = $entity->toStoreArray($this->security->isGranted('ROLE_ADMIN') || $this->security->isGranted('ROLE_USER'));
+            if (null !== $toStore) {
+                $records[] = $toStore($entity);
+            } else {
+                $records[] = $entity->toStoreArray();
+            }
 		}
 
 		if ($count == null) {
