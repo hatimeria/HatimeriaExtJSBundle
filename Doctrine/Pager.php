@@ -9,8 +9,6 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use Symfony\Component\Security\Core\SecurityContext;
-
 use Closure;
 
 class Pager
@@ -20,10 +18,9 @@ class Pager
 	 *
 	 * @param EntityManager           $em
 	 */
-	public function __construct(EntityManager $em, SecurityContext $s)
+	public function __construct(EntityManager $em)
 	{
 		$this->em = $em;
-		$this->security = $s;
 	}
 
 	/**
