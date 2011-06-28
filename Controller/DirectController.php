@@ -63,7 +63,7 @@ class DirectController extends Controller
         $hasFiles = count($_FILES) > 0;
 
         
-        if ($router->getRequest()->isFormCallType()) {
+        if ($router->getRequest()->isFormCallType() && !$router->getRequest()->isXmlHttpRequest()) {
            $content = sprintf("<html><body><textarea>%s</textarea></body></html>", $content);
            $contentType = "text/html";
         } else {

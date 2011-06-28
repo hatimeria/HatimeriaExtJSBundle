@@ -72,6 +72,11 @@ class Request
         return $this->callType;
     }
 
+    public function isXmlHttpRequest()
+    {
+        return $this->request->isXmlHttpRequest();
+    }
+
     /**
      * Returns true if request is form call type
      *
