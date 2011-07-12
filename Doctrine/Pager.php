@@ -13,15 +13,69 @@ use Closure;
 
 class Pager
 {
-
+    private $entity, $em;
+    /**
+     * Parameters
+     *
+     * @var ParameterBag
+     */
+    private $params;
+    
+    private $mapping = array();
+    
+    private $toStoreFunction = null;
+    
+    private $factory;
+    
     /**
      * Constructor.
      *
      * @param EntityManager           $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $em, $entity, $params, $factory)
     {
-        $this->em = $em;
+        $this->params  = $params;
+        $this->entity  = $entity;
+        $this->em      = $em;
+        $this->factory = $factory;
+        $this->qb      = $this->em->createQueryBuilder();
+        $this->qb->add('select', 'e');
+        $this->qb->add('from', $this->entity . ' e');
+    }
+    
+    public function addColumnAlias($column, $alias)
+    {
+        $this->mapping[$column] = $alias;
+    }
+    
+    public function setToStoreFunction($function)
+    {
+        $this->toStoreFunction = $function;
+    }
+    
+    public function getQueryBuilder()
+    {
+        return $this->qb;
+    }
+    
+    public function getParams()
+    {
+        return $this->params;
+    }
+    
+    private function addSort()
+    {
+        $sort = $this->params['sort'][0];
+
+        // change birthday_at to birthdayAt
+        // @todo move to util class
+        $column = lcfirst(preg_replace('/(^|_|-)+(.)/e', "strtoupper('\\2')", $sort['property']));
+
+        if (isset($this->mapping[$column])) {
+            $column = $this->mapping[$column];
+        }
+
+        $this->qb->add('orderBy', 'e.' . $column . ' ' . $sort['direction']);        
     }
 
     /**
@@ -31,78 +85,25 @@ class Pager
      *
      * @return array data in ext direct format
      */
-    public function getResults($entity, ParameterBag $params = null, array $mapping = array(), $filter = null, $toStore = null)
+    public function toArray()
     {
-        $qb = $this->em->createQueryBuilder();
-        $qb->add('select', 'e');
-        $qb->add('from', $entity . ' e');
-
-        if ($filter != null) {
-            $filter($qb);
+        if ($this->params->has('sort')) {
+            $this->addSort();
         }
 
-        if ($params->has('sort')) {
-            $sort = $params['sort'][0];
+        $limit = $this->params->getInt('limit', 10);
 
-            // change birthday_at to birthdayAt
-            // @todo move to util class
-            $column = lcfirst(preg_replace('/(^|_|-)+(.)/e', "strtoupper('\\2')", $sort['property']));
-
-            if (isset($mapping[$column])) {
-                $column = $mapping[$column];
-            }
-
-            $qb->add('orderBy', 'e.' . $column . ' ' . $sort['direction']);
-        }
-
-        $query = $qb->getQuery();
-        $limit = $params->getInt('limit', 10);
-
-        if ($params->has('page')) {
-            $offset = ($params['page'] - 1) * $limit;
+        if ($this->params->has('page')) {
+            $offset = ($this->params->get('page') - 1) * $limit;
         } else {
             $offset = 0;
         }
 
+        $query = $this->qb->getQuery();
         $count = Paginate::getTotalQueryResults($query);
         $paginateQuery = Paginate::getPaginateQuery($query, $offset, $limit);
         $entities = $paginateQuery->getResult();
 
-        return $this->collectionToArray($entities, $count, $limit, $toStore);
+        return $this->factory->collectionToArray($entities, $count, $limit, $this->toStoreFunction);
     }
-
-    /**
-     * Convert array or array collection to ext js array used for store source
-     *
-     * @param array Array collection or array of entities $entities
-     * @param int $count
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function collectionToArray($entities, $count = null, $limit = null, $toStore = null)
-    {
-        $records = array();
-
-        foreach ($entities as $entity) {
-            if (null !== $toStore) {
-                $records[] = $toStore($entity);
-            } else {
-                $records[] = $entity->toStoreArray();
-            }
-        }
-
-        if ($count == null) {
-            $count = count($records);
-        }
-
-        return array(
-            'records' => $records,
-            'success' => true,
-            'total' => $count,
-            'start' => 0,
-            'limit' => $limit ? $limit : 0
-        );
-    }
-
 }

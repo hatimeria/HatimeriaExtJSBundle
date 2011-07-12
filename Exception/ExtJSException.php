@@ -7,7 +7,7 @@ namespace Hatimeria\ExtJSBundle\Exception;
  *
  * @author Michal Wujas
  */
-class ExtJSException extends Exception
+class ExtJSException extends \Exception
 {
     
 }
