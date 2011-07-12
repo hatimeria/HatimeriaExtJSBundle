@@ -2,6 +2,8 @@
 
 namespace Hatimeria\ExtJSBundle\Router;
 
+use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
+
 class Call
 {
     /**
@@ -109,6 +111,10 @@ class Call
      */
     public function getResponse($result)
     {
+        if(!is_array($result) && is_callable(array($result, 'toArray'))) {
+            $result = $result->toArray();
+        }
+        
         return array(
           'type' => 'rpc',
           'tid' => $this->tid,
@@ -155,5 +161,15 @@ class Call
         foreach ($call as $key => $value) {
             $this->data[$key] = $value;
         }
+    }
+    
+    /**
+     * Params for action
+     * 
+     * @return ParameterBag
+     */
+    public function getParams()
+    {
+        return new ParameterBag($this->data);
     }
 }

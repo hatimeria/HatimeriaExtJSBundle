@@ -9,103 +9,102 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
+
 use Closure;
 
 class Pager
 {
-	/**
-	 * Constructor.
-	 *
-	 * @param EntityManager           $em
-	 */
-	public function __construct(EntityManager $em)
-	{
-		$this->em = $em;
-	}
 
-	/**
-	 * Paginated resultset in ext direct format
-	 *
-	 * @param Query $query
-	 *
-	 * @return array data in ext direct format
-	 */
-	public function getResults($entity, array $params = array(), array $mapping = array(), $filter = null, $toStore = null)
-	{
-		$qb = $this->em->createQueryBuilder();
-		$qb->add('select','e');
-		$qb->add('from', $entity.' e');
+    /**
+     * Constructor.
+     *
+     * @param EntityManager           $em
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
 
-		if($filter != null) {
-			$filter($qb);
-		}
+    /**
+     * Paginated resultset in ext direct format
+     *
+     * @param Query $query
+     *
+     * @return array data in ext direct format
+     */
+    public function getResults($entity, ParameterBag $params = null, array $mapping = array(), $filter = null, $toStore = null)
+    {
+        $qb = $this->em->createQueryBuilder();
+        $qb->add('select', 'e');
+        $qb->add('from', $entity . ' e');
 
-		if(isset($params['sort'])) {
-			$sort = $params['sort'][0];
+        if ($filter != null) {
+            $filter($qb);
+        }
 
-			// change birthday_at to birthdayAt
-			// @todo move to util class
-			$column = lcfirst(preg_replace('/(^|_|-)+(.)/e',"strtoupper('\\2')", $sort['property']));
+        if ($params->has('sort')) {
+            $sort = $params['sort'][0];
 
-			if(isset($mapping[$column]))
-			{
-				$column = $mapping[$column];
-			}
+            // change birthday_at to birthdayAt
+            // @todo move to util class
+            $column = lcfirst(preg_replace('/(^|_|-)+(.)/e', "strtoupper('\\2')", $sort['property']));
 
-			$qb->add('orderBy', 'e.'.$column.' '.$sort['direction']);
-		}
+            if (isset($mapping[$column])) {
+                $column = $mapping[$column];
+            }
 
-		$query = $qb->getQuery();
-		$limit = 10;
-		if(isset($params['limit']))
-		{
-			$limit = $params['limit'];
-		}
+            $qb->add('orderBy', 'e.' . $column . ' ' . $sort['direction']);
+        }
 
-		if(isset($params['page'])) {
-			$offset = ($params['page'] - 1) * $limit;
-		} else {
-			$offset = 0;
-		}
+        $limit = $params->getInt('limit', 10);
 
-		$count = Paginate::getTotalQueryResults($query);
-		$paginateQuery = Paginate::getPaginateQuery($query, $offset, $limit);
-		$entities = $paginateQuery->getResult();
+        if ($params->has('page')) {
+            $offset = ($params['page'] - 1) * $limit;
+        } else {
+            $offset = 0;
+        }
 
-		return $this->collectionToArray($entities, $count, $limit, $toStore);
-	}
+        $query = $qb->getQuery();
+        $count = Paginate::getTotalQueryResults($query);
+        $paginateQuery = Paginate::getPaginateQuery($query, $offset, $limit);
+        $entities = $paginateQuery->getResult();
 
-	/**
-	 * Convert array or array collection to ext js array used for store source
-	 *
-	 * @param array Array collection or array of entities $entities
-	 * @param int $count
-	 * @param int $limit
-	 *
-	 * @return array
-	 */
-	public function collectionToArray($entities, $count = null, $limit = null, $toStore = null)
-	{
-		$records = array();
+        return $this->collectionToArray($entities, $count, $limit, $toStore);
+    }
 
-		foreach($entities as $entity) {
+    /**
+     * Convert array or array collection to ext js array used for store source
+     *
+     * @param array Array collection or array of entities $entities
+     * @param int $count
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function collectionToArray($entities, $count = null, $limit = null, $toStore = null)
+    {
+        $records = array();
+
+        foreach ($entities as $entity) {
             if (null !== $toStore) {
                 $records[] = $toStore($entity);
             } else {
                 $records[] = $entity->toStoreArray();
             }
-		}
+        }
 
-		if ($count == null) {
-			$count = count($records);
-		}
+        if ($count == null) {
+            $count = count($records);
+        }
 
-		return array(
-            'records' => $records, 
-            'success' => true, 
+        return array(
+            'records' => $records,
+            'success' => true,
             'total' => $count,
             'start' => 0,
             'limit' => $limit ? $limit : 0
-		);
-	}
+        );
+    }
+
 }

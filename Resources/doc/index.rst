@@ -4,6 +4,12 @@ ExtJSBundle
 ExtJSBundle is an implementation of ExtDirect specification to Symfony2
 framework.
 
+It is a https://github.com/oaugustus/DirectBundle fork.
+
+Requirements
+------------
+FOSUserBundle is required because of default 403 redirecting to login page
+
 Installing
 ----------
 
@@ -69,12 +75,7 @@ script section:
 ::
 
     <script type="text/javascript" src="{{ url('api')}}"></script>
-
-Or if you are not using a template engine:
-
-::
-
-    <script type="text/javascript" src="http://localhost/symfony-sandbox/web/app.php/api.js"></script>
+    <script type="text/javascript" src="/bundles/hatimeriaextjs/js/direct-api-handler.js"></script>
 
 Expose your controller methods to ExtDirect Api
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

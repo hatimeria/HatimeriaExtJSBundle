@@ -4,7 +4,7 @@ namespace Hatimeria\ExtJSBundle\Router;
 class Response
 {
     /**
-     * Call type to respond. Where values in ('form','single).
+     * Call type to respond. Where values in ('form','single').
      *   
      * @var string
      */

@@ -19,30 +19,17 @@ class DirectController extends Controller
     {
         // instantiate the api object
         $api = new Api($this->container);
-        $url = $this->container->get('router')->generate('fos_user_security_login');
+        
+        $response = sprintf("Ext.Direct.addProvider(%s);", $api);
 
-        // return the json api description
-        //$r = new Response("Ext.Direct.addProvider(".$api.");");
-        $response = "
-            Ext.Direct.addProvider(".$api.");
-            Ext.Direct.on('event', function(response) {
-                if (!response.result.success)
-                {
-                    if (response.result.exception)
-                    {
-                        switch(response.result.code)
-                        {
-                            case 404:
-                                console.log('404');
-                                break;
-                            case 403:
-                                window.location = '".$url."';
-                                break;
-                        }
-                    }
-                }
-            });
-        ";
+        // @todo optional - if fos is not installed it will break this bundle
+        $url = $this->container->get('router')->generate('fos_user_security_login');
+        $response .= sprintf("
+            Ext.ns('App.Direct'); 
+            App.Direct.signinUrl = '%s';
+            App.Direct.environment = '%s';
+            ", $url, $this->container->getParameter("kernel.environment"));
+        
         $r = new Response($response);
         $r->headers->set("Content-Type","text/javascript");
         

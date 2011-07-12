@@ -6,12 +6,16 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
+use Hatimeria\ExtJSBundle\Exception\ExtJSException;
+use Hatimeria\ExtJSBundle\Response\Success;
+use Hatimeria\ExtJSBundle\Response\Failure;
+
 class Router
 {
     /**
      * The ExtDirect Request object.
      * 
-     * @var Hatimeria\ExtJSBundle\Request
+     * @var Hatimeria\ExtJSBundle\Router\Request
      */
     protected $request;
     
@@ -77,17 +81,21 @@ class Router
         $method = $call->getMethod()."Action";
 
         if (!is_callable(array($controller, $method))) {
-            //todo: throw an execption method not callable
+            throw new ExtJSException("Controller %s doesn't have method %s", $controller, $method);
         }
 
         try
         {
-            if ('form' == $this->request->getCallType()) {
-                $result = $call->getResponse($controller->$method($call->getData(), $this->request->getFiles()));
-            } else {
-                $result = $call->getResponse($controller->$method($call->getData()));
+            $controllerReturn = $controller->$method($call->getParams(), $this->request->getFiles());
+
+            // default behavior - everything was fine
+            if($controllerReturn == null) {
+                $controllerReturn = new Success();
             }
+            
+            $result = $call->getResponse($controllerReturn);
         }
+                
         catch (NotFoundHttpException $e)
         {
             $result = $call->getResponse(array('success' => false, 'exception' => true, 'code' => $e->getStatusCode(), 'msg' => $e->getMessage()));
@@ -125,7 +133,7 @@ class Router
 
             return $controller;
         } catch(Exception $e) {
-            // todo: handle exception
+            // @todo handle
         }
     }
 }
