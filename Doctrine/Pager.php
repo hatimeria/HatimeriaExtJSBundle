@@ -8,9 +8,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
-
 use Closure;
 
 class Pager
@@ -57,6 +55,7 @@ class Pager
             $qb->add('orderBy', 'e.' . $column . ' ' . $sort['direction']);
         }
 
+        $query = $qb->getQuery();
         $limit = $params->getInt('limit', 10);
 
         if ($params->has('page')) {
@@ -65,7 +64,6 @@ class Pager
             $offset = 0;
         }
 
-        $query = $qb->getQuery();
         $count = Paginate::getTotalQueryResults($query);
         $paginateQuery = Paginate::getPaginateQuery($query, $offset, $limit);
         $entities = $paginateQuery->getResult();

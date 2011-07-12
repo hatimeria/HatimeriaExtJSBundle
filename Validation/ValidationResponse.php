@@ -29,6 +29,10 @@ class ValidationResponse
         $list = array();
         
         foreach ($errors as $key => $error) {
+            if (is_array($error)) {
+                $list[$key] = $this->getFormatted($error);
+                continue;
+            }
             if ($error instanceof ConstraintViolationList) {
                 $list[$key] = $this->getFormatted($error);
                 continue;
