@@ -32,15 +32,21 @@ class Pager
      *
      * @param EntityManager           $em
      */
-    public function __construct(EntityManager $em, $entity, $params, $factory)
+    public function __construct(EntityManager $em, $params, $factory)
     {
-        $this->params  = $params;
-        $this->entity  = $entity;
         $this->em      = $em;
+        $this->params  = $params;
         $this->factory = $factory;
+    }
+    
+    public function setEntityName($entity) 
+    {
+        $this->entity  = $entity;        
         $this->qb      = $this->em->createQueryBuilder();
         $this->qb->add('select', 'e');
         $this->qb->add('from', $this->entity . ' e');
+        
+        return $this;
     }
     
     public function addColumnAlias($column, $alias)
@@ -77,6 +83,13 @@ class Pager
 
         $this->qb->add('orderBy', 'e.' . $column . ' ' . $sort['direction']);        
     }
+    
+    public function setQueryBuilder(QueryBuilder $qb)
+    {
+        $this->qb = $qb;
+        
+        return $this;
+    }    
 
     /**
      * Paginated resultset in ext direct format

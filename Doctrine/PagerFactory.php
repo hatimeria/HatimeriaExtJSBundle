@@ -4,8 +4,9 @@ namespace Hatimeria\ExtJSBundle\Doctrine;
 
 use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
 use Hatimeria\ExtJSBundle\Doctrine\Pager;
-use Hatimeria\ExtJSBundle\Exception\ExtJSException;
+use Hatimeria\ExtJSBundle\Exception\ExtJSException; 
 
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManager;
 
 class PagerFactory
@@ -23,16 +24,45 @@ class PagerFactory
         $this->isAdmin  = $security->isGranted('ROLE_ADMIN');
     }
 
-    /**
-     * Paginated resultset in ext direct format
-     *
-     * @param Query $query
-     *
-     * @return array data in ext direct format
-     */
+    // shortcut, depracated
     public function create($entity, ParameterBag $params)
     {
-        return new Pager($this->em, $entity, $params, $this);
+        return $this->fromEntity($entity, $params);
+    }
+    
+    public function fromEntity($entity, ParameterBag $params)
+    {
+        return $this->getNewPager($params)->setEntityName($entity);
+    }
+    
+    private function getNewPager(ParameterBag $params)
+    {
+        return new Pager($this->em, $params, $this);
+    }
+    
+    public function fromQuery(QueryBuilder $qb, ParameterBag $params)
+    {
+        return $this->getNewPager($params)->setQueryBuilder($qb);
+    }
+    
+    private function getDumper($entity)
+    {
+        $adminMethod = 'toAdminStoreArray';
+        $defaultMethod = 'toStoreArray';
+        
+        // admin dumper method has precedence
+        if ($this->isAdmin && is_callable(array($entity, $adminMethod))) {
+           $method = $adminMethod;
+        } else {
+            if (!is_callable(array($entity, $defaultMethod))) {
+                throw new ExtJSException(
+                        sprintf("method %s in %s entity class doesn't exists", $defaultMethod, get_class($entity)));
+            }
+            
+            $method = $defaultMethod;
+        }
+        
+        return function($entity) use($method) { return $entity->$method(); };
     }
     
     /**
@@ -49,21 +79,12 @@ class PagerFactory
         $records = array();
         
         if(!empty($entities)) {
+            $hasCustomDumper = null !== $toStoreFunction;
             
-            $dumper       = function($entity) { return $entity->toStoreArray(); };
-            $customDumper = null !== $toStoreFunction;
-            $firstEntity  = $entities[0];
-            
-            // admin dumper method has precedence
-            if (!$customDumper && $this->isAdmin && is_callable(array($firstEntity, 'toAdminStoreArray'))) {
-                $dumper = function($entity) { return $entity->toAdminStoreArray(); };
-            } elseif ($customDumper) {
-                $dumper = $customDumper;
+            if($hasCustomDumper) {
+                $dumper = $toStoreFunction;
             } else {
-                if (!is_callable(array($firstEntity, 'toStoreArray'))) {
-                    throw new ExtJSException(
-                            sprintf("method toStoreArray in %s entity class doesn't exists", get_class($firstEntity)));
-                }
+                $dumper = $this->getDumper($entities[0]);
             }
             
             foreach ($entities as $entity) {
