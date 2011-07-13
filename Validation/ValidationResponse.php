@@ -83,4 +83,9 @@ class ValidationResponse
         
     	return array('success' => $isValid, 'msg' => $msg);
     }
+    
+    public function toArray()
+    {
+        return $this->getContent();
+    }
 }
