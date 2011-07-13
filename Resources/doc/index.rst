@@ -71,6 +71,8 @@ Add the ExtDirect API into your page
 
 If you is using Twig engine, only add the follow line in your views page at the
 script section:
+api - dynamic js file which contains list of available backend actions
+direct-api-handler - handle backend errors (show error message to user or developer)
 
 ::
 
@@ -91,7 +93,7 @@ Expose your controller methods to ExtDirect Api
         * Single exposed method.
         *
         * @remote    // this annotation expose the method to API
-        * @param  array $params
+        * @param  ParameterBag $params
         * @return string
         */
         public function indexAction($params)
@@ -99,12 +101,37 @@ Expose your controller methods to ExtDirect Api
             return 'Hello '.$params['name'];
         }
 
+       /*
+        * Grid backend
+        *
+        * @remote    // this annotation expose the method to API
+        * @param  ParameterBag $params
+        * @return string
+        */
+        public function listAction($params)
+        {
+            // entity must have toStoreArray function which returns it's array representation
+            $pager = $this->get('hatimeria_extjs.pager')->create('ExampleCompany\ExampleBundle\Entity\Example', $params);
+            // use for sorting - map extjs column name to real entity column name
+            $pager->addColumnAlias('createdAt.date', 'createdAt');
+            
+            $qb = $pager->getQueryBuilder();
+
+            // add filter if there is a name parameter send by javascript
+            if (isset($params['name'])) {
+                $qb->andWhere('e.name like :name');
+                $qb->setParameter('name', '%' . $params['name'] . '%');
+            }
+            
+            return $pager;
+        }
+
         /*
          * An action to handle forms.
          *
          * @remote   // this annotation expose the method to API
          * @form     // this annotation expose the method to API with formHandler option
-         * @param array $params Form submited values
+         * @param ParameterBag $params Form submited values
          * @param array $files  Uploaded files like $_FILES
          */
         public function testFormAction($params, $files)

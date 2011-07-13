@@ -20,10 +20,10 @@ class DirectController extends Controller
         // instantiate the api object
         $api = new Api($this->container);
         
-        $response = sprintf("Ext.Direct.addProvider(%s);", $api);
-
         // @todo optional - if fos is not installed it will break this bundle
         $url = $this->container->get('router')->generate('fos_user_security_login');
+        
+        $response = sprintf("Ext.Direct.addProvider(%s);", $api);
         $response .= sprintf("
             Ext.ns('App.Direct'); 
             App.Direct.signinUrl = '%s';
@@ -44,13 +44,11 @@ class DirectController extends Controller
     public function routeAction()
     {
         // instantiate the router object
-        $router = new Router($this->container);
-
+        $router  = new Router($this->container);
+        $request = $router->getRequest();
         $content = $router->route();
-        $hasFiles = count($_FILES) > 0;
-
         
-        if ($router->getRequest()->isFormCallType() && !$router->getRequest()->isXmlHttpRequest()) {
+        if ($request->isFormCallType() && !$request->isXmlHttpRequest()) {
            $content = sprintf("<html><body><textarea>%s</textarea></body></html>", $content);
            $contentType = "text/html";
         } else {
