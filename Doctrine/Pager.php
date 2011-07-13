@@ -58,7 +58,10 @@ class Pager
     {
         $this->toStoreFunction = $function;
     }
-    
+
+    /**
+     * @return \Doctrine\ORM\QueryBuilder
+     */
     public function getQueryBuilder()
     {
         return $this->qb;

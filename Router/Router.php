@@ -3,7 +3,7 @@
 namespace Hatimeria\ExtJSBundle\Router;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\File\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\DependencyInjection\ContainerAware;
 
 use Hatimeria\ExtJSBundle\Exception\ExtJSException;
