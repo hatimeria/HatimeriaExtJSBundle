@@ -11,11 +11,14 @@ class Success
 {
     private $content;
     
-    public function __construct($msg = null)
+    public function __construct($msg = null, $result = null)
     {
         $this->content = array('succes' => true);
         if($msg != null) {
             $this->content['msg'] = $msg;
+        }
+        if (null !== $result) {
+            $this->content['result'] = $result;
         }
     }
     

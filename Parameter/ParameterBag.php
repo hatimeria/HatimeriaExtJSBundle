@@ -29,13 +29,13 @@ class ParameterBag extends BaseParameterBag implements \ArrayAccess
 
     public function offsetUnset($offset)
     {
-        return $this->remove($offset, $value);
+        return $this->remove($offset);
     }
     
     public function setDefault($key, $value)
     {
         if (!$this->has($key)) {
-            $this->set($key, 'x');
+            $this->set($key, $value);
         }
     }
 }
