@@ -6,6 +6,9 @@ use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormError;
 
+/**
+ * Response from validation errors
+ */
 class ValidationResponse
 {
     private $errors;

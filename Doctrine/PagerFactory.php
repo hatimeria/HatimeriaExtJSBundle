@@ -21,7 +21,7 @@ class PagerFactory
     public function __construct(EntityManager $em, $security)
     {
         $this->em       = $em;
-        $this->isAdmin  = $security->isGranted('ROLE_ADMIN');
+        $this->isAdmin  = $security->getToken() ? $security->isGranted('ROLE_ADMIN') : false;
     }
 
     // shortcut, depracated
