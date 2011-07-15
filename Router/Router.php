@@ -81,7 +81,7 @@ class Router
         $method = $call->getMethod()."Action";
 
         if (!is_callable(array($controller, $method))) {
-            throw new ExtJSException(sprintf("Controller %s doesn't have method %s", $controller, $method));
+            throw new ExtJSException(sprintf("Controller %s doesn't have method %s", get_class($controller), $method));
         }
 
         try
