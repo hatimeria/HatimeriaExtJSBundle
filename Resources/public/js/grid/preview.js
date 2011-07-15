@@ -38,9 +38,30 @@ Ext.define("Hatimeria.grid.Preview", {
         
         var columns = [];
         
+        var renderer = function(value) {
+            if(typeof value == 'object') {
+                var html = '';
+                
+                for(key in value) {
+                    
+                    var keyValue = value[key];
+                    
+                    if(typeof keyValue == 'object') {
+                        keyValue = renderer(keyValue);
+                    }
+                    
+                    html += key + ': ' + keyValue + '<br/>';
+                }
+                
+                return html;
+            }
+            
+            return value;
+        };
+        
         for(i in keys) {
             var key = keys[i];
-            columns[i] = {dataIndex: key, header: key};
+            columns[i] = {dataIndex: key, header: key, renderer: renderer};
         }
         
         gridParams = {
