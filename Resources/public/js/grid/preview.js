@@ -66,7 +66,7 @@ Ext.define("Hatimeria.grid.Preview", {
         
         gridParams = {
             store: store,
-            title: 'Preview grid',
+            title: this.config.title || 'Preview grid',
             columns: columns,
             renderTo: Ext.fly('body'),
             dockedItems: [{
