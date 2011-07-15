@@ -2,8 +2,10 @@
 
 namespace Hatimeria\ExtJSBundle\Response;
 
+use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
+
 /**
- * Direct Fail Messagee
+ * Direct Success Response
  *
  * @author Michal Wujas
  */
@@ -11,19 +13,41 @@ class Success
 {
     private $content;
     
-    public function __construct($msg = null, $result = null)
+    public function __construct($msg = null)
     {
-        $this->content = array('succes' => true);
+        $content = new ParameterBag();
+        $content->set('success', true);
+        
         if($msg != null) {
-            $this->content['msg'] = $msg;
+            $content->set('msg', $msg);
         }
-        if (null !== $result) {
-            $this->content['result'] = $result;
-        }
+
+        $this->content = $content;
     }
     
     public function toArray()
     {
-        return $this->content;
+        return $this->content->all();
     }
+
+    public function set($key, $value)
+    {
+        $this->content->set($key, $value);
+    }
+
+    public function get($key)
+    {
+        return $this->content->get($key);
+    }
+
+    public function has($key)
+    {
+        return $this->content->has($key);
+    }
+
+    public function remove($key)
+    {
+        $this->content->remove($key);
+    }
+
 }
