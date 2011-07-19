@@ -86,8 +86,6 @@ Ext.define("Hatimeria.grid.Preview", {
             columns.push(column);
         }
         
-        console.log(columns);
-        
         gridParams = {
             store: store,
             margin: '10px',
