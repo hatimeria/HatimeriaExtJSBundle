@@ -21,7 +21,22 @@ Ext.define("Hatimeria.grid.Preview", {
     loadData: function(response) {
         var me = this;
         var first = response.records[0];
-        var keys  = Object.keys(first);
+        var keys = null;
+        var headers = me.config.headers || null;
+        var showAllData = headers == null;        
+        
+        if(showAllData) {
+            if(typeof first != 'object') {
+                alert('Empty recordset preview grid is not available');
+                return;
+            }
+            
+            keys = Object.keys(first);
+            storeFields = keys;
+        } else {
+            keys = headers;
+            storeFields = Object.keys(headers);
+        }
         
         storeParams = {
             directFn: me.config.directFn,
@@ -29,14 +44,12 @@ Ext.define("Hatimeria.grid.Preview", {
             autoLoad: false,
             paramsAsHash: true,
             remoteSort: true,
-            fields: keys
+            fields: storeFields
         };
         
         var store = Ext.create("Ext.data.DirectStore", storeParams);
         store.proxy.extraParams = me.config.directParams;
         store.load();
-        
-        var columns = [];
         
         var renderer = function(value) {
             if(typeof value == 'object') {
@@ -59,13 +72,26 @@ Ext.define("Hatimeria.grid.Preview", {
             return value;
         };
         
+        var columns = [];
         for(i in keys) {
             var key = keys[i];
-            columns[i] = {dataIndex: key, header: key, renderer: renderer};
+            var column = {renderer: renderer, flex: 1, header: key}
+            
+            if(showAllData) {
+                column.dataIndex = key;
+            } else {
+                column.dataIndex = i;
+            }
+            
+            columns.push(column);
         }
+        
+        console.log(columns);
         
         gridParams = {
             store: store,
+            margin: '10px',
+            width: 800,
             title: this.config.title || 'Preview grid',
             columns: columns,
             renderTo: Ext.fly('body'),
