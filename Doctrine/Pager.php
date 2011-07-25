@@ -20,8 +20,18 @@ class Pager
      * @var ParameterBag
      */
     private $params;
-    
+    /**
+     * Column name mapping
+     *
+     * @var array
+     */
     private $mapping = array();
+    /**
+     * Column name => sorting closure
+     *
+     * @var array
+     */
+    private $sortFunctions = array();
     
     private $toStoreFunction = null;
     
@@ -80,13 +90,22 @@ class Pager
         // @todo move to util class
         $column = lcfirst(preg_replace('/(^|_|-)+(.)/e', "strtoupper('\\2')", $sort['property']));
 
+        if (isset($this->sortFunctions[$column])) {
+            return $this->sortFunctions[$column]($this->qb, $sort['direction']);
+        }
         if (isset($this->mapping[$column])) {
             $column = $this->mapping[$column];
         }
 
         $this->qb->add('orderBy', 'e.' . $column . ' ' . $sort['direction']);        
     }
-    
+
+
+    public function setSortFunction($column, $function)
+    {
+        $this->sortFunctions[$column] = $function;
+    }
+
     public function setQueryBuilder(QueryBuilder $qb)
     {
         $this->qb = $qb;
