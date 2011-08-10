@@ -196,14 +196,14 @@ Expose your controller methods to ExtDirect Api
 Call the exposed methods from JavaScript
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
-
+```javascript
     // Hello is the Bundle name without 'Bundle'
     // Test is the Controller name without 'Controller'
     // index is the method name without 'Action'
     Actions.Hello_Test.index({name: 'test'}, function(r){
        alert(r);
     });
+```
 
 Finished
 ~~~~~~~~
