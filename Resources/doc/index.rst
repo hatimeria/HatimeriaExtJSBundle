@@ -68,6 +68,15 @@ Register ExtJSBundle route into your route config
 How to use
 ----------
 
+Optionally configure singin route
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::
+    // app/config/config.yml
+    hatimeria_ext_js:
+      signin_route: fos_user_security_login
+
+If direct request got 403 response code it will redirect user to login page
+
 Add the ExtDirect API into your page
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -139,7 +148,9 @@ Expose your controller methods to ExtDirect Api
         public function testFormAction($params, $files)
         {
             // your proccessing
-            return true;
+
+            // Automatic response base on validation result, error list or clean succes message
+            return FormResponse($form);
         }
     }
 
