@@ -12,19 +12,12 @@ class DirectControllerTest extends WebTestCase
      */
     public function testGetApi()
     {
-        // create test env
         $client = $this->createClient();
 
         $crawler = $client->request('GET', '/api.js');
         
-        // test add provider
-        $this->assertTrue($crawler->filter('html:contains("Ext.Direct.addProvider(")')->count() > 0);
+        $js = $client->getResponse()->getContent();
         
-        // test url in direc api
-        $this->assertTrue($crawler->filter('html:contains("url")')->count() > 0);
-
-        // test actions in direc api
-        // @todo: improve this test
-        $this->assertTrue($crawler->filter('html:contains("actions")')->count() > 0);
+        $this->assertTrue(strpos($js, 'Ext.Direct') === 0);
     }
 }
