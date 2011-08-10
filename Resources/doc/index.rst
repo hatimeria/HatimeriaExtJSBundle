@@ -1,10 +1,12 @@
 ExtJSBundle
 ============
 
-ExtJSBundle is an implementation of ExtDirect specification to Symfony2
+ExtJSBundle is an implementation of Ext Direct (part of ExtJS framework from Sencha) specification for Symfony2
 framework.
 
-It is a https://github.com/oaugustus/DirectBundle fork.
+ExtJS 4: http://docs.sencha.com/ext-js/4-0/
+
+Bundle is highly customized https://github.com/oaugustus/DirectBundle fork.
 
 Requirements
 ------------
@@ -20,7 +22,7 @@ To do it, in the terminal, go to your main  Symfony2 application directory
 ::
 
     # add ExtJSBundle as a git submodule into your project
-    $ git submodule add git://github.com/hatimeria/ExtJSBundle.git vendor/Hatimeria/ExtJSBundle
+    $ git submodule add git://github.com/hatimeria/HatimeriaExtJSBundle.git vendor/Hatimeria/ExtJSBundle
 
 Register the Hatimeria namespace into your autoloader
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -44,7 +46,7 @@ Register ExtJSBundle into your application kernel
     {
         $bundles = array(
             // ...,
-            new Hatimeria\ExtJSBundle\ExtJSBundle(),
+            new Hatimeria\ExtJSBundle\HatimeriaExtJSBundle(),
             // ...,
         );
 
@@ -60,7 +62,7 @@ Register ExtJSBundle route into your route config
     // app/config/routing.yml
     # ... your other routes here
     direct:
-        resource: "@ExtJSBundle/Resources/config/routing.yml"
+        resource: "@HatimeriaExtJSBundle/Resources/config/routing.yml"
 
 
 How to use
@@ -72,7 +74,7 @@ Add the ExtDirect API into your page
 If you is using Twig engine, only add the follow line in your views page at the
 script section:
 api - dynamic js file which contains list of available backend actions
-direct-api-handler - handle backend errors (show error message to user or developer)
+direct-api-handler - handle backend errors (show nice error message to user or profiler output to developer)
 
 ::
 
