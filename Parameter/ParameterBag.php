@@ -32,6 +32,12 @@ class ParameterBag extends BaseParameterBag implements \ArrayAccess
         return $this->remove($offset);
     }
     
+    /**
+     * Default parameter value
+     *
+     * @param string $key
+     * @param mixed $value 
+     */
     public function setDefault($key, $value)
     {
         if (!$this->has($key)) {

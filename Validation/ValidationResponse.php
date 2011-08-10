@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormError;
 
 /**
  * Response from validation errors
+ * 
+ * @author Michal Wujas
  */
 class ValidationResponse
 {

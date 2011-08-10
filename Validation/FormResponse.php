@@ -6,8 +6,20 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Form\Form;
 
+/**
+ * Response representation for symfony processed form
+ * 
+ * Contains error list if form is not valid or Success
+ * 
+ * @author Michal Wujas
+ */
 class FormResponse extends ValidationResponse
 {
+    /**
+     * Form instance
+     *
+     * @var Form
+     */
     private $form;
     
     /**

@@ -11,8 +11,18 @@ use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
  */
 class Success
 {
+    /**
+     * Content in direct format
+     *
+     * @var array
+     */
     private $content;
     
+    /**
+     * Constructor
+     * 
+     * @param string $msg  Success message ("Operation succesfull")
+     */
     public function __construct($msg = null)
     {
         $content = new ParameterBag();
