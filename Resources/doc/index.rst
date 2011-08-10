@@ -8,21 +8,10 @@ ExtJS 4: http://docs.sencha.com/ext-js/4-0/
 
 Bundle is highly customized https://github.com/oaugustus/DirectBundle fork.
 
-Requirements
-------------
-FOSUserBundle is required because of default 403 redirecting to login page
-
 Installing
 ----------
 
-The best way to install ExtJSBundle into your project is add it as a git submodule.
-To do it, in the terminal, go to your main  Symfony2 application directory
-(e.g. /home/htdocs/symfony-sandbox or c:\\wamp\\www\\symfony-sandbox) and run:
-
-::
-
-    # add ExtJSBundle as a git submodule into your project
-    $ git submodule add git://github.com/hatimeria/HatimeriaExtJSBundle.git vendor/Hatimeria/ExtJSBundle
+Follow symfony istructions to add bundle source code from github (use deps)
 
 Register the Hatimeria namespace into your autoloader
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,13 +60,14 @@ How to use
 Optionally configure singin route
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
+
     // app/config/config.yml
     hatimeria_ext_js:
       signin_route: fos_user_security_login
 
 If direct request got 403 response code it will redirect user to login page
 
-Add the ExtDirect API into your page
+Add Javascript files to your layout
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you is using Twig engine, only add the follow line in your views page at the
@@ -126,7 +116,7 @@ Expose your controller methods to ExtDirect Api
         */
         public function successAction($params)
         {
-            // processing with return statement will generate direct success response
+            // processing without return statement will generate direct success response
         }
 
        /*
@@ -154,6 +144,8 @@ Expose your controller methods to ExtDirect Api
         */
         public function validationAction($params)
         {
+            // fetch entity, make same changes based on received params from extjs
+
             $errors = $validator->validate($entity);
         
             return ValidationResponse($errors);
