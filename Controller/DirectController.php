@@ -20,16 +20,18 @@ class DirectController extends Controller
         // instantiate the api object
         $api = new Api($this->container);
         
-        // @todo optional - if fos is not installed it will break this bundle
-        $url = $this->container->get('router')->generate('fos_user_security_login');
-        
         $response = sprintf("Ext.Direct.addProvider(%s);", $api);
         $response .= sprintf("
             Ext.ns('App.Direct'); 
-            App.Direct.signinUrl = '%s';
             App.Direct.environment = '%s';
-            ", $url, $this->container->getParameter("kernel.environment"));
+            ", $this->container->getParameter("kernel.environment"));
+
+        $signinRoute = $this->container->getParameter('hatimeria_ext_js.signin_route');
         
+        if($signinRoute) {
+            $signinUrl = $this->container->get('router')->generate($signinRoute);
+            $response.= sprintf("App.Direct.signinUrl = '%s'", $signinUrl);
+        }
         $r = new Response($response);
         $r->headers->set("Content-Type","text/javascript");
         

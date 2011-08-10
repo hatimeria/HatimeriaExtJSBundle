@@ -5,6 +5,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Definition\Processor;
 
 class HatimeriaExtJSExtension extends Extension
 {
@@ -16,13 +17,18 @@ class HatimeriaExtJSExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $processor     = new Processor();
+        $configuration = new Configuration();
+        
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('direct.xml');
-
+        
         foreach ($configs as $config) {
             $this->registerApiConfiguration($config, $container);
         }
-        
+
+        $config = $processor->processConfiguration($configuration, $configs);
+        $this->updateParameters($config, $container, 'hatimeria_ext_js.');
     }
 
     /**
@@ -56,7 +62,6 @@ class HatimeriaExtJSExtension extends Extension
         if (isset($config['api']['form_attribute'])) {
             $container->setParameter('direct.api.form_attribute', $config['api']['form_attribute']);
         }
-
     }
 
     /**
@@ -73,4 +78,16 @@ class HatimeriaExtJSExtension extends Extension
     {
         return 'extjs';
     }
+    
+    public function updateParameters($config, ContainerBuilder $container, $ns = '')
+    {
+        foreach ($config as $key => $value)
+        {
+            if (is_array($value)) {
+                $this->updateParameters($value, $container, $ns . $key . '.');
+            } else {
+                $container->setParameter($ns . $key, $value);
+            }
+        }
+    }    
 }

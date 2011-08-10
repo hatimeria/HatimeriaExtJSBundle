@@ -39,7 +39,11 @@ Ext.Direct.on('event', function(response) {
             }
             break;
         case 403:
-            window.location = App.signinUrl;
+            if(App.Direct.signinUrl) {
+                window.location = App.Direct.signinUrl;
+            } else {
+                new App.Direct.UserErrorMessage({html: "Access forbidden error"});
+            }
             break;
     }
 });
