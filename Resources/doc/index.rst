@@ -98,6 +98,11 @@ Expose your controller methods to ExtDirect Api
     // ...
     namespace Hatimeria\HelloBundle\Controller;
 
+    use Hatimeria\ExtJSBundle\Response\Failure;
+    use Hatimeria\ExtJSBundle\Response\Success;
+    use Hatimeria\ExtJSBundle\Validation\FormResponse;
+    use Hatimeria\ExtJSBundle\Validation\ValidationResponse;
+
     class TestController extends Controller
     {
        /*
@@ -110,6 +115,48 @@ Expose your controller methods to ExtDirect Api
         public function indexAction($params)
         {
             return 'Hello '.$params['name'];
+        }
+
+       /*
+        * Single exposed method with no custom response
+        *
+        * @remote    // this annotation expose the method to API
+        * @param  ParameterBag $params
+        * @return string
+        */
+        public function successAction($params)
+        {
+            // processing with return statement will generate direct success response
+        }
+
+       /*
+        * Single exposed method with fail or success message
+        *
+        * @remote    // this annotation expose the method to API
+        * @param  ParameterBag $params
+        * @return string
+        */
+        public function simpleAction($params)
+        {
+            if(some_condition) {
+                return Success;
+            } else {
+                return Failure;
+            }
+        }
+
+       /*
+        * Validation on entity
+        *
+        * @remote    // this annotation expose the method to API
+        * @param  ParameterBag $params
+        * @return string
+        */
+        public function validationAction($params)
+        {
+            $errors = $validator->validate($entity);
+        
+            return ValidationResponse($errors);
         }
 
        /*
@@ -149,7 +196,7 @@ Expose your controller methods to ExtDirect Api
         {
             // your proccessing
 
-            // Automatic response base on validation result, error list or clean succes message
+            // Automatic response based on validation result, error list or clean succes message
             return FormResponse($form);
         }
     }
