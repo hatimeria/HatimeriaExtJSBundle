@@ -17,8 +17,7 @@ class DirectController extends Controller
      */
     public function getApiAction()
     {
-        // instantiate the api object
-        $api = new Api($this->container);
+        $api = new Api($this->container, $this->get('request'));
         
         $response = sprintf("Ext.Direct.addProvider(%s);", $api);
         $response .= sprintf("
@@ -45,7 +44,6 @@ class DirectController extends Controller
      */
     public function routeAction()
     {
-        // instantiate the router object
         $router  = new Router($this->container);
         $request = $router->getRequest();
         $content = $router->route();

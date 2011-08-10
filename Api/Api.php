@@ -21,9 +21,10 @@ class Api
     /**
      * Initialize the API.
      */
-    public function __construct($container)
+    public function __construct($container, $request)
     {
         $this->container = $container;
+        $this->request   = $request;
 
         if ($container->get('kernel')->isDebug()) {
             $this->api = json_encode($this->createApi());
@@ -66,7 +67,7 @@ class Api
         }
 
         return array(
-            'url' => $this->container->get('request')->getBaseUrl().
+            'url' => $this->request->getBaseUrl().
                      $this->container->getParameter('direct.api.route_pattern'),
             'type' => $this->container->getParameter('direct.api.type'),
             'namespace' => $this->container->getParameter('direct.api.namespace'),

@@ -13,8 +13,9 @@ class ApiTest extends WebTestCase
     public function test__toString()
     {
         $client = $this->createClient();
-        $api = new Api($client->getContainer());
-        
+        $client->request('GET','/');
+        $api    = new Api($client->getContainer(), $client->getRequest());
+
         $this->assertRegExp('/Actions/', $api->__toString());
     }
 }

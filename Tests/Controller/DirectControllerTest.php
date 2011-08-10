@@ -12,12 +12,10 @@ class DirectControllerTest extends WebTestCase
      */
     public function testGetApi()
     {
-        $client = $this->createClient();
-
+        $client  = $this->createClient();
         $crawler = $client->request('GET', '/api.js');
+        $js      = $client->getResponse()->getContent();
         
-        $js = $client->getResponse()->getContent();
-        
-        $this->assertTrue(strpos($js, 'Ext.Direct') === 0);
+        $this->assertRegexp('/Ext\.Direct/', $js);
     }
 }
