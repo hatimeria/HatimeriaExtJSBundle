@@ -9,10 +9,12 @@ use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
 use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
+use Hatimeria\ExtJSBundle\Util\Camelizer;
 use Closure;
 
 class Pager
 {
+
     private $entity, $em;
     /**
      * Parameters
@@ -32,38 +34,38 @@ class Pager
      * @var array
      */
     private $sortFunctions = array();
-    
+    private $fields = array();
     private $toStoreFunction = null;
-    
-    private $factory;
-    
+    private $camelizer;
+
     /**
      * Constructor.
      *
      * @param EntityManager           $em
      */
-    public function __construct(EntityManager $em, $params, $factory)
+    public function __construct(EntityManager $em, $params, $dumper, $camelizer)
     {
-        $this->em      = $em;
-        $this->params  = $params;
-        $this->factory = $factory;
+        $this->em        = $em;
+        $this->params    = $params;
+        $this->dumper    = $dumper;
+        $this->camelizer = $camelizer;
     }
-    
-    public function setEntityName($entity) 
+
+    public function setEntityName($entity)
     {
-        $this->entity  = $entity;        
-        $this->qb      = $this->em->createQueryBuilder();
+        $this->entity = $entity;
+        $this->qb = $this->em->createQueryBuilder();
         $this->qb->add('select', 'e');
         $this->qb->add('from', $this->entity . ' e');
-        
+
         return $this;
     }
-    
+
     public function addColumnAlias($column, $alias)
     {
         $this->mapping[$column] = $alias;
     }
-    
+
     public function setToStoreFunction($function)
     {
         $this->toStoreFunction = $function;
@@ -76,19 +78,17 @@ class Pager
     {
         return $this->qb;
     }
-    
+
     public function getParams()
     {
         return $this->params;
     }
-    
+
     private function addSort()
     {
         $sort = $this->params['sort'][0];
 
-        // change birthday_at to birthdayAt
-        // @todo move to util class
-        $column = lcfirst(preg_replace('/(^|_|-)+(.)/e', "strtoupper('\\2')", $sort['property']));
+        $column = $this->camelizer->camelize($sort['property']);
 
         if (isset($this->sortFunctions[$column])) {
             return $this->sortFunctions[$column]($this->qb, $sort['direction']);
@@ -97,9 +97,8 @@ class Pager
             $column = $this->mapping[$column];
         }
 
-        $this->qb->add('orderBy', 'e.' . $column . ' ' . $sort['direction']);        
+        $this->qb->add('orderBy', 'e.' . $column . ' ' . $sort['direction']);
     }
-
 
     public function setSortFunction($column, $function)
     {
@@ -109,9 +108,16 @@ class Pager
     public function setQueryBuilder(QueryBuilder $qb)
     {
         $this->qb = $qb;
-        
+
         return $this;
-    }    
+    }
+
+    public function fields(array $fields)
+    {
+        $this->fields = $fields;
+
+        return $this;
+    }
 
     /**
      * Paginated resultset in ext direct format
@@ -126,19 +132,49 @@ class Pager
             $this->addSort();
         }
 
-        $limit = $this->params->getInt('limit', 10);
+        $this->limit = $this->params->getInt('limit', 10);
 
         if ($this->params->has('page')) {
-            $offset = ($this->params->get('page') - 1) * $limit;
+            $offset = ($this->params->get('page') - 1) * $this->limit;
         } else {
             $offset = 0;
         }
 
         $query = $this->qb->getQuery();
-        $count = Paginate::getTotalQueryResults($query);
-        $paginateQuery = Paginate::getPaginateQuery($query, $offset, $limit);
-        $entities = $paginateQuery->getResult();
+        $this->count = Paginate::getTotalQueryResults($query);
+        $paginateQuery = Paginate::getPaginateQuery($query, $offset, $this->limit);
+        $this->entities = $paginateQuery->getResult();
 
-        return $this->factory->collectionToArray($entities, $count, $limit, $this->toStoreFunction);
+        return $this->dumper->dumpPager($this);
+    }
+    
+    public function hasFields()
+    {
+        return count($this->fields) > 0;
+    }
+    
+    public function getFields()
+    {
+        return $this->fields;
+    }
+    
+    public function getToStoreFunction()
+    {
+        return $this->toStoreFunction;
+    }
+    
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+    
+    public function getCount()
+    {
+        return $this->count;
+    }
+    
+    public function getEntities()
+    {
+        return $this->entities;
     }
 }

@@ -13,9 +13,16 @@
         <parameter key="direct.api.form_attribute">@form</parameter>
     </parameters>
     <services>
-        <service id="hatimeria_extjs.pager" class="Hatimeria\ExtJSBundle\Doctrine\PagerFactory">
+        <service id="hatimeria_extjs.dumper" class="Hatimeria\ExtJSBundle\Doctrine\Dumper">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="security.context" />
+            <argument type="service" id="hatimeria_extjs.camelizer" />
         </service>
+        <service id="hatimeria_extjs.pager" class="Hatimeria\ExtJSBundle\Doctrine\PagerFactory">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="hatimeria_extjs.dumper" />
+            <argument type="service" id="hatimeria_extjs.camelizer" />
+        </service>
+        <service id="hatimeria_extjs.camelizer" class="Hatimeria\ExtJSBundle\Util\Camelizer"/>
     </services>
 </container>
