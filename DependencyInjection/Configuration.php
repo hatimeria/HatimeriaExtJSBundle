@@ -19,6 +19,14 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->arrayNode("mappings")
+                    ->prototype("array")
+                    ->useAttributeAsKey('class')
+                        ->children()
+                            ->arrayNode('fields')->prototype('scalar')->end()->end()
+                        ->end()
+                    ->end()
+                ->end()
                 ->scalarNode('signin_route')->defaultFalse()->cannotBeEmpty()->end()
             ->end();
 

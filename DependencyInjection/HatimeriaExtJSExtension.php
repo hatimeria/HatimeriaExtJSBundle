@@ -81,6 +81,9 @@ class HatimeriaExtJSExtension extends Extension
     
     public function updateParameters($config, ContainerBuilder $container, $ns = '')
     {
+        var_dump($config['mappings']);
+        die();
+        
         foreach ($config as $key => $value)
         {
             if (is_array($value)) {
