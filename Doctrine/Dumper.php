@@ -63,7 +63,22 @@ class Dumper
     {
         return isset($this->mappings[$entityName]);
     }
-
+    
+    public function dumpObject($object, $fields = array())
+    {
+        $class = $this->getClass($object);
+        
+        if($this->hasMapping($class)) {
+            return $this->getValues($object, $fields);
+        } else {
+            if(is_callable(array($object, 'toArray'))) {
+                return $object->toArray();
+            }
+        }
+        
+        throw new ExtJSException(sprintf("No mapping information or object method toArray exists for %s", $class));
+    }
+    
     private function getMappingFields($entityName)
     {
         return $this->mappings[$entityName]['fields']['default'];

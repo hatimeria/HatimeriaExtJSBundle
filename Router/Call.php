@@ -111,10 +111,6 @@ class Call
      */
     public function getResponse($result)
     {
-        if(!is_array($result) && is_callable(array($result, 'toArray'))) {
-            $result = $result->toArray();
-        }
-        
         return array(
           'type' => 'rpc',
           'tid' => $this->tid,
