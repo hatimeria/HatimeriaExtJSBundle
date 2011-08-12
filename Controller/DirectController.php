@@ -60,4 +60,5 @@ class DirectController extends Controller
         
         return $r;
     }
+    
 }

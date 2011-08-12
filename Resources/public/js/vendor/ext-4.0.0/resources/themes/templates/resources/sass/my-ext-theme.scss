@@ -1,0 +1,139 @@
+// Unless you want to include all components, you must set $include-default to false
+// IF you set this to true, you can also remove lines 10 to 38 of this file
+$include-default: false;
+
+// Insert your custom variables here.
+$base-color: #FFFFFF;
+
+//_window
+$window-header-font-size: 18px;
+$window-header-color: #cccccc;
+$window-header-background-gradient: color-stops(#929292, #070707);
+$window-header-background-color: #cccccc;
+$window-header-text-height: 40px;
+$window-header-padding: 0px 5px 0px 15px;
+$window-border-radius: 0px;
+$window-border-width: 0px;
+
+$window-body-border-width: 0px 10px 10px;
+$window-body-border-color: #999999;
+
+
+//_tabs
+$tab-base-color: #333333;
+$tabbar-strip-border-color:#ffcc00;
+$tabbar-strip-height: 10px;
+$tabbar-strip-background-color:#ffcc00;
+
+
+$tab-base-color-active: #ffcc00;
+$tab-base-color-over: #ffcc00;
+
+$tab-color: #ffffff;
+$tab-color-active: #000000;
+$tab-color-over: #000000;
+$tab-height: 30px;
+$tab-button-a-height: 30px;
+$tab-inner-border: false;
+
+$tab-top-border-radius: 0px;
+$tab-top-border-width: 0px;
+$tab-top-inner-border-width: 0px;
+
+$tab-spacing: 5px;
+
+$tab-background-gradient: null;
+$tab-background-gradient-over: null;
+$tab-background-gradient-active: null;
+$tab-background-gradient-disabled: null;
+$tab-enable-radius-pictures: false;
+
+//_tabbar
+$tabbar-top-body-border-width: 0px;
+
+//_core
+$font-family: arial,verdana,sans-serif;
+
+//_panel
+$panel-header-line-height: 40px;
+$panel-header-font-size: 18px;
+$panel-header-background-gradient: color-stops(#929292, #070707);
+$panel-header-color: #cccccc;
+$panel-header-font-weight: normal;
+$panel-header-padding: 0px 5px 0px 5px;
+$panel-header-framed-padding: 0px 5px 0px 5px;
+$panel-body-border-width: 0px 0px 0px 1px;
+$tool-size: 20px;
+
+
+//_menu
+$menu-background-color: none;
+$menu-text-color: #cccccc;
+$menu-text-font-size: 12px;
+$menu-text-font-family: arial;
+$menu-separator-display: none;
+$menu-padding:0px;
+$menu-item-active-background-image: none;
+$menu-item-active-background-color: #ffcc00;
+$menu-item-height: 36px;
+$menu-item-link-height: 36px;
+$menu-item-link-padding: 5px 0 0 0;
+$menu-item-active-color: #000000 !default;
+$menu-item-margin-bottom: 3px;
+$menu-item-background-color: #333333;
+
+
+//additional styles for custom cls component classes
+
+
+//class needed by tab panels to force border param
+.user-window-center-tab-panel-content
+{
+	border:10px solid #ffcc00 !important;
+	border-top:0px !important;
+}
+
+
+
+@import 'ext4/default/all';
+
+// You may remove any of the following modules that you
+// do not use in order to create a smaller css file.
+@include extjs-boundlist;
+@include extjs-button;
+@include extjs-btn-group;
+@include extjs-datepicker;
+@include extjs-colorpicker;
+@include extjs-menu;
+@include extjs-grid;
+@include extjs-form;
+    @include extjs-form-field;
+    @include extjs-form-fieldset;
+    @include extjs-form-checkboxfield;
+    @include extjs-form-checkboxgroup;
+    @include extjs-form-triggerfield;
+    @include extjs-form-htmleditor;
+@include extjs-panel;
+@include extjs-qtip;
+@include extjs-slider;
+@include extjs-progress;
+@include extjs-toolbar;
+@include extjs-window;
+@include extjs-messagebox;
+@include extjs-tabbar;
+@include extjs-tab;
+@include extjs-tree;
+@include extjs-drawcomponent;
+@include extjs-viewport;
+
+
+
+
+// This line changes the location of your images when creating UIs to be relative instead of within the ExtJS directory.
+// You MUST set this to true/string value if you are creating new UIs + supporting legacy browsers.
+// This only applies to new UIs. It does not apply to default component images (i.e. when changing $base-color)
+// The value can either be true, in which case the image path will be "../images/"
+// or a string, of where the path is
+$relative-image-path-for-uis: true; // defaults to "../images/" when true
+
+

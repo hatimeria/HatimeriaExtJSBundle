@@ -19,9 +19,10 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+                ->scalarNode('javascript_mode')->defaultValue("normal")->end()
                 ->arrayNode("mappings")
+                ->useAttributeAsKey('id')
                     ->prototype("array")
-                    ->useAttributeAsKey('class')
                         ->children()
                             ->arrayNode('fields')->prototype('scalar')->end()->end()
                         ->end()

@@ -4,6 +4,7 @@ namespace Hatimeria\ExtJSBundle\Doctrine;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use \DateTime;
+use Hatimeria\ExtJSBundle\Exception\ExtJSException;
 
 /**
  * Collection or Pager to Array conversion
@@ -17,12 +18,14 @@ class Dumper
     private $camelizer;
     private $reflections;
     private $accessMethods;
+    private $mappings;
 
-    public function __construct($em, $security, $camelizer)
+    public function __construct($em, $security, $camelizer, $mappings)
     {
         $this->isAdmin = $security->getToken() ? $security->isGranted('ROLE_ADMIN') : false;
         $this->em = $em;
         $this->camelizer = $camelizer;
+        $this->mappings  = $mappings;
     }
 
     /**
@@ -261,9 +264,16 @@ class Dumper
                     }
                     
                     $value = $records;
+                } else {
+                    
+                    $class = get_class($value);
+                    
+                    if(isset($this->mappings[$class])) {
+                        $value = $this->getValues($value, $this->mappings[$class]['fields']);
+                    } else {
+                        throw new ExtJSException(sprintf("Unknown object: %s", $class));
+                    }
                 }
-                
-                throw new ExtJSException(sprintf("Unknown object: %s", get_class($value)));
             }
 
             $values[$fieldName] = $value;

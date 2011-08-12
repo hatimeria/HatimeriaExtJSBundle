@@ -9,6 +9,8 @@ use Symfony\Component\Config\Definition\Processor;
 
 class HatimeriaExtJSExtension extends Extension
 {
+    const CONFIG_NAMESPACE = "hatimeria_ext_js";
+    
     /**
      * Loads the Direct configuration.
      *
@@ -28,7 +30,14 @@ class HatimeriaExtJSExtension extends Extension
         }
 
         $config = $processor->processConfiguration($configuration, $configs);
-        $this->updateParameters($config, $container, 'hatimeria_ext_js.');
+        $this->updateParameters($config, $container);
+        $this->setMainFilename($container, $config);
+    }
+    
+    private function setMainFilename($container, $config)
+    {
+        $filenames = array('normal' => 'ext-all', 'debug' => 'ext-all-debug', 'debug-comments' => 'ext-all-debug-w-comments');
+        $this->setParameter($container, 'js_filename', $filenames[$config['javascript_mode']]);  
     }
 
     /**
@@ -79,18 +88,16 @@ class HatimeriaExtJSExtension extends Extension
         return 'extjs';
     }
     
-    public function updateParameters($config, ContainerBuilder $container, $ns = '')
+    private function setParameter($container, $key, $value) 
     {
-        var_dump($config['mappings']);
-        die();
-        
+        $container->setParameter(self::CONFIG_NAMESPACE.'.'.$key, $value);
+    }
+    
+    public function updateParameters($config, ContainerBuilder $container)
+    {
         foreach ($config as $key => $value)
         {
-            if (is_array($value)) {
-                $this->updateParameters($value, $container, $ns . $key . '.');
-            } else {
-                $container->setParameter($ns . $key, $value);
-            }
+            $this->setParameter($container, $key, $value);
         }
     }    
 }
