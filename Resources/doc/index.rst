@@ -57,28 +57,27 @@ Register ExtJSBundle route into your route config
 How to use
 ----------
 
-Optionally configure singin route
+Configuration reference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ::
 
     // app/config/config.yml
     hatimeria_ext_js:
+      # If direct request got 403 response code it will redirect user to login page
       signin_route: fos_user_security_login
+      javascript_mode: debug # debug | debug-comments | normal - which extjs main file is included
+      # nested objects mapping - documentation in progress
+      mappings:   
+        Example\Example\Entity\Example:
+            fields: [id, name, slug]
 
-If direct request got 403 response code it will redirect user to login page
+
 
 Add Javascript files to your layout
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-If you is using Twig engine, only add the follow line in your views page at the
-script section:
-api - dynamic js file which contains list of available backend actions
-direct-api-handler - handle backend errors (show nice error message to user or profiler output to developer)
-
-::
-
-    <script type="text/javascript" src="{{ url('api')}}"></script>
-    <script type="text/javascript" src="/bundles/hatimeriaextjs/js/direct-api-handler.js"></script>
+In your app layout:
+{% render "HatimeriaExtJSBundle:Default:javascripts" %}
 
 Expose your controller methods to ExtDirect Api
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
