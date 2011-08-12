@@ -50,7 +50,7 @@ class Pager
         $this->dumper    = $dumper;
         $this->camelizer = $camelizer;
     }
-
+    
     public function setEntityName($entity)
     {
         $this->entity = $entity;
@@ -59,6 +59,11 @@ class Pager
         $this->qb->add('from', $this->entity . ' e');
 
         return $this;
+    }
+    
+    public function getEntityName()
+    {
+        return $this->entity;
     }
 
     public function addColumnAlias($column, $alias)
@@ -69,6 +74,11 @@ class Pager
     public function setToStoreFunction($function)
     {
         $this->toStoreFunction = $function;
+    }
+    
+    public function hasToStoreFunction()
+    {
+        return $this->toStoreFunction !== null;
     }
 
     /**

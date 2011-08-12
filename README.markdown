@@ -2,7 +2,8 @@
 
 #HatimeriaExtJSBundle
 
-backend implementation for ExtJS 4 and lot more.
+Symfony and ExtJS RAD Environment for fun and profit
+Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or user switch interface (not all availible yet)
 
 ##Changelog
 
@@ -22,6 +23,7 @@ backend implementation for ExtJS 4 and lot more.
 * Example grid, admin panel, form
 * Include user switch for admin
 * CRUD 
+* Quick start guide
 
 For documentation, see:
 

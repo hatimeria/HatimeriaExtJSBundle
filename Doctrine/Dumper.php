@@ -13,11 +13,42 @@ use Hatimeria\ExtJSBundle\Exception\ExtJSException;
  */
 class Dumper
 {
+
     private $em;
+
+    /**
+     * Signed user is an admin ?
+     *
+     * @var bool
+     */
     private $isAdmin;
+
+    /**
+     * Camelizer
+     *
+     * @var Camelizer
+     */
     private $camelizer;
+
+    /**
+     * Reflection class objects
+     *
+     * @var array of \ReflectionClass Objects
+     */
     private $reflections;
+
+    /**
+     * Map of access methods for object and property (getter, isser or property)
+     *
+     * @var array
+     */
     private $accessMethods;
+
+    /**
+     * Configured mappings for classes
+     *
+     * @var array
+     */
     private $mappings;
 
     public function __construct($em, $security, $camelizer, $mappings)
@@ -25,34 +56,29 @@ class Dumper
         $this->isAdmin = $security->getToken() ? $security->isGranted('ROLE_ADMIN') : false;
         $this->em = $em;
         $this->camelizer = $camelizer;
-        $this->mappings  = $mappings;
+        $this->mappings = $mappings;
     }
 
-    /**
-     * Which function use to dump every object in collection
-     * Use admin method if he is signed in or default to store method
-     * 
-     * @param Object $entity
-     */
-    private function getEntityToStoreFunction($object)
+    private function hasMapping($entityName)
     {
-        $adminMethod = 'toAdminStoreArray';
-        $defaultMethod = 'toStoreArray';
+        return isset($this->mappings[$entityName]);
+    }
 
-        // admin dumper method has precedence
-        if ($this->isAdmin && is_callable(array($object, $adminMethod))) {
-            $method = $adminMethod;
-        } else {
-            if (!is_callable(array($object, $defaultMethod))) {
-                throw new ExtJSException(
-                        sprintf("method %s in %s entity class doesn't exists", $defaultMethod, get_class($object)));
-            }
+    private function getMappingFields($entityName)
+    {
+        return $this->mappings[$entityName]['fields']['default'];
+    }
+    
+    public function getObjectMappingFields($object)
+    {
+        $class = $this->getClass($entity);
 
-            $method = $defaultMethod;
+        if (!$this->hasMapping($class)) {
+            throw new ExtJSException(sprintf("No dumper method for: %s", $class));
         }
 
-        return function($object) use($method) { return $object->$method(); };
-    }
+        return $this->getMappingFields($class);
+    }    
 
     /**
      * Convert array or array collection to ext js array used for store source
@@ -65,20 +91,21 @@ class Dumper
      */
     public function dumpPager(Pager $pager)
     {
-        $time_start = microtime(true);
-        if ($pager->hasFields()) {
-
+        if ($pager->hasToStoreFunction()) {
+            return $this->dump($pager->getEntities(), $pager->getCount(), $pager->getLimit(), $pager->getToStoreFunction());
+        } elseif ($pager->hasFields() || $this->hasMapping($pager->getEntityName())) {
             $fields = $pager->getFields();
             $records = array();
 
             foreach ($pager->getEntities() as $entity) {
                 $records[] = $this->getValues($entity, $fields);
             }
-            
-            return $this->getResult($records, $pager->getCount(), $pager->getLimit());
-        } 
 
-        return $this->dump($pager->getEntities(), $pager->getCount(), $pager->getLimit(), $pager->getToStoreFunction());
+            return $this->getResult($records, $pager->getCount(), $pager->getLimit());
+        }
+        
+        throw new ExtJSException(sprintf(
+                        "No toStoreFunction given or mappings configured for entity %s", $pager->getEntityName()));
     }
 
     /**
@@ -108,16 +135,9 @@ class Dumper
         $records = array();
 
         if (!empty($entities)) {
-            $hasCustomDumper = null !== $toStoreFunction;
-
-            if ($hasCustomDumper) {
-                $dumper = $toStoreFunction;
-            } else {
-                $dumper = $this->getEntityToStoreFunction($entities[0]);
-            }
 
             foreach ($entities as $entity) {
-                $records[] = $dumper($entity);
+                $records[] = $toStoreFunction($entity);
             }
         }
 
@@ -239,6 +259,15 @@ class Dumper
         return $this->getPropertyValue($object, $path);
     }
 
+    private function getClass($entity)
+    {
+        if ($entity instanceof \Doctrine\ORM\Proxy\Proxy) {
+            return get_parent_class($entity);
+        } else {
+            return get_class($entity);
+        }
+    }
+
     /**
      * Object values for list of properties (fields)
      *
@@ -246,37 +275,34 @@ class Dumper
      * @param array $fields
      * @return array
      */
-    public function getValues($entity, $fields)
+    public function getValues($entity, $fields = array())
     {
         $values = array();
 
-        foreach ($fields as $fieldName) {
-            $value = $this->getPathValue($entity, $fieldName);
+        if (count($fields) == 0) {
+            $fields = $this->getObjectMappingFields($entity);
+        }
+
+        foreach ($fields as $path) {
+            $value = $this->getPathValue($entity, $path);
 
             if (is_object($value)) {
                 if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d');
                 } else if ($value instanceof Doctrine\Common\Collections\ArrayCollection) {
                     $records = array();
-                    
-                    foreach($value as $entity) {
-                        $records[] = $entity->toArray();
+
+                    foreach ($value as $entity) {
+                        $records[] = $this->getValues($value);
                     }
-                    
+
                     $value = $records;
                 } else {
-                    
-                    $class = get_class($value);
-                    
-                    if(isset($this->mappings[$class])) {
-                        $value = $this->getValues($value, $this->mappings[$class]['fields']);
-                    } else {
-                        throw new ExtJSException(sprintf("Unknown object: %s", $class));
-                    }
+                    $value = $this->getValues($value);
                 }
             }
 
-            $values[$fieldName] = $value;
+            $values[$path] = $value;
         }
 
         return $values;

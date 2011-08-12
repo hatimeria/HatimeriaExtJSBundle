@@ -163,6 +163,9 @@ Expose your controller methods to ExtDirect Api
             $pager = $this->get('hatimeria_extjs.pager')->create('ExampleCompany\ExampleBundle\Entity\Example', $params);
             // use for sorting - map extjs column name to real entity column name
             $pager->addColumnAlias('createdAt.date', 'createdAt');
+
+            // this function is called on every record found to make it accesible for json formatter
+            $pager->setToStoreFunction(function($entity) { $entity->toStoreArray() });
             
             $qb = $pager->getQueryBuilder();
 
