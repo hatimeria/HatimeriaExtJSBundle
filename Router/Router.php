@@ -93,9 +93,9 @@ class Router
                 $controllerReturn = new Success();
             }
             
-            if(is_object($result)) {
-                $result = $this->container->get('hatimeria_extjs.dumper')->dumpObject($result);
-            }
+            if(is_object($controllerReturn)) {
+                $controllerReturn = $this->container->get('hatimeria_extjs.dumper')->dumpObject($controllerReturn);
+            } 
             
             $result = $call->getResponse($controllerReturn);
         }

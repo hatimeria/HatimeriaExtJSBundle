@@ -108,19 +108,16 @@ class Dumper
     {
         if ($pager->hasToStoreFunction()) {
             return $this->dump($pager->getEntities(), $pager->getCount(), $pager->getLimit(), $pager->getToStoreFunction());
-        } elseif ($pager->hasFields() || $this->hasMapping($pager->getEntityName())) {
-            $fields = $pager->getFields();
-            $records = array();
-
-            foreach ($pager->getEntities() as $entity) {
-                $records[] = $this->getValues($entity, $fields);
-            }
-
-            return $this->getResult($records, $pager->getCount(), $pager->getLimit());
-        }
+        } 
         
-        throw new ExtJSException(sprintf(
-                        "No toStoreFunction given or mappings configured for entity %s", $pager->getEntityName()));
+        $fields = $pager->getFields();
+        $records = array();
+
+        foreach ($pager->getEntities() as $entity) {
+            $records[] = $this->getValues($entity, $fields);
+        }
+
+        return $this->getResult($records, $pager->getCount(), $pager->getLimit());
     }
 
     /**
