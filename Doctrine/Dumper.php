@@ -71,7 +71,7 @@ class Dumper
     
     public function getObjectMappingFields($object)
     {
-        $class = $this->getClass($entity);
+        $class = $this->getClass($object);
 
         if (!$this->hasMapping($class)) {
             throw new ExtJSException(sprintf("No dumper method for: %s", $class));
