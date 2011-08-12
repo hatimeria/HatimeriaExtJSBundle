@@ -68,8 +68,12 @@ Configuration reference
       javascript_mode: debug # debug | debug-comments | normal - which extjs main file is included
       # nested objects mapping - documentation in progress
       mappings:   
-        Example\Example\Entity\Example:
-            fields: [id, name, slug]
+        Example\Example\Entity\User:
+            fields: 
+              default: [id, username, profile] # profile is object of class Profile
+        Example\Example\Entity\Profile:
+            fields: 
+              default: [id, first_name, last_name]
 
 
 
@@ -165,6 +169,7 @@ Expose your controller methods to ExtDirect Api
             $pager->addColumnAlias('createdAt.date', 'createdAt');
 
             // this function is called on every record found to make it accesible for json formatter
+            // if not function is specified config mappings are used
             $pager->setToStoreFunction(function($entity) { $entity->toStoreArray() });
             
             $qb = $pager->getQueryBuilder();
@@ -206,6 +211,15 @@ Call the exposed methods from JavaScript
     Actions.Hello_Test.index({name: 'test'}, function(r){
        alert(r);
     });
+
+    // Show preview grid for list action
+    new Hatimeria.grid.Preview(
+        {
+            directFn: Actions.Hello_Test.list,
+            title: 'Example data grid',
+            headers: ['Header 1', 'Header 2']
+        }
+    );
 
 
 Finished

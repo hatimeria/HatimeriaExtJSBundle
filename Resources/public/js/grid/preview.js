@@ -1,5 +1,13 @@
 /* 
  * Preview grid dynamically created with data returned by directFn
+ * 
+ * @example new Hatimeria.grid.Preview(
+ *  {
+ *      directFn: Actions.Hello_Test.list,
+ *      title: 'Example data grid',
+ *      headers: ['Header 1', 'Header 2']
+ *  });
+ *  
  */
 
 Ext.ns("Hatimeria");
