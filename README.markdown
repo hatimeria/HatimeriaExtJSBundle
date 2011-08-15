@@ -2,16 +2,17 @@
 
 #HatimeriaExtJSBundle
 
-Symfony and ExtJS RAD Environment for fun and profit
-Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or user switch interface (not all availible yet)
+Symfony and ExtJS RAD Environment for fun and profit.
+
+Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or user switch interface.
 
 ##Changelog
 
 12.08.2011
 
-* Added mappings - without documentation
-* Configurable javascript_mode so you can change js type included in our your envs
-* Extjs javasripts and easy way to include all javascript in layout
+* Added object property mappings
+* Configurable javascript_mode so you can change js type included in our different environment (ext-all, ext-all-debug...)
+* Include all bundle javascripts in layout with just one twig line
 
 11.08.2011
 
