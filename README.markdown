@@ -6,6 +6,11 @@ Symfony and ExtJS RAD Environment for fun and profit.
 
 Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or user switch interface.
 
+## Full application
+
+This bundle is part of hatimeria CMF.
+[hatimeria - Symfony2 and ExtJS CMF](https://github.com/hatimeria/hatimeria)
+
 ## Credits
 
 Bundle is based on https://github.com/oaugustus/DirectBundle, created by Otavio Fernandes.
