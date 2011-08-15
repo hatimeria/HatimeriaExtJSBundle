@@ -219,6 +219,14 @@ In your app layout:
     );
 ```
 
+## Backend application
+
+Work is in progress.
+
+Example backend base on this bundle:
+
+![Example application screenshot](/https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/example.png)
+
 ### Finished
 
 Well, this all to ExtJSBundle work. Suggestions, bug reports and observations

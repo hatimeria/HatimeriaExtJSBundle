@@ -12,6 +12,10 @@ Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or u
 
 ## Changelog
 
+15.08.2011
+
+* User switch select component added
+
 12.08.2011
 
 * Added object property mappings
