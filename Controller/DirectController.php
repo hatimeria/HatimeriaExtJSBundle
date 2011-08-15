@@ -19,22 +19,30 @@ class DirectController extends Controller
     {
         $api = new Api($this->container, $this->get('request'));
         
+        
         $response = sprintf("Ext.Direct.addProvider(%s);", $api);
+        // @todo move aditional content to direct parameters class 
         $response .= sprintf("
             Ext.ns('App.Direct'); 
             App.Direct.environment = '%s';
             ", $this->container->getParameter("kernel.environment"));
 
+        $this->addSigninRoute($response);
+
+        $r = new Response($response);
+        $r->headers->set("Content-Type","text/javascript");
+        
+        return $r;
+    }
+    
+    private function addSigninRoute(&$response)
+    {
         $signinRoute = $this->container->getParameter('hatimeria_ext_js.signin_route');
         
         if($signinRoute) {
             $signinUrl = $this->container->get('router')->generate($signinRoute);
             $response.= sprintf("App.Direct.signinUrl = '%s'", $signinUrl);
         }
-        $r = new Response($response);
-        $r->headers->set("Content-Type","text/javascript");
-        
-        return $r;
     }
 
     /**

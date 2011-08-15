@@ -12,6 +12,11 @@ use Hatimeria\ExtJSBundle\DependencyInjection\HatimeriaExtJSExtension;
  */
 class DefaultController extends Controller
 {
+    /**
+     * All bundle html headers
+     *
+     * @return string
+     */
     public function javascriptsAction()
     {
         $path = $this->getParameter("js_filename");
@@ -23,6 +28,13 @@ class DefaultController extends Controller
                 ));
     }
     
+    /**
+     * Bundle parameter
+     *
+     * @param string $key
+     * 
+     * @return mixed
+     */
     private function getParameter($key)
     {
         return $this->container->getParameter(HatimeriaExtJSExtension::CONFIG_NAMESPACE.'.'.$key);

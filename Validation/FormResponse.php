@@ -3,8 +3,8 @@
 namespace Hatimeria\ExtJSBundle\Validation;
 
 use Symfony\Component\Form\FormError;
-use Symfony\Component\Validator\ConstraintViolationList;
 use Symfony\Component\Form\Form;
+use Symfony\Component\Validator\ConstraintViolationList;
 
 /**
  * Response representation for symfony processed form
@@ -32,7 +32,12 @@ class FormResponse extends ValidationResponse
         $this->form = $form;
     }
     
-    public function getFormatted($errors = null)
+    /**
+     * List of errors
+     *
+     * @return array field -> message
+     */
+    public function getFormatted()
     {
         // @todo children recursion
         $list = array();
@@ -50,6 +55,11 @@ class FormResponse extends ValidationResponse
         return $list;
     }    
     
+    /**
+     * Is form valid ?
+     *
+     * @return bool
+     */
     public function isValid()
     {
         return $this->form->isValid();

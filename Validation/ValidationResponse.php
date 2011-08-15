@@ -13,18 +13,30 @@ use Symfony\Component\Form\FormError;
  */
 class ValidationResponse
 {
+    /**
+     * Errors
+     *
+     * @var mixed
+     */
     private $errors;
     
     /**
      * New error list
      *
-     * @param mixed $mixed form or errors array
+     * @param mixed $errors form or errors array
      */
     public function __construct($errors)
     {
         $this->errors = $errors;
     }
     
+    /**
+     * List of errors
+     *
+     * @param array $errors
+     * 
+     * @return array
+     */
     public function getFormatted($errors = null)
     {
         if (null === $errors) {
@@ -53,7 +65,14 @@ class ValidationResponse
         
         return $list;
     }
-    
+
+    /**
+     * Validated property name
+     *
+     * @param Object $error
+     * 
+     * @return string
+     */
     public function getProperty($error)
     {
         $property = $error->getPropertyPath();
@@ -62,7 +81,6 @@ class ValidationResponse
             return $property;
         }
         
-        // constraint zwraca inaczej niz property validator
         $parameters = $error->getMessageParameters();
         
         if(isset($parameters['property'])) {
@@ -72,11 +90,21 @@ class ValidationResponse
         }
     }
     
+    /**
+     * Validation success or failure
+     *
+     * @return bool
+     */
     public function isValid()
     {
         return count($this->errors) === 0;
     }
     
+    /**
+     * Validation response
+     *
+     * @return array
+     */
     public function getContent()
     {
         $msg     = null;
@@ -89,6 +117,11 @@ class ValidationResponse
     	return array('success' => $isValid, 'msg' => $msg);
     }
     
+    /**
+     * Array representation
+     * 
+     * @return array
+     */
     public function toArray()
     {
         return $this->getContent();

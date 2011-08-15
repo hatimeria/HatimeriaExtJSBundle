@@ -3,9 +3,9 @@
 namespace Hatimeria\ExtJSBundle\Util;
 
 /**
- * Description of Camelizer
+ * Change birthday_at to birthdayAt
  *
- * @author michal
+ * @author Michal Wujas
  */
 class Camelizer
 {

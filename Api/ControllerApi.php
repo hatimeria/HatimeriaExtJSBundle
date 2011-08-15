@@ -2,6 +2,8 @@
 
 namespace Hatimeria\ExtJSBundle\Api;
 
+use Hatimeria\ExtJSBundle\Exception\ExtJSException;
+
 class ControllerApi
 {
     /**
@@ -36,7 +38,7 @@ class ControllerApi
         try {
             $this->reflection = new \ReflectionClass($controller);
         } catch (Exception $e) {
-            // @todo: throw an exception
+            throw new ExtJSException(sprintf("Reflection creation failed for %s with message: ", $controller, $e->getMessage()));
         }
         
         $this->container = $container;
@@ -116,7 +118,7 @@ class ControllerApi
 
             if ($isRemote) {
                 $api['name'] = str_replace('Action','',$method->getName());
-                $api['len'] = 1;//$method->getNumberOfParameters();
+                $api['len'] = 1;
 
                 if(!!preg_match('/' . $this->formAttribute . '/', $doc)) {
                     $api['formHandler'] = true;
