@@ -8,10 +8,13 @@ Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or u
 ##Changelog
 
 12.08.2011
+
 * Added mappings - without documentation
 * Configurable javascript_mode so you can change js type included in our your envs
 * Extjs javasripts and easy way to include all javascript in layout
+
 11.08.2011
+
 * Configurable signin_route, for FosUserBundle set it to fos_user_security_login
 
 ##Todo
