@@ -5,8 +5,6 @@ framework.
 
 [ExtJS 4 documentation](http://docs.sencha.com/ext-js/4-0/)
 
-Bundle is highly customized https://github.com/oaugustus/DirectBundle fork.
-
 ## Installing
 
 Follow symfony instructions to add bundle source code from github (use deps)

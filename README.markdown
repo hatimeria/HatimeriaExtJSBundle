@@ -6,6 +6,11 @@ Symfony and ExtJS RAD Environment for fun and profit.
 
 Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or user switch interface.
 
+## Credits
+
+Bundle is based on https://github.com/oaugustus/DirectBundle, created by Otavio Fernandes.
+Now it is maintaned by Hatimeria company.
+
 ## Documentation
 
 [Read the documentation](https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/index.md)
