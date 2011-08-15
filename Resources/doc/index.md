@@ -9,7 +9,7 @@ Bundle is highly customized https://github.com/oaugustus/DirectBundle fork.
 
 ## Installing
 
-Follow symfony istructions to add bundle source code from github (use deps)
+Follow symfony instructions to add bundle source code from github (use deps)
 
 ### Configure autoloader
 
@@ -221,5 +221,5 @@ In your app layout:
 
 ### Finished
 
-Well, this all to ExtJSBundle work. Suggestions, bug reports and observations
+Well, this all to HatimeriaExtJSBundle work. Suggestions, bug reports and observations
 are wellcome.
