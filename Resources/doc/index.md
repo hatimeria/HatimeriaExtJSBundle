@@ -50,7 +50,7 @@ Follow symfony istructions to add bundle source code from github (use deps)
     # ... your other routes here
     direct:
         resource: "@HatimeriaExtJSBundle/Resources/config/routing.yml"
-
+```
 
 ## How to use
 
@@ -74,10 +74,10 @@ Follow symfony istructions to add bundle source code from github (use deps)
 
 ```
 
-### Add Javascript files to your layout
+### Add bundle headers to your layout
 
 In your app layout:
-{% render "HatimeriaExtJSBundle:Default:javascripts" %}
+{% render "HatimeriaExtJSBundle:Default:headers" %}
 
 ### Expose your controller methods to ExtDirect Api
 
@@ -88,8 +88,8 @@ In your app layout:
 
     use Hatimeria\ExtJSBundle\Response\Failure;
     use Hatimeria\ExtJSBundle\Response\Success;
-    use Hatimeria\ExtJSBundle\Validation\FormResponse;
-    use Hatimeria\ExtJSBundle\Validation\ValidationResponse;
+    use Hatimeria\ExtJSBundle\Response\Form;
+    use Hatimeria\ExtJSBundle\Response\Validation;
 
     class TestController extends Controller
     {
@@ -138,7 +138,8 @@ In your app layout:
         *
         * @remote    // this annotation expose the method to API
         * @param  ParameterBag $params
-        * @return string
+        *
+        * @return Validation
         */
         public function validationAction($params)
         {
@@ -146,7 +147,7 @@ In your app layout:
 
             $errors = $validator->validate($entity);
         
-            return ValidationResponse($errors);
+            return new Validation($errors);
         }
 
        /*
@@ -159,7 +160,7 @@ In your app layout:
         public function listAction($params)
         {
             // entity must have toStoreArray function which returns it's array representation
-            $pager = $this->get('hatimeria_extjs.pager')->create('ExampleCompany\ExampleBundle\Entity\Example', $params);
+            $pager = $this->get('hatimeria_extjs.pager')->fromEntity('ExampleCompany\ExampleBundle\Entity\Example', $params);
             // use for sorting - map extjs column name to real entity column name
             $pager->addColumnAlias('createdAt.date', 'createdAt');
 
@@ -191,7 +192,7 @@ In your app layout:
             // your proccessing
 
             // Automatic response based on validation result, error list or clean succes message
-            return FormResponse($form);
+            return new Form($form);
         }
     }
 ```

@@ -8,7 +8,7 @@ Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or u
 
 ## Documentation
 
-    [Read the documentation](https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/index.md)
+[Read the documentation](https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/index.md)
 
 ## Changelog
 
