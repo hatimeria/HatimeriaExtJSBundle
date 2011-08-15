@@ -1,10 +1,11 @@
 <?php
 
-namespace Hatimeria\ExtJSBundle\Doctrine;
+namespace Hatimeria\ExtJSBundle\Dumper;
 
+use Hatimeria\ExtJSBundle\Exception\ExtJSException;
+use Hatimeria\ExtJSBundle\Doctrine\Pager;
 use Doctrine\Common\Collections\ArrayCollection;
 use \DateTime;
-use Hatimeria\ExtJSBundle\Exception\ExtJSException;
 
 /**
  * Collection or Pager to Array conversion
@@ -13,37 +14,36 @@ use Hatimeria\ExtJSBundle\Exception\ExtJSException;
  */
 class Dumper
 {
-
+    /**
+     * Entity Manager
+     *
+     * @var EntityManager
+     */
     private $em;
-
     /**
      * Signed user is an admin ?
      *
      * @var bool
      */
     private $isAdmin;
-
     /**
      * Camelizer
      *
      * @var Camelizer
      */
     private $camelizer;
-
     /**
      * Reflection class objects
      *
      * @var array of \ReflectionClass Objects
      */
     private $reflections;
-
     /**
      * Map of access methods for object and property (getter, isser or property)
      *
      * @var array
      */
     private $accessMethods;
-
     /**
      * Configured mappings for classes
      *
@@ -108,7 +108,7 @@ class Dumper
     {
         if ($pager->hasToStoreFunction()) {
             return $this->dump($pager->getEntities(), $pager->getCount(), $pager->getLimit(), $pager->getToStoreFunction());
-        } 
+        }
         
         $fields = $pager->getFields();
         $records = array();
@@ -271,45 +271,54 @@ class Dumper
         return $this->getPropertyValue($object, $path);
     }
 
-    private function getClass($entity)
+    /**
+     * Get object class
+     * ignores doctrine proxy class
+     *
+     * @param Object $object
+     * 
+     * @return string Class name
+     */
+    private function getClass($object)
     {
-        if ($entity instanceof \Doctrine\ORM\Proxy\Proxy) {
-            return get_parent_class($entity);
+        if ($object instanceof \Doctrine\ORM\Proxy\Proxy) {
+            return get_parent_class($object);
         } else {
-            return get_class($entity);
+            return get_class($object);
         }
     }
 
     /**
-     * Object values for list of properties (fields)
+     * Object values for properties paths
      *
-     * @param Object $entity
-     * @param array $fields
+     * @param Object $object
+     * @param array $paths
+     * 
      * @return array
      */
-    public function getValues($entity, $fields = array())
+    public function getValues($object, $paths = array())
     {
         $values = array();
 
-        if (count($fields) == 0) {
-            $fields = $this->getObjectMappingFields($entity);
+        if (count($paths) == 0) {
+            $paths = $this->getObjectMappingFields($object);
         }
 
-        foreach ($fields as $path) {
-            $value = $this->getPathValue($entity, $path);
+        foreach ($paths as $path) {
+            $value = $this->getPathValue($object, $path);
 
             if (is_object($value)) {
                 if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d');
-                } else if ($value instanceof Doctrine\Common\Collections\ArrayCollection) {
+                } else if ($value instanceof ArrayCollection) {
                     $records = array();
 
                     foreach ($value as $entity) {
-                        $records[] = $this->getValues($value);
+                        $records[] = $this->getValues($entity);
                     }
 
                     $value = $records;
-                } else {
+                } else {    
                     $value = $this->getValues($value);
                 }
             }

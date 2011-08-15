@@ -8,11 +8,12 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Common\Collections\ArrayCollection;
+use Hatimeria\ExtJSBundle\Response\Response;
 use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
 use Hatimeria\ExtJSBundle\Util\Camelizer;
 use Closure;
 
-class Pager
+class Pager implements Response
 {
 
     private $entity, $em;

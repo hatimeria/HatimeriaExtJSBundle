@@ -1,12 +1,16 @@
 ![Hatimeria logo](http://hatimeria.pl/assets/img/hatimeria_v_220.png)
 
-#HatimeriaExtJSBundle
+# HatimeriaExtJSBundle
 
 Symfony and ExtJS RAD Environment for fun and profit.
 
 Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or user switch interface.
 
-##Changelog
+## Documentation
+
+    [Read the documentation](https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/index.md)
+
+## Changelog
 
 12.08.2011
 
@@ -18,7 +22,7 @@ Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or u
 
 * Configurable signin_route, for FosUserBundle set it to fos_user_security_login
 
-##Todo
+## Todo
 
 * Tests
 * Mappings docs
@@ -28,7 +32,3 @@ Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or u
 * Include user switch for admin
 * CRUD 
 * Quick start guide
-
-For documentation, see:
-
-    Resources/doc/index.rst

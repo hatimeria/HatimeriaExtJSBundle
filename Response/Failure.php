@@ -7,7 +7,7 @@ namespace Hatimeria\ExtJSBundle\Response;
  *
  * @author Michal Wujas
  */
-class Failure
+class Failure implements Response
 {
     /**
      * Content in direct format

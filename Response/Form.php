@@ -1,9 +1,9 @@
 <?php
 
-namespace Hatimeria\ExtJSBundle\Validation;
+namespace Hatimeria\ExtJSBundle\Response;
 
 use Symfony\Component\Form\FormError;
-use Symfony\Component\Form\Form;
+use Symfony\Component\Form\Form as SymfonyForm;
 use Symfony\Component\Validator\ConstraintViolationList;
 
 /**
@@ -13,7 +13,7 @@ use Symfony\Component\Validator\ConstraintViolationList;
  * 
  * @author Michal Wujas
  */
-class FormResponse extends ValidationResponse
+class Form extends Validation
 {
     /**
      * Form instance
@@ -27,7 +27,7 @@ class FormResponse extends ValidationResponse
      *
      * @param mixed $mixed form or errors array
      */
-    public function __construct(Form $form)
+    public function __construct(SymfonyForm $form)
     {
         $this->form = $form;
     }
@@ -37,7 +37,7 @@ class FormResponse extends ValidationResponse
      *
      * @return array field -> message
      */
-    public function getFormatted()
+    public function getFormatted($errors = null)
     {
         // @todo children recursion
         $list = array();

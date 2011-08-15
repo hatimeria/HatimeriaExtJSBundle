@@ -9,7 +9,7 @@ use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
  *
  * @author Michal Wujas
  */
-class Success
+class Success implements Response
 {
     /**
      * Content in direct format

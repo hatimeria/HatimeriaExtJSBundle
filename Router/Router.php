@@ -9,6 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Hatimeria\ExtJSBundle\Exception\ExtJSException;
 use Hatimeria\ExtJSBundle\Response\Success;
 use Hatimeria\ExtJSBundle\Response\Failure;
+use Hatimeria\ExtJSBundle\Response\Response as ResponseInterface;
 
 class Router
 {
@@ -81,23 +82,26 @@ class Router
         $method = $call->getMethod()."Action";
 
         if (!is_callable(array($controller, $method))) {
-            throw new ExtJSException(sprintf("Controller %s doesn't have method %s", get_class($controller), $method));
+            throw new ExtJSException(sprintf("Controller %s method %s is not callable", get_class($controller), $method));
         }
 
         try
         {
-            $controllerReturn = $controller->$method($call->getParams(), $this->request->getFiles());
+            $response = $controller->$method($call->getParams(), $this->request->getFiles());
 
-            // default behavior - everything was fine
-            if($controllerReturn == null) {
-                $controllerReturn = new Success();
+            // default behavior - everything went fine
+            if($response == null) {
+                $response = new Success();
+            } else if(is_object($response)) {
+                
+                if($response instanceof ResponseInterface) {
+                    $response = $response->toArray();
+                } else {
+                    $response = $this->container->get('hatimeria_extjs.dumper')->dumpObject($response);
+                }
             }
             
-            if(is_object($controllerReturn)) {
-                $controllerReturn = $this->container->get('hatimeria_extjs.dumper')->dumpObject($controllerReturn);
-            } 
-            
-            $result = $call->getResponse($controllerReturn);
+            $result = $call->getResponse($response);
         }
                 
         catch (NotFoundHttpException $e)

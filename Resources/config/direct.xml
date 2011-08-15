@@ -13,7 +13,7 @@
         <parameter key="direct.api.form_attribute">@form</parameter>
     </parameters>
     <services>
-        <service id="hatimeria_extjs.dumper" class="Hatimeria\ExtJSBundle\Doctrine\Dumper">
+        <service id="hatimeria_extjs.dumper" class="Hatimeria\ExtJSBundle\Dumper\Dumper">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="security.context" />
             <argument type="service" id="hatimeria_extjs.camelizer" />

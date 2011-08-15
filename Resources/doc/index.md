@@ -1,35 +1,33 @@
-ExtJSBundle
-============
+# HatimeriaExtJSBundle
 
-ExtJSBundle is an implementation of Ext Direct (part of ExtJS framework from Sencha) specification for Symfony2
+HatimeriaExtJSBundle is an implementation of Ext Direct (part of ExtJS framework from Sencha) specification for Symfony2
 framework.
 
-ExtJS 4: http://docs.sencha.com/ext-js/4-0/
+[ExtJS 4 documentation](http://docs.sencha.com/ext-js/4-0/)
 
 Bundle is highly customized https://github.com/oaugustus/DirectBundle fork.
 
-Installing
-----------
+## Installing
 
 Follow symfony istructions to add bundle source code from github (use deps)
 
-Register the Hatimeria namespace into your autoloader
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Configure autoloader
 
-::
-
+``` php
+<?php
     // app/autoload.php
     $loader->registerNamespaces(array(
         // ...,
         'Hatimeria' => __DIR__.'/../vendor/bundles',
         // ...,
     );
+```
 
-Register ExtJSBundle into your application kernel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Register bundle
 
-::
 
+``` php
+<?php
     // app/AppKernel.php
     public function registerBundles()
     {
@@ -42,25 +40,23 @@ Register ExtJSBundle into your application kernel
         //..
         return $bundles;
     }
+```
 
-Register ExtJSBundle route into your route config
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Register routing
 
-::
 
-    // app/config/routing.yml
+``` yaml
+    # app/config/routing.yml
     # ... your other routes here
     direct:
         resource: "@HatimeriaExtJSBundle/Resources/config/routing.yml"
 
 
-How to use
-----------
+## How to use
 
-Configuration reference
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-::
+### Configuration reference
 
+``` yaml
     // app/config/config.yml
     hatimeria_ext_js:
       # If direct request got 403 response code it will redirect user to login page
@@ -76,19 +72,18 @@ Configuration reference
               default: [id, first_name, last_name]
 
 
+```
 
-Add Javascript files to your layout
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Add Javascript files to your layout
 
 In your app layout:
 {% render "HatimeriaExtJSBundle:Default:javascripts" %}
 
-Expose your controller methods to ExtDirect Api
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Expose your controller methods to ExtDirect Api
 
-::
 
-    // ...
+``` php
+<?php
     namespace Hatimeria\HelloBundle\Controller;
 
     use Hatimeria\ExtJSBundle\Response\Failure;
@@ -199,11 +194,12 @@ Expose your controller methods to ExtDirect Api
             return FormResponse($form);
         }
     }
+```
 
-Call the exposed methods from JavaScript
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### Call the exposed methods from JavaScript
 
-::
+
+``` javascript
 
     // Hello is the Bundle name without 'Bundle'
     // Test is the Controller name without 'Controller'
@@ -220,10 +216,9 @@ Call the exposed methods from JavaScript
             headers: ['Header 1', 'Header 2']
         }
     );
+```
 
-
-Finished
-~~~~~~~~
+### Finished
 
 Well, this all to ExtJSBundle work. Suggestions, bug reports and observations
 are wellcome.

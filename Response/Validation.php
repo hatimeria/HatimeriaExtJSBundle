@@ -1,9 +1,8 @@
 <?php
 
-namespace Hatimeria\ExtJSBundle\Validation;
+namespace Hatimeria\ExtJSBundle\Response;
 
 use Symfony\Component\Validator\ConstraintViolationList;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Form\FormError;
 
 /**
@@ -11,7 +10,7 @@ use Symfony\Component\Form\FormError;
  * 
  * @author Michal Wujas
  */
-class ValidationResponse
+class Validation implements Response
 {
     /**
      * Errors
