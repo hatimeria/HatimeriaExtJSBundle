@@ -223,9 +223,9 @@ In your app layout:
 
 Work is in progress.
 
-Example backend base on this bundle:
+Example backend based on this bundle:
 
-![Example application screenshot](/https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/example.png)
+![Example application screenshot](https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/example.png)
 
 ### Finished
 
