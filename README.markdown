@@ -9,7 +9,7 @@ Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or u
 ## Credits
 
 Bundle is based on https://github.com/oaugustus/DirectBundle, created by Otavio Fernandes.
-Now it is maintaned by Hatimeria company.
+Now it is maintained by Hatimeria company.
 
 ## Documentation
 
@@ -19,6 +19,7 @@ Now it is maintaned by Hatimeria company.
 
 15.08.2011
 
+* Fields only visible to admin user are configurable now
 * User switch select component added
 
 12.08.2011
@@ -34,10 +35,9 @@ Now it is maintaned by Hatimeria company.
 ## Todo
 
 * Tests
-* Mappings docs
 * Api errors handling docs
-* Admin dumper docs
+* Include admin menu, layout
 * Example grid, admin panel, form
 * Include user switch for admin
-* CRUD 
+* CRUD
 * Quick start guide

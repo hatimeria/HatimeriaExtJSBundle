@@ -50,6 +50,11 @@ Follow symfony instructions to add bundle source code from github (use deps)
         resource: "@HatimeriaExtJSBundle/Resources/config/routing.yml"
 ```
 
+### Add bundle headers to your layout
+
+In your app layout:
+{% render "HatimeriaExtJSBundle:Default:headers" %}
+
 ## How to use
 
 ### Configuration reference
@@ -64,7 +69,10 @@ Follow symfony instructions to add bundle source code from github (use deps)
       mappings:   
         Example\Example\Entity\User:
             fields: 
-              default: [id, username, profile] # profile is object of class Profile
+              # profile is object of class Profile, account is object which have getBalance method
+              default: [id, username, profile, account.balance, created_at] 
+              # fields only visible for admin user
+              admin: [password]
         Example\Example\Entity\Profile:
             fields: 
               default: [id, first_name, last_name]
@@ -72,10 +80,30 @@ Follow symfony instructions to add bundle source code from github (use deps)
 
 ```
 
-### Add bundle headers to your layout
+### Mappings explained
 
-In your app layout:
-{% render "HatimeriaExtJSBundle:Default:headers" %}
+When record is returned by controller (or pager results) every single object have to be converted to json format (array first).
+Because of that you need to specify which object property paths include in results. For example if you need converter like:
+
+``` php
+<?php
+    
+    // In entity class
+
+    public function toArray()
+    {
+        return array(
+            'id'              => $this->id,
+            'username'        => $this->username,
+            'profile'         => $this->getProfile()->toArray(),
+            'account.balance' => $this->getAccount()->getBalance(),
+            'created_at'      => $this->getCreatedAt()->format('Y-m-d')
+        );
+    }
+```
+
+You can just configure this behaviour in yml. Related objects are automatically converted,
+ (when profile object is found in user the Profile class mappings are used)
 
 ### Expose your controller methods to ExtDirect Api
 
@@ -217,9 +245,15 @@ In your app layout:
     );
 ```
 
+## Error handling
+
+When ajax request got symfony exception output JS Direct Api Handler will render it to Developer in nice popup window.
+Same goes with fatal, notices and warnings.
+If this happens in non dev environment popup window contains only simple error message suitable for normal user.
+
 ## Backend application
 
-Work is in progress.
+Work in progress.
 
 Example backend based on this bundle:
 
