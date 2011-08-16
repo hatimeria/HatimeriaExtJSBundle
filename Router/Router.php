@@ -99,7 +99,9 @@ class Router
             // default behavior - everything went fine
             if($response == null) {
                 $response = new Success();
-            } else if(is_object($response)) {
+            }
+            
+            if(is_object($response)) {
                 
                 if($response instanceof ResponseInterface) {
                     $response = $response->toArray();

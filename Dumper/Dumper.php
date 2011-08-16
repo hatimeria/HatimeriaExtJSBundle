@@ -51,12 +51,6 @@ class Dumper
      */
     private $mappings;
     /**
-     * Fields config group
-     *
-     * @var string
-     */
-    private $fieldsGroup;
-    /**
      * Admin group key
      */
     const ADMIN_FIELD_GROUP = 'admin';
