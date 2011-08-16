@@ -2,6 +2,13 @@
 
 namespace Hatimeria\ExtJSBundle\Api;
 
+/**
+ * Api is the ExtDirect Api class.
+ *
+ * It provide the ExtDirect Api descriptor of exposed Controllers and methods.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class Api
 {
     /**

@@ -5,6 +5,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 use Hatimeria\ExtJSBundle\Controller\DirectController;
 
+/**
+ * Test class DirectBundle Direct controller.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class DirectControllerTest extends WebTestCase
 {
     /**

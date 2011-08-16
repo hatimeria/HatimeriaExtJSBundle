@@ -50,6 +50,14 @@ class Dumper
      * @var array
      */
     private $mappings;
+    /**
+     * Admin group key
+     */
+    const ADMIN_FIELD_GROUP = 'admin';
+    /**
+     * Default group key
+     */    
+    const DEFAULT_FIELD_GROUP = 'default';
 
     public function __construct($em, $security, $camelizer, $mappings)
     {
@@ -79,9 +87,30 @@ class Dumper
         throw new ExtJSException(sprintf("No mapping information or object method toArray exists for %s", $class));
     }
     
+    /**
+     *
+     * @param type $entityName
+     * @return type 
+     */
     private function getMappingFields($entityName)
     {
-        return $this->mappings[$entityName]['fields']['default'];
+        $fields = array();
+        
+        if ($this->isAdmin) {
+            // add admin fields if configuration has them
+           if (isset($this->mappings[$entityName]['fields'][self::ADMIN_FIELD_GROUP])) {
+               $fields += $this->getGroupMappingFields($entityName, self::ADMIN_FIELD_GROUP);
+           }
+        }
+        
+        $fields += $this->getGroupMappingFields($entityName, self::DEFAULT_FIELD_GROUP);
+        
+        return $fields;
+    }
+    
+    private function getGroupMappingFields($entityName, $groupName) 
+    {
+        return $this->mappings[$entityName]['fields'][$groupName];
     }
     
     public function getObjectMappingFields($object)
