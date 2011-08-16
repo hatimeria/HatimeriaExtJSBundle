@@ -1,6 +1,11 @@
 <?php
 namespace Hatimeria\ExtJSBundle\Router;
 
+/**
+ * Response encapsule the ExtDirect response to Direct call.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class Response
 {
     /**

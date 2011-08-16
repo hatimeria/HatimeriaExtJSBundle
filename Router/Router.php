@@ -11,6 +11,13 @@ use Hatimeria\ExtJSBundle\Response\Success;
 use Hatimeria\ExtJSBundle\Response\Failure;
 use Hatimeria\ExtJSBundle\Response\Response as ResponseInterface;
 
+/**
+ * Router is the ExtDirect Router class.
+ *
+ * It provide the ExtDirect Router mechanism.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class Router
 {
     /**

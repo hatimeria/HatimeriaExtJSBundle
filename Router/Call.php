@@ -4,6 +4,11 @@ namespace Hatimeria\ExtJSBundle\Router;
 
 use Hatimeria\ExtJSBundle\Parameter\ParameterBag;
 
+/**
+ * Call encapsule an single ExtDirect call.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class Call
 {
     /**

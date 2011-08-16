@@ -8,7 +8,7 @@ Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or u
 
 ## Credits
 
-Bundle is based on https://github.com/oaugustus/DirectBundle, created by Otavio Fernandes.
+Bundle is based on [DirectBundle](https://github.com/oaugustus/DirectBundle), created by Otavio Fernandes.
 Now it is maintained by Hatimeria company.
 
 ## Documentation
@@ -35,9 +35,10 @@ Now it is maintained by Hatimeria company.
 ## Todo
 
 * Tests
-* Api errors handling docs
 * Include admin menu, layout
 * Example grid, admin panel, form
 * Include user switch for admin
+* Security by annotations
+* FosUser complete admin
 * CRUD
 * Quick start guide

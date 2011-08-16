@@ -65,11 +65,11 @@ In your app layout:
       # If direct request got 403 response code it will redirect user to login page
       signin_route: fos_user_security_login
       javascript_mode: debug # debug | debug-comments | normal - which extjs main file is included
-      # nested objects mapping - documentation in progress
       mappings:   
         Example\Example\Entity\User:
             fields: 
-              # profile is object of class Profile, account is object which have getBalance method
+              # profile is object of class Profile, account is object which have getBalance method, 
+              # createdAt is a DateTime member of user class
               default: [id, username, profile, account.balance, created_at] 
               # fields only visible for admin user
               admin: [password]
@@ -105,7 +105,7 @@ Because of that you need to specify which object property paths include in resul
 You can just configure this behaviour in yml. Related objects are automatically converted,
  (when profile object is found in user the Profile class mappings are used)
 
-### Expose your controller methods to ExtDirect Api
+### Expose controller - in many ways
 
 
 ``` php

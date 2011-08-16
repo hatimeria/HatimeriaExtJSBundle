@@ -4,6 +4,11 @@ namespace Hatimeria\ExtJSBundle\Api;
 
 use Hatimeria\ExtJSBundle\Exception\ExtJSException;
 
+/**
+ * ControllerApi encapsulate methods to get the Controller exposed Api.
+ *
+ * @author Otavio Fernandes <otabio@neton.com.br>
+ */
 class ControllerApi
 {
     /**

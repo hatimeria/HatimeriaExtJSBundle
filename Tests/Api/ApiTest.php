@@ -5,6 +5,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 use Hatimeria\ExtJSBundle\Api\Api;
 
+/**
+ * Test class of ExtDirect Api.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class ApiTest extends WebTestCase
 {
     /**
