@@ -7,6 +7,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Config\Definition\Processor;
 
+/**
+ * DirectExtension is an extension for the ExtDirect.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class HatimeriaExtJSExtension extends Extension
 {
     const CONFIG_NAMESPACE = "hatimeria_ext_js";

@@ -2,6 +2,11 @@
 
 namespace Hatimeria\ExtJSBundle\Router;
 
+/**
+ * Request encapsule the ExtDirect request call.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class Request
 {
     /**

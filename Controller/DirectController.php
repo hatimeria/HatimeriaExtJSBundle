@@ -8,6 +8,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Hatimeria\ExtJSBundle\Api\Api;
 use Hatimeria\ExtJSBundle\Router\Router;
 
+/**
+ * Direct controller.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class DirectController extends Controller
 {
     /**

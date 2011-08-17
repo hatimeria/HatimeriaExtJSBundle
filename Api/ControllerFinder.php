@@ -4,6 +4,11 @@ namespace Hatimeria\ExtJSBundle\Api;
 
 use Symfony\Component\Finder\Finder;
 
+/**
+ * Controller Finder find all controllers from a Bundle.
+ *
+ * @author Otavio Fernandes <otavio@neton.com.br>
+ */
 class ControllerFinder
 {
     /**
