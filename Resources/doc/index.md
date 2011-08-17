@@ -239,14 +239,18 @@ You can just configure this behaviour in yml. Related objects are automatically 
        alert(r);
     });
 
-    // Show preview grid for list action
-    new Hatimeria.grid.Preview(
-        {
-            directFn: Actions.Hello_Test.list,
-            title: 'Example data grid',
-            headers: ['Header 1', 'Header 2']
-        }
-    );
+    // Show preview grid for list action - example
+    Ext.onReady(function() {
+        var usersGrid = Ext.create('Hatimeria.grid.Preview', 
+                {
+                    directFn: Actions.HatimeriaAdmin_User.list,
+                    title: 'Users',
+                    headers: {'id': '', 'username': 'Username', 'email': 'Email'}
+                }
+            );
+
+        usersGrid.init()
+    });
 ```
 
 ## Error handling

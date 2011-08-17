@@ -1,12 +1,5 @@
 /* 
  * Preview grid dynamically created with data returned by directFn
- * 
- * @example new Hatimeria.grid.Preview(
- *  {
- *      directFn: Actions.Hello_Test.list,
- *      title: 'Example data grid',
- *      headers: ['Header 1', 'Header 2']
- *  });
  *  
  */
 
@@ -100,7 +93,7 @@ Ext.define("Hatimeria.grid.Preview", {
             width: 800,
             title: this.config.title || 'Preview grid',
             columns: columns,
-            renderTo: Ext.fly('body'),
+            renderTo: this.config.renderTo || Ext.fly('body'),
             dockedItems: [{
                     xtype: 'pagingtoolbar',
                     store: store,
