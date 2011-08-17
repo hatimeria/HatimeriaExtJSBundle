@@ -9,6 +9,10 @@ framework.
 
 Follow symfony instructions to add bundle source code from github (use deps)
 
+### Requirements
+
+Pager needs [StofDoctrineExtensionsBundle](https://github.com/stof/StofDoctrineExtensionsBundle) with enabled Paginate extension to work.
+
 ### Configure autoloader
 
 ``` php
