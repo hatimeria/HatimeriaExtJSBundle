@@ -48,7 +48,7 @@ Follow symfony instructions to add bundle source code from github (use deps)
 ``` yaml
     # app/config/routing.yml
     # ... your other routes here
-    direct:
+    HatimeriaExtJSBundle:
         resource: "@HatimeriaExtJSBundle/Resources/config/routing.yml"
 ```
 
