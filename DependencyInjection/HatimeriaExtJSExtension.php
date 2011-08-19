@@ -41,8 +41,9 @@ class HatimeriaExtJSExtension extends Extension
     
     private function setMainFilename($container, $config)
     {
-        $filenames = array('normal' => 'ext-all', 'debug' => 'ext-all-debug', 'debug-comments' => 'ext-all-debug-w-comments');
-        $this->setParameter($container, 'js_filename', $filenames[$config['javascript_mode']]);  
+        // @todo validation
+        $filenames = array('ext-all-debug-w-comments','ext-all-debug','ext-all','ext-debug','ext');
+        $this->setParameter($container, 'js_filename', $config['javascript_mode']);
     }
 
     /**

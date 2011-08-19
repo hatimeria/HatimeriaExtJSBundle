@@ -6,6 +6,8 @@ Symfony and ExtJS RAD Environment for fun and profit.
 
 Easy add sortable, editable grids with pagers, ajax forms, nice admin panel or user switch interface.
 
+This bundle is ready for use but still under heavy development.
+
 ## Full application
 
 This bundle is part of hatimeria CMF.
@@ -21,6 +23,10 @@ Now it is maintained by Hatimeria company.
 [Read the documentation](https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/index.md)
 
 ## Changelog
+
+19.08.2011
+
+* Configurable vendor path, all main filenames supported, ext loader implemented
 
 15.08.2011
 

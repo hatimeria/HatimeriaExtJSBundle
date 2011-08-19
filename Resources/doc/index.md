@@ -68,7 +68,10 @@ In your app layout:
     hatimeria_ext_js:
       # If direct request got 403 response code it will redirect user to login page
       signin_route: fos_user_security_login
-      javascript_mode: debug # debug | debug-comments | normal - which extjs main file is included
+      # optionally your extjs library web path directory (if you use different version than this bundle provides)
+      javascript_vendor_path: "bundles/hatimeriaextjs/js/vendor/ext-4.0.0/" # default
+      # one of extjs main filenames, [options listed here](http://www.sencha.com/blog/using-ext-loader-for-your-application/)
+      javascript_mode:  ext-all-debug # default
       mappings:   
         Example\Example\Entity\User:
             fields: 
@@ -174,7 +177,7 @@ You can just configure this behaviour in yml. Related objects are automatically 
         public function validationAction($params)
         {
             // fetch entity, make same changes based on received params from extjs
-
+            
             $errors = $validator->validate($entity);
         
             return new Validation($errors);
@@ -221,6 +224,7 @@ You can just configure this behaviour in yml. Related objects are automatically 
         {
             // your proccessing
 
+            // csrf protection must be disabled in this form, whole application, token transport to extjs is not implemented right now
             // Automatic response based on validation result, error list or clean succes message
             return new Form($form);
         }
@@ -241,7 +245,7 @@ You can just configure this behaviour in yml. Related objects are automatically 
 
     // Show preview grid for list action - example
     Ext.onReady(function() {
-        var usersGrid = Ext.create('Hatimeria.grid.Preview', 
+        var usersGrid = Ext.create('HatimeriaCore.grid.Preview',
                 {
                     directFn: Actions.HatimeriaAdmin_User.list,
                     title: 'Users',
@@ -261,9 +265,9 @@ If this happens in non dev environment popup window contains only simple error m
 
 ## Backend application
 
-Work in progress.
+[CMF Application](https://github.com/hatimeria/hatimeria)
 
-Example backend based on this bundle:
+Example backend based on CMF:
 
 ![Example application screenshot](https://github.com/hatimeria/HatimeriaExtJSBundle/raw/master/Resources/doc/example.png)
 

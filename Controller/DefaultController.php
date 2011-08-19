@@ -19,11 +19,11 @@ class DefaultController extends Controller
      */
     public function headersAction()
     {
-        $path = $this->getParameter("js_filename");
         
         return $this->render('HatimeriaExtJSBundle:Default:headers.html.twig', 
                 array(
-                    'js_filename' => $path,
+                    'main_filename' => $this->getParameter("js_filename"),
+                    'javascript_vendor_path' => $this->getParameter("javascript_vendor_path"),
                     'locale'      => $this->container->getParameter("locale")
                 ));
     }

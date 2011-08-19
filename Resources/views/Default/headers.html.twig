@@ -1,4 +1,14 @@
-<script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/vendor/ext-4.0.0/'~js_filename~'.js') }}"> </script>
-<script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/vendor/ext-4.0.0/locale/ext-lang-'~locale~'.js') }}"> </script>
+<script type="text/javascript" src="{{ asset(javascript_vendor_path~main_filename~'.js') }}"> </script>
+<script type="text/javascript" src="{{ asset(javascript_vendor_path~'locale/ext-lang-'~locale~'.js') }}"> </script>
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/direct-api-handler.js') }}"> </script>
 <script type="text/javascript" src="{{ path('api') }}"> </script>
+<script type="text/javascript">
+    Ext.Loader.setConfig({
+        enabled : true,
+        paths   : {
+            'HatimeriaCore' : '/bundles/hatimeriaextjs/js',
+            // @todo move to HatimeriaAdminBundle and make this place configurable
+            'HatimeriaAdmin' : '/bundles/hatimeriaadmin/js'
+        } 
+    });
+</script>
