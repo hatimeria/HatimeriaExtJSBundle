@@ -124,9 +124,11 @@ You can just configure this behaviour in yml. Related objects are automatically 
     use Hatimeria\ExtJSBundle\Response\Form;
     use Hatimeria\ExtJSBundle\Response\Validation;
 
+    use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
     class TestController extends Controller
     {
-       /*
+       /**
         * Single exposed method.
         *
         * @remote    // this annotation expose the method to API
@@ -138,7 +140,7 @@ You can just configure this behaviour in yml. Related objects are automatically 
             return 'Hello '.$params['name'];
         }
 
-       /*
+       /**
         * Single exposed method with no custom response
         *
         * @remote    // this annotation expose the method to API
@@ -150,7 +152,7 @@ You can just configure this behaviour in yml. Related objects are automatically 
             // processing without return statement will generate direct success response
         }
 
-       /*
+       /**
         * Single exposed method with fail or success message
         *
         * @remote    // this annotation expose the method to API
@@ -159,14 +161,14 @@ You can just configure this behaviour in yml. Related objects are automatically 
         */
         public function simpleAction($params)
         {
-            if(some_condition) {
-                return Success;
+            if($some_condition) {
+                return new Success;
             } else {
-                return Failure;
+                return new Failure;
             }
         }
 
-       /*
+       /**
         * Validation on entity
         *
         * @remote    // this annotation expose the method to API
@@ -183,7 +185,7 @@ You can just configure this behaviour in yml. Related objects are automatically 
             return new Validation($errors);
         }
 
-       /*
+       /**
         * Grid backend
         *
         * @remote    // this annotation expose the method to API
@@ -199,7 +201,7 @@ You can just configure this behaviour in yml. Related objects are automatically 
 
             // this function is called on every record found to make it accesible for json formatter
             // if not function is specified config mappings are used
-            $pager->setToStoreFunction(function($entity) { $entity->toStoreArray() });
+            $pager->setToStoreFunction(function($entity) { $entity->toStoreArray(); });
             
             $qb = $pager->getQueryBuilder();
 
@@ -212,7 +214,7 @@ You can just configure this behaviour in yml. Related objects are automatically 
             return $pager;
         }
 
-        /*
+        /**
          * An action to handle forms.
          *
          * @remote   // this annotation expose the method to API
