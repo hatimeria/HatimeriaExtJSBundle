@@ -69,9 +69,9 @@ class PagerFactory
      * 
      * @return Pager
      */
-    public function fromEntity($entity, ParameterBag $params)
+    public function fromEntity($entityClass, ParameterBag $params)
     {
-        return $this->getNewPager($params)->setEntityName($entity);
+        return $this->getNewPager($params)->setEntityClass($entityClass);
     }
     
     /**

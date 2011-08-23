@@ -16,8 +16,11 @@
         <service id="hatimeria_extjs.dumper" class="Hatimeria\ExtJSBundle\Dumper\Dumper">
             <argument type="service" id="security.context" />
             <argument type="service" id="hatimeria_extjs.camelizer" />
-            <argument>%hatimeria_ext_js.mappings%</argument>
+            <argument type="service" id="hatimeria_extjs.mappings" />
         </service>
+        <service id="hatimeria_extjs.mappings" class="Hatimeria\ExtJSBundle\Dumper\Mappings">
+            <argument>%hatimeria_ext_js.mappings%</argument>
+        </service>        
         <service id="hatimeria_extjs.pager" class="Hatimeria\ExtJSBundle\Doctrine\PagerFactory">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="hatimeria_extjs.dumper" />

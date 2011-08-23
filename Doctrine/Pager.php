@@ -15,8 +15,12 @@ use Closure;
 
 class Pager implements Response
 {
-
-    private $entity, $em;
+    /**
+     * Entity Manager
+     * 
+     * @var EntityManager
+     */
+    private $em;
     /**
      * Parameters
      *
@@ -35,8 +39,17 @@ class Pager implements Response
      * @var array
      */
     private $sortFunctions = array();
-    private $fields = array();
+    /**
+     * Closure
+     *
+     * @var Closure
+     */
     private $toStoreFunction = null;
+    /**
+     * Camelizer
+     *
+     * @var Camelizer
+     */
     private $camelizer;
 
     /**
@@ -52,21 +65,15 @@ class Pager implements Response
         $this->camelizer = $camelizer;
     }
     
-    public function setEntityName($entity)
+    public function setEntityClass($entityClass)
     {
-        $this->entity = $entity;
         $this->qb = $this->em->createQueryBuilder();
         $this->qb->add('select', 'e');
-        $this->qb->add('from', $this->entity . ' e');
+        $this->qb->add('from', $entityClass . ' e');
 
         return $this;
     }
     
-    public function getEntityName()
-    {
-        return $this->entity;
-    }
-
     public function addColumnAlias($column, $alias)
     {
         $this->mapping[$column] = $alias;
@@ -123,13 +130,6 @@ class Pager implements Response
         return $this;
     }
 
-    public function fields(array $fields)
-    {
-        $this->fields = $fields;
-
-        return $this;
-    }
-
     /**
      * Paginated resultset in ext direct format
      *
@@ -156,17 +156,7 @@ class Pager implements Response
         $paginateQuery = Paginate::getPaginateQuery($query, $offset, $this->limit);
         $this->entities = $paginateQuery->getResult();
 
-        return $this->dumper->dumpPager($this);
-    }
-    
-    public function hasFields()
-    {
-        return count($this->fields) > 0;
-    }
-    
-    public function getFields()
-    {
-        return $this->fields;
+        return $this->dumper->dump($this)->toArray();
     }
     
     public function getToStoreFunction()

@@ -4,7 +4,12 @@ namespace Hatimeria\ExtJSBundle\Dumper;
 
 use Hatimeria\ExtJSBundle\Exception\ExtJSException;
 use Hatimeria\ExtJSBundle\Doctrine\Pager;
+use Hatimeria\ExtJSBundle\Dumper\Mappings;
+use Hatimeria\ExtJSBundle\Response\Records;
+use Hatimeria\ExtJSBundle\Response\Success;
+
 use Doctrine\Common\Collections\ArrayCollection;
+
 use \DateTime;
 
 /**
@@ -42,17 +47,9 @@ class Dumper
     /**
      * Configured mappings for classes
      *
-     * @var array
+     * @var Mappings
      */
     private $mappings;
-    /**
-     * Admin group key
-     */
-    const ADMIN_FIELD_GROUP = 'admin';
-    /**
-     * Default group key
-     */    
-    const DEFAULT_FIELD_GROUP = 'default';
 
     public function __construct($security, $camelizer, $mappings)
     {
@@ -61,16 +58,39 @@ class Dumper
         $this->mappings  = $mappings;
     }
 
-    private function hasMapping($entityName, $groupName = self::DEFAULT_FIELD_GROUP)
+    /**
+     * Get object class
+     * ignores doctrine proxy class
+     *
+     * @param Object $object
+     * 
+     * @return string Class name
+     */
+    private function getClass($object)
     {
-        return isset($this->mappings[$entityName]['fields'][$groupName]);
-    }
+        if ($object instanceof \Doctrine\ORM\Proxy\Proxy) {
+            return get_parent_class($object);
+        } else {
+            return get_class($object);
+        }
+    }    
     
-    public function dumpObject($object, $fields = array())
+    private function getMappings($object)
+    {
+        $class = $this->getClass($object);
+
+        if (!$this->mappings->has($class)) {
+            throw new ExtJSException(sprintf("No dumper method for: %s", $class));
+        }
+
+        return $this->mappings->get($class, $this->isAdmin);
+    }        
+    
+    private function dumpObject($object, $fields = array())
     {
         $class = $this->getClass($object);
         
-        if($this->hasMapping($class)) {
+        if($this->mappings->has($class)) {
             return $this->getValues($object, $fields);
         } else {
             if(is_callable(array($object, 'toArray'))) {
@@ -80,125 +100,62 @@ class Dumper
         
         throw new ExtJSException(sprintf("No mapping information or object method toArray exists for %s", $class));
     }
-    
-    /**
-     *
-     * @param type $entityName
-     * @return type 
-     */
-    private function getMappingFields($entityName)
-    {
-        $fields = array();
-        
-        if ($this->isAdmin) {
-            // add admin fields if configuration has them
-           if ($this->hasMapping($entityName, self::ADMIN_FIELD_GROUP)) {
-               $fields += $this->getGroupMappingFields($entityName, self::ADMIN_FIELD_GROUP);
-           }
-        }
-        
-        $fields += $this->getGroupMappingFields($entityName, self::DEFAULT_FIELD_GROUP);
-        
-        return $fields;
-    }
-    
-    private function getGroupMappingFields($entityName, $groupName) 
-    {
-        return $this->mappings[$entityName]['fields'][$groupName];
-    }
-    
-    public function getObjectMappingFields($object)
-    {
-        $class = $this->getClass($object);
-
-        if (!$this->hasMapping($class)) {
-            throw new ExtJSException(sprintf("No dumper method for: %s", $class));
-        }
-
-        return $this->getMappingFields($class);
-    }    
 
     /**
-     * Convert array or array collection to ext js array used for store source
+     * Dump resource
+     * Supported: array of objects, object, instance of Pager
      *
-     * @param array Array collection or array of entities $entities
-     * @param int $count
-     * @param int $limit
-     *
-     * @return array
-     */
-    public function dumpPager(Pager $pager)
-    {
-        if ($pager->hasToStoreFunction()) {
-            return $this->dump($pager->getEntities(), $pager->getCount(), $pager->getLimit(), $pager->getToStoreFunction());
-        }
-        
-        $fields = $pager->getFields();
-        $records = array();
-
-        foreach ($pager->getEntities() as $entity) {
-            $records[] = $this->getValues($entity, $fields);
-        }
-
-        return $this->getResult($records, $pager->getCount(), $pager->getLimit());
-    }
-
-    /**
-     * Dumps collection without limit
-     *
-     * @param array $entities
-     * @param Closure $toStoreFunction
-     * @return array
-     */
-    public function dumpCollection($entities, $toStoreFunction = null)
-    {
-        return $this->dump($entities, count($entities), 0, $toStoreFunction);
-    }
-
-    /**
-     * Dumps collection with limit
-     *
-     * @param array $entities
-     * @param int $count
-     * @param int $limit
-     * @param Closure $toStoreFunction
+     * @param mixed $resource
      * 
-     * @return array
+     * @return Response
      */
-    private function dump($entities, $count = null, $limit = null, $toStoreFunction = null)
+    public function dump($resource)
     {
-        $records = array();
-
-        if (!empty($entities)) {
-            foreach ($entities as $entity) {
-                if (null === $toStoreFunction) {
-                    $records[] = $this->dumpObject($entity);
-                } else {
-                    $records[] = $toStoreFunction($entity);
+        $isPager = $resource instanceof Pager;
+        $isArray = is_array($resource);
+        
+        if($isPager || $isArray) {
+            
+            $r = new Records();
+            $toStoreFunction = null;
+            
+            if($isPager) {
+                $entities = $resource->getEntities();
+                $toStoreFunction = $resource->getToStoreFunction();
+            } else {
+                $entities = $resource;
+            }
+            
+            $records = array();
+            
+            if (!empty($entities)) {
+                foreach ($entities as $entity) {
+                    if (null === $toStoreFunction) {
+                        $records[] = $this->dumpObject($entity);
+                    } else {
+                        $records[] = $toStoreFunction($entity);
+                    }
                 }
             }
+            
+            $r->records($records);
+            
+            if($isPager) {
+                $r->limit($resource->getLimit());
+                $r->total($resource->getCount());
+            }
+            
+            return $r;
+            
+        } elseif (is_object($resource)) {
+            $r = new Success();
+            $r->set("record", $this->dumpObject($resource));
+        } else {
+            $r = new Success();
+            $r->set("record", $resource);
         }
-
-        return $this->getResult($records, $count, $limit);
-    }
-
-    /**
-     * Pager dump result in ExtJS format
-     *
-     * @param array $records
-     * @param int $count
-     * @param int $limit
-     * @return array 
-     */
-    private function getResult($records, $count, $limit)
-    {
-        return array(
-            'records' => $records,
-            'success' => true,
-            'total' => $count,
-            'start' => 0,
-            'limit' => $limit
-        );
+        
+        return $r;
     }
 
     /**
@@ -298,23 +255,6 @@ class Dumper
     }
 
     /**
-     * Get object class
-     * ignores doctrine proxy class
-     *
-     * @param Object $object
-     * 
-     * @return string Class name
-     */
-    private function getClass($object)
-    {
-        if ($object instanceof \Doctrine\ORM\Proxy\Proxy) {
-            return get_parent_class($object);
-        } else {
-            return get_class($object);
-        }
-    }
-
-    /**
      * Object values for properties paths
      *
      * @param Object $object
@@ -327,7 +267,7 @@ class Dumper
         $values = array();
 
         if (count($paths) == 0) {
-            $paths = $this->getObjectMappingFields($object);
+            $paths = $this->getMappings($object);
         }
 
         foreach ($paths as $path) {
