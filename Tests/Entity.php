@@ -10,10 +10,12 @@ namespace Hatimeria\ExtJSBundle\Tests;
 class Entity
 {
     private $name;
+    public $createdAt;
     
     public function __construct($name)
     {
         $this->name = $name;
+        $this->createdAt = new \DateTime("2011-01-01");
     }
     
     public function getName()
@@ -24,5 +26,10 @@ class Entity
     public function getChild()
     {
         return new EntityChild('Bar');
+    }
+    
+    public function isEnabled()
+    {
+        return true;
     }
 }

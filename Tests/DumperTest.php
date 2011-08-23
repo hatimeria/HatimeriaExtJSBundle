@@ -10,6 +10,7 @@ use Hatimeria\ExtJSBundle\Util\Camelizer;
 use Hatimeria\ExtJSBundle\Tests\Entity;
 use Hatimeria\ExtJSBundle\Dumper\Mappings;
 use Hatimeria\ExtJSBundle\Response\Response;
+use Hatimeria\ExtJSBundle\Exception\ExtJSException;
 
 /**
  * Description of DumperTest
@@ -18,12 +19,22 @@ use Hatimeria\ExtJSBundle\Response\Response;
  */
 class DumperTest extends \PHPUnit_Framework_TestCase
 {
-    private $mappings = array();
+    private $mappings = array(), $dumper;
     
     private function getSecurity($isAdmin = false)
     {
-        $security = $this->getMockBuilder('Symfony\Component\Security\Core\SecurityContext')
+        $security = $this->getMockBuilder('Hatimeria\ExtJSBundle\Tests\Security')
                 ->disableOriginalConstructor()->getMock();
+        
+        if($isAdmin) {
+            $security->expects($this->atLeastOnce())->method("isGranted")
+                    ->with("ROLE_ADMIN")->will($this->returnValue(true));
+            $security->expects($this->atLeastOnce())->method("getToken")
+                    ->will($this->returnValue($this->getMock("Symfony\Component\Security\Core\Authentication\Token\TokenInterface")));
+        } else {
+            $security->expects($this->any())->method("getToken")
+                ->will($this->returnValue(null));
+        }
         
         return $security;
     }
@@ -33,14 +44,24 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         return $this->getSecurity(true);
     }
     
-    public function addMapping($class, $paths)
+    public function addMapping($name, $paths, $group = 'default')
     {
-        $this->mappings["Hatimeria\ExtJSBundle\Tests\\".$class] = array('fields' => array('default' => $paths));
+        $class = "Hatimeria\ExtJSBundle\Tests\\".$name;
+        
+        if(!isset($this->mappings[$class])) {
+            $this->mappings[$class] = array('fields' => array());
+        }
+        
+        $this->mappings[$class]['fields'][$group] = $paths;
     }
     
     private function getDumper()
     {
-        return new Dumper($this->getSecurity(), new Camelizer(), new Mappings($this->mappings));
+        if($this->dumper === null) {
+            $this->dumper = new Dumper($this->getSecurity(), new Camelizer(), new Mappings($this->mappings));
+        }
+        
+        return $this->dumper;
     }
     
     private function checkDump($resource, $key, $value)
@@ -49,16 +70,34 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         $dumped = $d->dump($resource);
         $this->assertTrue($dumped instanceof Response);
         $result = $dumped->toArray();
-        $this->assertSame($value, $result[$key]);
+        $this->assertEquals($value, $result[$key]);
     }
     
     public function testObject()
     {
-        $this->addMapping('Entity', array('name','child'));
+        $this->addMapping('Entity', array('name','child','created_at','enabled','child.name'));
         $this->addMapping('EntityChild', array('name'));
         
         $e = new Entity('Foo');
-        $this->checkDump($e, 'record', array('name'=>'Foo', 'child' => array('name'=>'Bar')));
+        $this->checkDump($e, 'record', array(
+            'name'=>'Foo',  
+            'enabled' => true, 
+            'created_at' => '2011-01-01', 
+            'child.name' => 'Bar',
+            'child' => array(
+                'name'=>'Bar'
+                )));
+    }
+    
+    public function testAdmin()
+    {
+        $this->addMapping('Entity', array('name'));
+        $this->addMapping('Entity', array('enabled'), 'admin');
+        
+        $e = new Entity("Foo");
+        
+        $this->dumper = new Dumper($this->getAdminSecurity(), new Camelizer(), new Mappings($this->mappings));
+        $this->checkDump($e, 'record', array('name' => "Foo", 'enabled' => true));
     }
     
     public function testPager()
@@ -85,5 +124,15 @@ class DumperTest extends \PHPUnit_Framework_TestCase
         $this->addMapping('Entity', array('name'));
         $this->checkDump(array(new Entity("Frank")), 'total', 1);
         $this->checkDump(array(new Entity("Frank")), 'records', array(array('name' => 'Frank')));
+    }
+    
+    public function testMappingNotFound()
+    {
+        try {
+            $this->checkDump($this->getSecurity(), 'foo', 'bar');
+            $this->fail();
+        } catch (ExtJSException $e) {
+            
+        }
     }
 }

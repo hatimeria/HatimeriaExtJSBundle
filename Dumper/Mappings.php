@@ -45,12 +45,12 @@ class Mappings
         
         if ($isAdmin) {
             // add admin fields if configuration has them
-           if ($this->hasMapping($class, self::ADMIN_FIELD_GROUP)) {
-               $fields += $this->getGroup($class, self::ADMIN_FIELD_GROUP);
+           if ($this->has($class, self::ADMIN_FIELD_GROUP)) {
+               $fields = array_merge($fields, $this->getGroup($class, self::ADMIN_FIELD_GROUP));
            }
         }
         
-        $fields += $this->getGroup($class, self::DEFAULT_FIELD_GROUP);
+        $fields = array_merge($fields, $this->getGroup($class, self::DEFAULT_FIELD_GROUP));
         
         return $fields;
     }
