@@ -7,7 +7,7 @@ namespace Hatimeria\ExtJSBundle\Tests;
  *
  * @author Michal Wujas
  */
-class Entity
+class EntityChild
 {
     private $name;
     
@@ -19,10 +19,5 @@ class Entity
     public function getName()
     {
         return $this->name;
-    }
-    
-    public function getChild()
-    {
-        return new EntityChild('Bar');
     }
 }

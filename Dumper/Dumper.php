@@ -8,18 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use \DateTime;
 
 /**
- * Collection or Pager to Array conversion
+ * Collection, Pager or Object to Array conversion
+ * Configurable paths for object properties
  *
  * @author Michal Wujas
  */
 class Dumper
 {
-    /**
-     * Entity Manager
-     *
-     * @var EntityManager
-     */
-    private $em;
     /**
      * Signed user is an admin ?
      *
@@ -59,17 +54,16 @@ class Dumper
      */    
     const DEFAULT_FIELD_GROUP = 'default';
 
-    public function __construct($em, $security, $camelizer, $mappings)
+    public function __construct($security, $camelizer, $mappings)
     {
-        $this->isAdmin = $security->getToken() ? $security->isGranted('ROLE_ADMIN') : false;
-        $this->em = $em;
+        $this->isAdmin   = is_object($security->getToken()) ? $security->isGranted('ROLE_ADMIN') : false;
         $this->camelizer = $camelizer;
-        $this->mappings = $mappings;
+        $this->mappings  = $mappings;
     }
 
-    private function hasMapping($entityName)
+    private function hasMapping($entityName, $groupName = self::DEFAULT_FIELD_GROUP)
     {
-        return isset($this->mappings[$entityName]);
+        return isset($this->mappings[$entityName]['fields'][$groupName]);
     }
     
     public function dumpObject($object, $fields = array())
@@ -98,7 +92,7 @@ class Dumper
         
         if ($this->isAdmin) {
             // add admin fields if configuration has them
-           if (isset($this->mappings[$entityName]['fields'][self::ADMIN_FIELD_GROUP])) {
+           if ($this->hasMapping($entityName, self::ADMIN_FIELD_GROUP)) {
                $fields += $this->getGroupMappingFields($entityName, self::ADMIN_FIELD_GROUP);
            }
         }
