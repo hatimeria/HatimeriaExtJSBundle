@@ -9,6 +9,7 @@ use Hatimeria\ExtJSBundle\Response\Records;
 use Hatimeria\ExtJSBundle\Response\Success;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\PersistentCollection;
 
 use \DateTime;
 
@@ -276,7 +277,7 @@ class Dumper
             if (is_object($value)) {
                 if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d');
-                } else if ($value instanceof ArrayCollection) {
+                } else if ($value instanceof ArrayCollection || $value instanceof PersistentCollection) {
                     $records = array();
 
                     foreach ($value as $entity) {
