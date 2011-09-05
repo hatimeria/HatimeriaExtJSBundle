@@ -11,7 +11,7 @@ class Records implements Response
 {
     private $limit = 0, $total, $records, $start = 0;
     
-    public function records(array $records)
+    public function result(array $records)
     {
         $this->total   = count($records);
         $this->records = $records;

@@ -139,7 +139,7 @@ class Dumper
                 }
             }
             
-            $r->records($records);
+            $r->result($records);
             
             if($isPager) {
                 $r->limit($resource->getLimit());
