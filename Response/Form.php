@@ -20,16 +20,24 @@ class Form extends Validation
      *
      * @var Form
      */
-    private $form;
-    
+    private $forms;
+    /**
+     * @var array
+     */
+    private $extraErrors = array();
+
     /**
      * New error list
      *
      * @param mixed $mixed form or errors array
      */
-    public function __construct(SymfonyForm $form)
+    public function __construct($forms)
     {
-        $this->form = $form;
+        if (!is_array($forms)) {
+            $forms = array($forms);
+        }
+        
+        $this->forms = $forms;
     }
     
     /**
@@ -41,20 +49,46 @@ class Form extends Validation
     {
         // @todo children recursion
         $list = array();
-        
-        foreach($this->form->getChildren() as $field) {
-            if (!$field->hasErrors()) continue;
-            $messages = array();
-            foreach($field->getErrors() as $error) {
-                $messages[] = $error->getMessageTemplate();
+
+        foreach ($this->forms as $form) {
+            /* @var \Symfony\Component\Form\Form $form */
+            foreach($form->getChildren() as $field) {
+                if (!$field->hasErrors()) continue;
+                $messages = array();
+                foreach($field->getErrors() as $error) {
+                    $messages[] = $error->getMessageTemplate();
+                }
+
+                $list[$field->getName()] = $messages;
             }
-            
-            $list[$field->getName()] = $messages;
         }
-        
+        $list = array_merge($list, $this->extraErrors);
+
         return $list;
     }    
-    
+
+    /**
+     * Additional errors 
+     *
+     * @param array $v
+     * @return void
+     */
+    public function setExtraErrors(array $v)
+    {
+        $this->extraErrors = $v;
+    }
+
+    /**
+     * Add single additional error to extra errors
+     * 
+     * @param string $key
+     * @param string $value
+     * @return void
+     */
+    public function addExtraError($key, $value)
+    {
+        $this->extraErrors[$key] = $value;
+    }
     /**
      * Is form valid ?
      *
@@ -62,6 +96,15 @@ class Form extends Validation
      */
     public function isValid()
     {
-        return $this->form->isValid();
+        $valid = true;
+
+        foreach ($this->forms as $form) {
+            /* @var \Symfony\Component\Form\Form $form */
+            $valid = $valid && $form->isValid();
+        }
+        
+        $valid = $valid && empty($this->extraErrors);
+        
+        return $valid;
     }
 }
