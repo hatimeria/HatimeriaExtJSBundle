@@ -147,7 +147,14 @@ class Dumper
             }
             
             return $r;
-            
+        } elseif ($resource instanceof ArrayCollection || $resource instanceof PersistentCollection) {
+            $records = array();
+
+            foreach ($resource as $element) {
+                $records[] = $this->dumpObject($element);
+            }
+            $r = new Success();
+            $r->set("record", $records);
         } elseif (is_object($resource)) {
             $r = new Success();
             $r->set("record", $this->dumpObject($resource));
