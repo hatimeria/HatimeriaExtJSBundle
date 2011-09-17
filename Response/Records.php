@@ -33,6 +33,11 @@ class Records implements Response
         
         return $this;
     }
+
+    public function getRecords()
+    {
+        return $this->records;
+    }
     
     public function toArray()
     {
