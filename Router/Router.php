@@ -106,7 +106,7 @@ class Router
                 if($response instanceof ResponseInterface) {
                     $response = $response->toArray();
                 } else {
-                    $response = $this->container->get('hatimeria_extjs.dumper')->dump($response);
+                    $response = $this->container->get('hatimeria_extjs.dumper')->dump($response)->toArray();
                 }
             }
             
