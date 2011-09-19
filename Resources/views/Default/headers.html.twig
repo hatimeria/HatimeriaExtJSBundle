@@ -5,6 +5,7 @@
 <script type="text/javascript">
     Ext.Loader.setConfig({
         enabled : true,
+        {% if main_filename == 'ext-all'  %} disableCaching:  false,{% endif %}
         paths   : {
             'HatimeriaCore' : '/bundles/hatimeriaextjs/js',
             // @todo move to HatimeriaAdminBundle and make this place configurable
