@@ -259,6 +259,11 @@ You can just configure this behaviour in yml. Related objects are automatically 
     });
 ```
 
+## Common errors
+
+Annotation not imported or method is not available remotely:
+Make sure method comment looks exactly like above example, no extra lines, spaces etc.
+
 ## Error handling
 
 When ajax request got symfony exception output JS Direct Api Handler will render it to Developer in nice popup window.
