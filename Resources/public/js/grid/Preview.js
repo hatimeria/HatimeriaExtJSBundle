@@ -3,7 +3,7 @@
  *  
  */
 
-Ext.ns("Hatimeria");
+Ext.ns("HatimeriaCore");
 
 Ext.define("HatimeriaCore.grid.Preview", {
     init: function() {
@@ -93,7 +93,6 @@ Ext.define("HatimeriaCore.grid.Preview", {
             width: 800,
             title: this.config.title || 'Preview grid',
             columns: columns,
-            renderTo: this.config.renderTo || Ext.fly('body'),
             dockedItems: [{
                     xtype: 'pagingtoolbar',
                     store: store,
@@ -102,7 +101,15 @@ Ext.define("HatimeriaCore.grid.Preview", {
             }]
         };
         
+        if(typeof this.config.renderTo != 'function') {
+            gridParams.renderTo = this.config.renderTo || Ext.fly('body');
+        }
+        
         me.grid  = Ext.create("Ext.grid.Panel", gridParams);
+        
+        if(typeof this.config.renderTo == 'function') {
+            this.config.renderTo(me.grid);
+        }        
     },
     constructor: function(config){
         this.initConfig(config);
