@@ -29,6 +29,19 @@ class DefaultController extends Controller
     }
     
     /**
+     * Variables for javascript
+     * 
+     * @return string
+     */
+    public function variablesAction()
+    {
+        return $this->render('HatimeriaExtJSBundle:Default:variables.html.twig', 
+                array(
+                    'dev_mode' => $this->container->getParameter("kernel.debug"),
+                ));        
+    }
+    
+    /**
      * Bundle parameter
      *
      * @param string $key
