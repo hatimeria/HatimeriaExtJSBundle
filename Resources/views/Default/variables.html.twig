@@ -3,6 +3,9 @@
     var user = {
             signedIn: {{ is_granted("ROLE_USER") ? 'true': 'false' }},
             isAdmin:  {{ is_granted("ROLE_ADMIN") ? 'true': 'false' }}
+            {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
+            ,isSwitched: true
+            {% endif %}
             {% if is_granted("ROLE_USER") %}
             ,data: {
                 username: '{{ app.user.username }}'

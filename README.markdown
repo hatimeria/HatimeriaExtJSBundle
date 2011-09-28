@@ -21,6 +21,7 @@ Now it is maintained by Hatimeria company.
 ## Documentation
 
 [Read the documentation](https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/index.md)
+
 [Read the changelog](https://github.com/hatimeria/HatimeriaExtJSBundle/blob/master/Resources/doc/changelog.md)
 
 ## Todo

@@ -1,3 +1,4 @@
+// depracated, use HatimeriaAdminBundle UserSwitch instead
 Ext.onReady(function() {
     Ext.ns('App.User.Form.Switch');
 
