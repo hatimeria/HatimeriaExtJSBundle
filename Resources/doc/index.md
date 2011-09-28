@@ -274,7 +274,7 @@ If this happens in non dev environment popup window contains only simple error m
 
 [CMF Application](https://github.com/hatimeria/hatimeria)
 
-![Example application screenshot](https://github.com/hatimeria/hatimeria/raw/master/Resources/doc/images/admin.png)
+![Example application screenshot](https://github.com/hatimeria/hatimeria/raw/master/app/Resources/doc/images/admin.png)
 
 ### Finished
 
