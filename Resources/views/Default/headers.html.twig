@@ -1,7 +1,5 @@
 <script type="text/javascript" src="{{ asset(javascript_vendor_path~main_filename~'.js') }}"> </script>
 <script type="text/javascript" src="{{ asset(javascript_vendor_path~'locale/ext-lang-'~locale~'.js') }}"> </script>
-<script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/direct-api-handler.js') }}"> </script>
-<script type="text/javascript" src="{{ path('api') }}"> </script>
 <script type="text/javascript">
     Ext.Loader.setConfig({
         enabled : true,
@@ -13,3 +11,5 @@
         } 
     });
 </script>
+<script type="text/javascript" src="{{ path('api') }}"> </script>
+<script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/direct-api-handler.js') }}"> </script>

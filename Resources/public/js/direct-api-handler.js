@@ -5,7 +5,8 @@
  * - 500 fatal without output
  */ 
 
-Ext.Direct.on('event', function(response) {
+Ext.require('Ext.direct.Manager', function() {
+    Ext.direct.Manager.on('event', function(response) {
     
     // accesible if ext exception is thrown
     var xhr = response.xhr;
@@ -66,4 +67,5 @@ Ext.define("App.Direct.UserErrorMessage", {
     height: 50,
     autoScroll: true,
     bodyStyle: 'background: white; padding: 15px'
+});
 });
