@@ -5,6 +5,7 @@ namespace Hatimeria\ExtJSBundle\Router;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 use Hatimeria\ExtJSBundle\Exception\ExtJSException;
 use Hatimeria\ExtJSBundle\Response\Success;
@@ -88,13 +89,28 @@ class Router
         $controller = $this->resolveController($call->getAction());
         $method = $call->getMethod()."Action";
 
-        if (!is_callable(array($controller, $method))) {
+        \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName("remote");
+        \Doctrine\Common\Annotations\AnnotationReader::addGlobalIgnoredName("form");
+        
+        $event = new FilterControllerEvent($this->container->get("kernel"), array($controller, $method), $this->container->get('request'), 'GET');
+        
+        $listener = $this->container->get("security.extra.controller_listener");
+        $listener->onCoreController($event);
+
+        $controller = $event->getController();
+        
+        if (!is_callable($controller)) {
             throw new ExtJSException(sprintf("Controller %s method %s is not callable", get_class($controller), $method));
         }
 
         try
         {
-            $response = $controller->$method($call->getParams(), $this->request->getFiles());
+            if($controller instanceof \Closure) {
+                $response = $controller($call->getParams(), $this->request->getFiles());
+            } else {
+                $response = $controller[0]->$method($call->getParams(), $this->request->getFiles());
+            }
+            
 
             // default behavior - everything went fine
             if($response == null) {

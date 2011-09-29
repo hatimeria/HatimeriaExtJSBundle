@@ -12,16 +12,16 @@ Ext.require('Ext.direct.Manager', function() {
     var xhr = response.xhr;
     
     if(xhr) {
-        var window = null;
+        var errorWindow = null;
         if(App.Direct.environment == 'dev') {
-            window = Ext.create('App.Direct.DevErrorMessage', {html: xhr.responseText});
-            window.setTitle("Backend error");
+            errorWindow = Ext.create('App.Direct.DevErrorMessage', {html: xhr.responseText});
+            errorWindow.setTitle("Backend error");
         } else {
             // user friendly window title
-            window = new App.Direct.UserErrorMessage();
+            errorWindow = new App.Direct.UserErrorMessage();
         }
         
-        window.show();
+        errorWindow.show();
     }
     
     // normal response content;
@@ -36,7 +36,9 @@ Ext.require('Ext.direct.Manager', function() {
     {
         case 404:
             if(console) {
-                console.log('404');
+                // @todo change to something better
+                errorWindow = new App.Direct.UserErrorMessage();
+                errorWindow.show();
             }
             break;
         case 403:
