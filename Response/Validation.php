@@ -74,10 +74,12 @@ class Validation implements Response
      */
     public function getProperty($error)
     {
-        $property = $error->getPropertyPath();
-
-        if ($property) {
-            return $property;
+        if(is_callable($error, 'getPropertyPath')) {
+            $property = $error->getPropertyPath();
+            
+            if ($property) {
+                return $property;
+            }
         }
         
         $parameters = $error->getMessageParameters();

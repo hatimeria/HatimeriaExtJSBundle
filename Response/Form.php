@@ -51,6 +51,13 @@ class Form extends Validation
         $list = array();
 
         foreach ($this->forms as $form) {
+            
+            if($form->hasErrors()) {
+                foreach($form->getErrors() as $error) {
+                    $list[$this->getProperty($error)] = $error->getMessageTemplate();
+                }
+            }
+            
             /* @var \Symfony\Component\Form\Form $form */
             foreach($form->getChildren() as $field) {
                 if (!$field->hasErrors()) continue;
@@ -66,7 +73,7 @@ class Form extends Validation
 
         return $list;
     }    
-
+    
     /**
      * Additional errors 
      *
