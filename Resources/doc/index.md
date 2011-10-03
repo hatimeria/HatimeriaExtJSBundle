@@ -123,6 +123,8 @@ You can just configure this behaviour in yml. Related objects are automatically 
     use Hatimeria\ExtJSBundle\Response\Success;
     use Hatimeria\ExtJSBundle\Response\Form;
     use Hatimeria\ExtJSBundle\Response\Validation;
+    use Hatimeria\ExtJSBundle\Annotation\Remote as remote;
+    use Hatimeria\ExtJSBundle\Annotation\Remote as form;
 
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
