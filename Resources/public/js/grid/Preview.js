@@ -3,8 +3,6 @@
  *  
  */
 
-Ext.ns("HatimeriaCore");
-
 Ext.define("HatimeriaCore.grid.Preview", {
     init: function() {
         var me = this;
