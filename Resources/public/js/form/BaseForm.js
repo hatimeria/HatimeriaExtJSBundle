@@ -1,14 +1,17 @@
 Ext.define("HatimeriaCore.form.BaseForm", {
     extend: "Ext.form.Panel",
+    mixins: {
+        translationable: 'HatimeriaCore.mixins.Translationable'
+    },    
     initComponent: function(config) {
-        if(this.submit) {
+        if(this.submitConfig) {
             this.mountSubmit();
         }
         this.callParent([config]);
     },
     mountSubmit: function() {
         
-        var config = this.submit;
+        var config = this.submitConfig;
         var handler = Ext.create("HatimeriaCore.form.ResponseHandler");
         handler.failureWindowTitle = config.failureWindowTitle;
         handler.success = config.success;
