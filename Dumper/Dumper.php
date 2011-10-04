@@ -144,6 +144,7 @@ class Dumper
             if($isPager) {
                 $r->limit($resource->getLimit());
                 $r->total($resource->getCount());
+                $r->start($resource->getStart());
             }
             
             return $r;

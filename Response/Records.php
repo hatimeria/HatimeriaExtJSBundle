@@ -26,6 +26,13 @@ class Records implements Response
         
         return $this;
     }
+
+    public function start($start)
+    {
+        $this->start = $start;
+
+        return $this;
+    }
     
     public function total($total)
     {
