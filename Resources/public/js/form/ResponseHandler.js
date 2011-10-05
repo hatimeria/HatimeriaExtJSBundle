@@ -1,41 +1,53 @@
 Ext.define("HatimeriaCore.form.ResponseHandler", {
-    failure: function(form, action) {
+    extend: 'HatimeriaCore.response.BaseHandler',
+    
+    failure: function(form, action)
+    {
         var info = '';
-        var type = typeof action.result.msg
-        var msg = action.result.msg;
+        var result = action.result;
         
-        if(type == 'object') {
+        this.callParent([result]);
+        
+        var msg = result.msg;
+
+        if (typeof result.msg == 'object')
+        {
             info += "";
             msg.global = null;
-            
-            for(property in msg) {
-                
-                for(i in msg[property]) {
+
+            for (var property in msg)
+            {
+                for (var i in msg[property])
+                {
                     var translationKey = 'validators:' + msg[property];
-                    if(ExposeTranslation.has(translationKey)) {
+                    if (ExposeTranslation.has(translationKey))
+                    {
                         msg[property] = __(translationKey);
                     }
-                    
+
                 }
-                
+
                 var field = this.formPanel.getFieldByName(property);
-                if(field) {
+                if (field)
+                {
                     field.markInvalid(msg[property]);
                     continue;
                 }
-                
-                for(i in msg[property]) {
+
+                for (i in msg[property])
+                {
                     info += msg[property][i] + "<br/>"
                 }
             }
-            
-        } else {
+        }
+        else
+        {
             info = msg;
         }
-        
-        if(info != '') {
-            Ext.Msg.alert(this.failureWindowTitle || __("form.error.title"), info);
+
+        if (info != '')
+        {
+            this.displayMessage(info, this.failureWindowTitle || __("form.error.title"));
         }
-        
     }
 });
