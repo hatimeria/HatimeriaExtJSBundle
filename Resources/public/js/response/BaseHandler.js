@@ -4,15 +4,77 @@
 (function() {
     
     Ext.define('HatimeriaCore.response.BaseHandler', {
+        config: {
+            
+            /**
+             * Window alert
+             * 
+             * @var string
+             */
+            failureWindowTitle: 'Alert'
+        },
+        
+        /**
+         * Error message
+         * 
+         * @var mixed
+         */
+        msg: undefined,
+        
+        /**
+         * Global errors
+         * 
+         * @var []
+         */
+        globalMsg: [],
+        
+        /**
+         * Constructor
+         * 
+         * @param {} config
+         */
+        constructor: function(config)
+        {
+            this.initConfig(config);
+            
+            return this;
+        },
         
         /**
          * Error 
          * 
          * @param {} result
          */
-        failure: function()
+        failure: function(result)
         {
-            
+            this.globalMsg = [];
+            this.msg = result.msg;
+
+            if (typeof this.msg == 'object')
+            {
+                for (var property in this.msg)
+                {
+                    for (var i in this.msg[property])
+                    {
+                        var translationKey = 'validators:' + this.msg[property][i];
+                        if (ExposeTranslation.has(translationKey))
+                        {
+                            this.msg[property][i] = __(translationKey);
+                        }
+                    }
+
+                    this.markMessage(property);
+                }
+            }
+            else
+            {
+                this.globalMsg.push(this.msg);
+            }
+
+            if (this.globalMsg.length)
+            {
+                this.displayMessage();
+            }
         },
         
         /**
@@ -20,9 +82,33 @@
          * 
          * @param {} result
          */
-        displayMessage: function(info, title)
+        displayMessage: function()
         {
-            Ext.Msg.alert(title, info);
+            var msg = new Ext.XTemplate([
+                '<ul style="list-style-type: square; list-style-position: outsite;">',
+                    '<tpl for=".">',
+                        '<li>{.}</li>',
+                    '</tpl>',
+                '</ul>'
+            ]).apply(this.globalMsg);
+            
+            Ext.Msg.alert(this.getFailureWindowTitle(), msg);
+        },
+        
+        /**
+         * Marks message in specific place
+         * 
+         * @param string index
+         */
+        markMessage: function(index)
+        {
+            var msg = this.msg[index];
+            if (typeof msg == 'object')
+            {
+                msg = msg.join(', ');
+            }
+            
+            this.globalMsg.push(msg);
         }
 
     });

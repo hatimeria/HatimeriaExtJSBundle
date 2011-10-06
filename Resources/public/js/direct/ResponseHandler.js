@@ -31,6 +31,9 @@
              */
             error: undefined,
             
+            /**
+             * Scope of functions success, error
+             */
             scope: undefined
         },
         
@@ -48,8 +51,11 @@
          */
         constructor: function(config)
         {
+            this.callParent([config]);
             this.initConfig(config);
             this.init();
+            
+            return this;
         },
 
         /**
@@ -114,7 +120,6 @@
         failure: function(result, response)
         {
             this.callParent([result]);
-            this.displayMessage(response.msg, this.failureWindowTitle || __("form.error.title"));
         },
         
         /**

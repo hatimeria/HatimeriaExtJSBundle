@@ -22,10 +22,11 @@ Ext.define("HatimeriaCore.form.BaseForm", {
     mountSubmit: function()
     {
         var config = this.submitConfig;
-        var handler = Ext.create("HatimeriaCore.form.ResponseHandler");
-        handler.failureWindowTitle = config.failureWindowTitle;
-        handler.success = config.success;
-        handler.formPanel = this;
+        var handler = Ext.create("HatimeriaCore.form.ResponseHandler", {
+            failureWindowTitle: config.failureWindowTitle || 'Alert',
+            success: config.success || function() {},
+            formPanel: this
+        });
         
         var submitButton = {
             text: config.text,
