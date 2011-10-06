@@ -49,14 +49,20 @@
         {
             this.globalMsg = [];
             this.msg = result.msg;
+            var translationKey, i;
 
             if (typeof this.msg == 'object')
             {
                 for (var property in this.msg)
                 {
-                    for (var i in this.msg[property])
+                    if (property == 'global')
                     {
-                        var translationKey = 'validators:' + this.msg[property][i];
+                        continue;
+                    }
+                    
+                    for (i in this.msg[property])
+                    {
+                        translationKey = 'validators:' + this.msg[property][i];
                         if (ExposeTranslation.has(translationKey))
                         {
                             this.msg[property][i] = __(translationKey);
