@@ -159,6 +159,8 @@ class Dumper
         } elseif (is_object($resource)) {
             $r = new Success();
             $r->set("record", $this->dumpObject($resource));
+            // for BasicForm api load function compability
+            $r->set("data", $this->dumpObject($resource));
         } else {
             $r = new Success();
             $r->set("record", $resource);
