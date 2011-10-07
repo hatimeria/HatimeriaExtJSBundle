@@ -1,41 +1,50 @@
 Ext.define("HatimeriaCore.form.ResponseHandler", {
-    failure: function(form, action) {
-        var info = '';
-        var type = typeof action.result.msg
-        var msg = action.result.msg;
+    extend: 'HatimeriaCore.response.BaseHandler',
+    config: {
+        success: function() {},
+        formPanel: {}
+    },
+    
+    /**
+     * Constructor
+     * 
+     * @param {} config
+     */
+    constructor: function(config)
+    {
+        this.callParent([config]);
+        this.initConfig(config);
         
-        if(type == 'object') {
-            info += "";
-            msg.global = null;
-            
-            for(property in msg) {
-                
-                for(i in msg[property]) {
-                    var translationKey = 'validators:' + msg[property];
-                    if(ExposeTranslation.has(translationKey)) {
-                        msg[property] = __(translationKey);
-                    }
-                    
-                }
-                
-                var field = this.formPanel.getFieldByName(property);
-                if(field) {
-                    field.markInvalid(msg[property]);
-                    continue;
-                }
-                
-                for(i in msg[property]) {
-                    info += msg[property][i] + "<br/>"
-                }
-            }
-            
-        } else {
-            info = msg;
+        return this;
+    },
+    
+    /**
+     * Manage failure case
+     * 
+     * @param Ext.form.Base form
+     * @param {} action
+     */
+    failure: function(form, action)
+    {
+        this.callParent([action.result]);
+    },
+    
+    /**
+     * Mark fields as invalid
+     * 
+     * @param string index
+     */
+    markMessage: function(index)
+    {
+        var field = this.getFormPanel().getFieldByName(index);
+        if (field)
+        {
+            field.markInvalid(this.msg[index]);
         }
-        
-        if(info != '') {
-            Ext.Msg.alert(this.failureWindowTitle || __("form.error.title"), info);
+        else
+        {
+            this.globalMsg.push(this.msg[index].join(', '));
         }
-        
     }
+    
 });

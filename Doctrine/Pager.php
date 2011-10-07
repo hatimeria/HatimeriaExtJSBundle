@@ -144,6 +144,7 @@ class Pager implements Response
         }
 
         $this->limit = $this->params->getInt('limit', 10);
+        $this->start = $this->params->getInt('start', 0);
 
         if ($this->params->has('page')) {
             $offset = ($this->params->get('page') - 1) * $this->limit;
@@ -178,4 +179,10 @@ class Pager implements Response
     {
         return $this->entities;
     }
+
+    public function getStart()
+    {
+        return $this->start;
+    }
+
 }
