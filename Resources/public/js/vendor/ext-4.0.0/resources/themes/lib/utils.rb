@@ -59,7 +59,9 @@ module ExtJS4
           if relative
             image_path = File.join(relative_path, theme, path)
           else
-            images_path = File.join($ext_path, 'resources', 'themes', 'images', theme)
+            # changed according to: http://www.sencha.com/learn/theming/
+            # images_path = File.join($ext_path, 'resources', 'themes', 'images', theme)
+            images_path = relative_path
             image_path = File.join(images_path, path)
           end
           
