@@ -61,7 +61,7 @@
                     {
                         xtype: 'checkbox',
                         fieldLabel: false,
-                        boxLabel: this.getCheckboxLabel(),
+                        boxLabel: this.getCheckboxLabel()+'<em class="ux-required">*</em>',
                         name: 'agreement'
                     }
                 ]

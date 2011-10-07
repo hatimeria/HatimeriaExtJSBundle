@@ -30,6 +30,7 @@ Ext.define("HatimeriaCore.form.BaseForm", {
         
         var submitButton = {
             text: config.text,
+            cls: 'ux-submit-btn',
             handler: function() {
                 var form = this.up('form').getForm();
                 if (form.isValid())
