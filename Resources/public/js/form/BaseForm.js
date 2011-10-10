@@ -22,7 +22,10 @@ Ext.define("HatimeriaCore.form.BaseForm", {
     mountSubmit: function()
     {
         var config = this.submitConfig;
-        var handler = Ext.create("HatimeriaCore.form.ResponseHandler", {
+        
+        this.submitConfig = this.submitConfig || {};
+        
+        var submitHandler = Ext.create("HatimeriaCore.form.ResponseHandler", {
             failureWindowTitle: config.failureWindowTitle || 'Alert',
             success: config.success || function() {},
             formPanel: this
@@ -35,10 +38,12 @@ Ext.define("HatimeriaCore.form.BaseForm", {
                 var form = this.up('form').getForm();
                 if (form.isValid())
                 {
-                    form.submit(handler);
+                    form.submit(submitHandler);
                 }
-            }             
+            }
         };
+        
+        this.submitHandler = submitHandler;
         
         if (!this.buttons)
         {
