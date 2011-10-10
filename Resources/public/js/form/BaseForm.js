@@ -22,15 +22,11 @@ Ext.define("HatimeriaCore.form.BaseForm", {
     mountSubmit: function()
     {
         var config = this.submitConfig;
-        
-        this.submitConfig = this.submitConfig || {};
-        
         var submitHandler = Ext.create("HatimeriaCore.form.ResponseHandler", {
             failureWindowTitle: config.failureWindowTitle || 'Alert',
             success: config.success || function() {},
             formPanel: this
         });
-        
         var submitButton = {
             text: config.text,
             cls: 'ux-submit-btn',
