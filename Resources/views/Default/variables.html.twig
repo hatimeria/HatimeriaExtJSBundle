@@ -1,6 +1,6 @@
 <script type="text/javascript">
     var dev_mode = {{ dev_mode ? 'true': 'false' }};
-    var user = {
+    var _user = {
             signedIn: {{ is_granted("ROLE_USER") ? 'true': 'false' }},
             isAdmin:  {{ is_granted("ROLE_ADMIN") ? 'true': 'false' }}
             {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
