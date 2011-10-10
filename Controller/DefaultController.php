@@ -24,7 +24,8 @@ class DefaultController extends Controller
                 array(
                     'main_filename' => $this->getParameter("js_filename"),
                     'javascript_vendor_path' => $this->getParameter("javascript_vendor_path"),
-                    'locale'      => $this->container->getParameter("locale")
+                    'locale'      => $this->container->getParameter("locale"),
+                    'disable_caching' => $this->getParameter('loader_disable_caching')
                 ));
     }
     
@@ -37,8 +38,8 @@ class DefaultController extends Controller
     {
         return $this->render('HatimeriaExtJSBundle:Default:variables.html.twig', 
                 array(
-                    'dev_mode' => $this->container->getParameter("kernel.debug"),
-                ));        
+                    'dev_mode' => $this->container->getParameter("kernel.debug")
+                ));
     }
     
     /**
