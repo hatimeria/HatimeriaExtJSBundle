@@ -57,7 +57,7 @@ class Pager implements Response
      *
      * @param EntityManager           $em
      */
-    public function __construct(EntityManager $em, $params, $dumper, $camelizer)
+    public function __construct(EntityManager $em, ParameterBag $params, $dumper, $camelizer)
     {
         $this->em        = $em;
         $this->params    = $params;
