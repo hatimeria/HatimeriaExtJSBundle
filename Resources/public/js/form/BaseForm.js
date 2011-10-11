@@ -7,13 +7,14 @@ Ext.define("HatimeriaCore.form.BaseForm", {
     /**
      * Initialization
      */
-    initComponent: function(config)
+    initComponent: function()
     {
         if (this.submitConfig)
         {
             this.mountSubmit();
         }
-        this.callParent([config]);
+        
+        this.callParent();
     },
     
     /**
@@ -29,7 +30,7 @@ Ext.define("HatimeriaCore.form.BaseForm", {
         });
         var submitButton = {
             text: config.text,
-            cls: 'ux-submit-btn',
+            cls: 'ux-button',
             handler: function() {
                 var form = this.up('form').getForm();
                 if (form.isValid())
