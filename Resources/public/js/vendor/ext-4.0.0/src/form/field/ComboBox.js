@@ -905,7 +905,7 @@ var combo = new Ext.form.field.ComboBox({
                 processedValue.push(value[i]);
             }
         }
-
+        
         // Set the value of this field. If we are multiselecting, then that is an array.
         me.value = me.multiSelect ? processedValue : processedValue[0];
         if (!Ext.isDefined(me.value)) {
