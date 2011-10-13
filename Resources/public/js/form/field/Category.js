@@ -176,6 +176,10 @@
                            for (var i in nodes)
                            {
                                nodes[i].expanded = true;
+                               if (!nodes[i].children || nodes[i].children.length == 0)
+                               {
+                                   nodes[i].leaf = true;
+                               }
                                expand(nodes[i].children)
                            }
                        }
