@@ -63,9 +63,69 @@
         
     });
     
+    Ext.define('HatimeriaCore.store.TreeStore', {
+        extend: 'Ext.data.TreeStore',
+        
+        paramsAsHash: true,
+        
+        /**
+         * Loads all nodes
+         * 
+         * @param {} nodes
+         */
+        loadNodes: function(nodes)
+        {
+            this.getRootNode().appendChild(nodes);
+            this.fireEvent('load', this);
+        },
+        
+        /**
+         * Count of nodes (always one)
+         * 
+         * @return int
+         */
+        getCount: function()
+        { 
+            return 1; 
+        },
+        
+        /**
+         * Search node
+         */
+        findExact: function(field, value)
+        {
+            var find = function(nodes, field, value)
+            {
+                for (var i in nodes)
+                {
+                    if (nodes[i].get(field) == value)
+                    {
+                        return nodes[i];
+                    }
+                    else
+                    {
+                        return find(nodes[i].childNodes, field, value);
+                    }
+                }
+            };
+            
+            var record = find(this.getRootNode().childNodes, field, value);
+            
+            return record;
+        },
+        
+        /**
+         * Get node from a pases position
+         */
+        getAt: function(record)
+        {
+            return record;
+        }
+    });
+    
     
     Ext.define('HatimeriaCore.form.field.Category', {
-        extend: 'Ext.form.field.ComboBox',
+        extend: 'HatimeriaCore.form.ComboBox',
         alias: 'widget.ux-category',
         config: {
             directFn: Ext.emptyFn
@@ -78,6 +138,8 @@
         {
             this.initConfig(config);
             this.callParent([config]);
+            
+            return this;
         },
         
         /**
@@ -90,9 +152,7 @@
                 valueField: 'id',
                 queryMode: 'local',
                 displayField: 'text',
-                store: Ext.create('Ext.data.TreeStore', {
-                    getCount: function() { return 1; },
-                    paramsAsHash: true,
+                store: Ext.create('HatimeriaCore.store.TreeStore', {
                     root: {
                         id: 'root',
                         expanded: true,
@@ -120,7 +180,8 @@
                            }
                        }
                        expand(nodes);
-                       _this.store.getRootNode().appendChild(nodes);
+                       
+                       _this.store.loadNodes(nodes);
                    }
                 });
             });
