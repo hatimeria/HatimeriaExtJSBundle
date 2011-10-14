@@ -54,6 +54,7 @@
                         id: 'agreement-field',
                         fieldLabel: this.getLabel(),
                         labelAlign: 'top',
+                        disabled: true,
                         xtype: 'textarea',
                         width: 350,
                         height: 100
