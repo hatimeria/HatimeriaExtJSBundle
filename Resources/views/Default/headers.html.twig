@@ -10,6 +10,10 @@
             'HatimeriaAdmin' : '/bundles/hatimeriaadmin/js'
         } 
     });
+    
+    function __(key) {
+        return ExposeTranslation.get(key);
+    }
 </script>
 <script type="text/javascript" src="{{ path('api') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/direct-api-handler.js') }}"></script>
