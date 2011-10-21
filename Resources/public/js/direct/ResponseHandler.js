@@ -23,16 +23,23 @@
             
             /**
              * Success case
+             * 
+             * @var function
              */
             success: undefined,
             
             /**
              * Failure case
+             * !!! Error function must return TRUE to run failure method !!!
+             * 
+             * @var function
              */
             error: undefined,
             
             /**
              * Scope of functions success, error
+             * 
+             * @var {}
              */
             scope: undefined
         },
@@ -102,7 +109,10 @@
             {
                 if (typeof this.getError() == 'function')
                 {
-                    this.getError().call(scope, result, response);
+                    if (this.getError().call(scope, result, response))
+                    {
+                        this.failure(result, response);
+                    }
                 }
                 else
                 {
