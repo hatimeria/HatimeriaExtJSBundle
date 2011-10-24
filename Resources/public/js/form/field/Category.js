@@ -3,6 +3,8 @@
  */
 (function() {
     
+    Ext.require('HatimeriaCore.direct.ResponseHandler');
+    
     Ext.define('HatimeriaCore.form.field.TreePicker', {
         extend: 'Ext.tree.Panel',
         
