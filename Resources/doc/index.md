@@ -11,7 +11,13 @@ Follow symfony instructions to add bundle source code from github (use deps)
 
 ### Requirements
 
+* [BazingaExposeTranslationBundle](https://github.com/bazinga/BazingaExposeTranslationBundle)
+* [FOSJsRoutingBundle](https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git)
+
+Optional:
+
 Pager needs [StofDoctrineExtensionsBundle](https://github.com/stof/StofDoctrineExtensionsBundle) with enabled Paginate extension to work.
+
 
 ### Configure autoloader
 

@@ -1,0 +1,11 @@
+direct:
+  title: Błąd po stronie serwera
+  forbidden: Brak dostępu
+  try_later: Nastąpił błąd po stronie serwera. Spróbuj ponownie później.
+  
+form: 
+  alert_title: Formularz zawiera błędy
+
+  image:
+    browse: Przeglądaj
+    delete: Usuń

@@ -1,6 +1,7 @@
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/vendor/jquery/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset(javascript_vendor_path~main_filename~'.js') }}"></script>
 <script type="text/javascript" src="{{ asset(javascript_vendor_path~'locale/ext-lang-'~locale~'.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/bazingaexposetranslation/js/translation.js') }}"></script>
 <script type="text/javascript">
     Ext.Loader.setConfig({
         enabled : true,
@@ -11,8 +12,12 @@
     });
     
     function __(key) {
-        return ExposeTranslation.get(key);
+        return (typeof ExposeTranslation == 'object') ? ExposeTranslation.get(key) : key ;
     }
 </script>
+<script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/routing.js') }}"></script>
+<script type="text/javascript" src="{{ path('fos_js_routing_js') }}"></script>
+<script type="text/javascript" src="{{ url('bazinga_exposetranslation_js', { 'domain_name': 'HatimeriaExtJSBundle'}) }}"></script>
+<script type="text/javascript" src="{{ url('bazinga_exposetranslation_js', { 'domain_name': 'validators' }) }}"></script>
 <script type="text/javascript" src="{{ path('api') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/direct-api-handler.js') }}"></script>

@@ -11,7 +11,7 @@
              * 
              * @var string
              */
-            failureWindowTitle: 'Alert'
+            failureWindowTitle: 'alert'
         },
         
         /**

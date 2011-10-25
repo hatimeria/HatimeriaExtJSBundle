@@ -8,6 +8,8 @@
         mixins: {
             translationable: 'HatimeriaCore.mixins.Translationable'
         },
+        transDomain: 'HatimeriaExtJSBundle',
+        
         config: {
             
             /**
@@ -84,7 +86,7 @@
                 name: this.getImgName(),
                 msgTarget: 'none',
                 fieldLabel: false,
-                buttonText: __("form.image.browse"),
+                buttonText: this.__("form.image.browse"),
                 buttonOnly: true,
                 baseBodyCls: 'image-form-upload',
                 hidden: false,
@@ -98,7 +100,7 @@
                        
             // Delete button:
             var deleteBtn = Ext.create('Ext.button.Button', {
-                text: __("form.image.delete"),
+                text: this.__("form.image.delete"),
                 scope: this,
                 handler: function()
                 {

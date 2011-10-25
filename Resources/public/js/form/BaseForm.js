@@ -3,6 +3,7 @@ Ext.define("HatimeriaCore.form.BaseForm", {
     mixins: {
         translationable: 'HatimeriaCore.mixins.Translationable'
     },
+    transDomain: 'HatimeriaExtJSBundle',
     
     /**
      * Initialization
@@ -24,7 +25,7 @@ Ext.define("HatimeriaCore.form.BaseForm", {
     {
         var config = this.submitConfig;
         var submitHandler = Ext.create("HatimeriaCore.form.ResponseHandler", {
-            failureWindowTitle: config.failureWindowTitle || 'Alert',
+            failureWindowTitle: config.failureWindowTitle || this.__('form.alert_title'),
             success: config.success || function() {},
             formPanel: this
         });

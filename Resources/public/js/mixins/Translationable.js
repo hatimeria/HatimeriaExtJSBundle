@@ -12,25 +12,33 @@
         {
             var _placeholders = placeholders || {};
             var translated = '';
+            var domain = '';
             
-            if(this.transNS) {
-                var fullKey = this.transNS + '.' + key;
+            if (typeof this.transDomain != 'undefined')
+            {
+                domain = this.transDomain + ':';
+            }
+            
+            if (this.transNS)
+            {
+                var fullKey = domain + this.transNS + '.' + key;
                 translated = __(fullKey, _placeholders);
                 
-                if(translated == fullKey) {
+                // if key not exists: return raw key (without domain and transNS)
+                if (translated == fullKey) {
                     translated = __(key, _placeholders);
                 } else {
                     return translated;
                 }
                 
-                if(translated == key) {
+                if (translated == key) {
                     return fullKey;
                 } else {
                     return translated;
                 }
-            } 
+            }
             
-            return __(key, _placeholders);
+            return __(domain + key, _placeholders);
         }
     });
     
