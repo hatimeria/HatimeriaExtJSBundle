@@ -4,3 +4,9 @@ api:
 route:
     pattern: /route
     defaults: { _controller: HatimeriaExtJSBundle:Direct:route}
+hatimeria_login:
+    pattern:  /login
+    defaults: { _controller: HatimeriaExtJSBundle:Security:login }
+hatimeria_after_login:
+    pattern:  /after-login
+    defaults: { _controller: HatimeriaExtJSBundle:Security:afterLogin }    
