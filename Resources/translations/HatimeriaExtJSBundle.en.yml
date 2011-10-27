@@ -1,0 +1,11 @@
+direct:
+  title: Backend error
+  forbidden: Access denied
+  try_later: Backend error. Try again later.
+  
+form: 
+  alert_title: Form contains errors
+
+  image:
+    browse: Browser
+    delete: Delete

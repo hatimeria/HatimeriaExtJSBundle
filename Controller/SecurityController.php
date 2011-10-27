@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Hatimeria\ExtJSBundle\Response\Success;
+use Hatimeria\ExtJSBundle\Response\Failure;
 
 class SecurityController extends Controller
 {
@@ -33,7 +34,7 @@ class SecurityController extends Controller
         }
 
         if ($error) {
-            $failure = new Failure("Nieprawidłowy login lub hasło");
+            $failure = new Failure($this->get('translator')->trans("form.login.failed", array(), "HatimeriaAdminBundle"));
             $content = json_encode($failure->toArray());
             
             return new Response($content);
