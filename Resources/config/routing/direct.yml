@@ -1,0 +1,6 @@
+api:
+    pattern:  /api.js
+    defaults: { _controller: HatimeriaExtJSBundle:Direct:getApi}
+route:
+    pattern: /route
+    defaults: { _controller: HatimeriaExtJSBundle:Direct:route}
