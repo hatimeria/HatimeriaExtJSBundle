@@ -90,7 +90,6 @@ Ext.define('Ext.form.action.Submit', {
                 method: this.getMethod(),
                 headers: this.headers
             });
-
         // For uploads we need to create an actual form that contains the file upload fields,
         // and pass that to the ajax call so it can do its iframe-based submit method.
         if (this.form.hasUpload()) {
@@ -145,7 +144,7 @@ Ext.define('Ext.form.action.Submit', {
                 tag: 'input',
                 type: 'hidden',
                 name: name,
-                value: val
+                value: Ext.String.htmlEncode(val)
             });
         }
 
