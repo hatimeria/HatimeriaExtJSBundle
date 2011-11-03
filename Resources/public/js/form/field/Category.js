@@ -172,22 +172,7 @@
                    fn: this.getDirectFn(),
                    scope: this,
                    success: function(result) {
-                       var nodes = result.record;
-                       var expand = function(nodes)
-                       {
-                           for (var i in nodes)
-                           {
-                               nodes[i].expanded = true;
-                               if (!nodes[i].children || nodes[i].children.length == 0)
-                               {
-                                   nodes[i].leaf = true;
-                               }
-                               expand(nodes[i].children)
-                           }
-                       }
-                       expand(nodes);
-                       
-                       _this.store.loadNodes(nodes);
+                       _this.store.loadNodes(result.record);
                    }
                 });
             });
