@@ -51,15 +51,22 @@
                 border: false,
                 items: [
                     {
+                        xtype: 'label',
+                        text: this.getLabel()
+                    },
+                    {
+                        xtype: 'panel',
                         id: 'agreement-field',
-                        fieldLabel: this.getLabel(),
-                        labelAlign: 'top',
-                        xtype: 'textarea',
-                        isFormField: false,
-                        readOnly: true,
-                        submitValue: false,
-                        width: this.initialConfig.width || 350 ,
-                        height: 100
+                        layout: 'auto',
+                        autoScroll: true,
+                        width: this.initialConfig.width || 350,
+                        bodyStyle: {
+                            background: '#FFF',
+                            overflow: 'auto'
+                        },
+                        margin: '5 0',
+                        height: 100,
+                        html: ''
                     },
                     {
                         xtype: 'checkbox',
@@ -100,7 +107,7 @@
          */
         updateTerms: function(value)
         {
-            this.getComponent('agreement-field').setValue(value);
+            this.getComponent('agreement-field').update(value);
         }
     });
     
