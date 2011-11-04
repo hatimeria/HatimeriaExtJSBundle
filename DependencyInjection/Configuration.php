@@ -21,7 +21,7 @@ class Configuration implements ConfigurationInterface
             ->children()
                 ->scalarNode('javascript_mode')->defaultValue("ext-all-debug")->end()
                 ->scalarNode('loader_disable_caching')->defaultTrue()->end()
-                ->scalarNode('javascript_vendor_path')->defaultValue("bundles/hatimeriaextjs/js/vendor/ext-4.0.0/")->end()
+                ->scalarNode('javascript_vendor_path')->defaultValue("bundles/hatimeriaextjs/js/extjs/vendor/extjs-4.0.7/")->end()
                 ->arrayNode("mappings")
                 ->useAttributeAsKey('id')
                     ->prototype("array")
