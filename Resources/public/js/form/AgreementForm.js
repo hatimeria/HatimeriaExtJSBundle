@@ -26,7 +26,12 @@
             /**
              * Label behind checkbox
              */
-            checkboxLabel: 'Akceptuję requlamin'
+            checkboxLabel: 'Akceptuję requlamin',
+            
+            /** 
+             * Wysokość pola na regulamin
+             */ 
+            fieldHeight: 100
         },
         
         /**
@@ -65,7 +70,7 @@
                             overflow: 'auto'
                         },
                         margin: '5 0',
-                        height: 100,
+                        height: this.getFieldHeight(),
                         html: ''
                     },
                     {
