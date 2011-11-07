@@ -21,4 +21,15 @@ if [ ! -L extjs ]; then
     ln -s ../../../../../../hatimeria/HatimeriaExtJS/src extjs
 fi
 
-echo "DONE! Remember to set up your deps."
+cd ../../../../../../..
+
+if grep -q "target=/hatimeria/HatimeriaExtJS" "deps" ; then
+  echo "Deps already updated!"
+else
+  echo "[HatimeriaExtJS]" >> deps
+  echo "  git=git://github.com/hatimeria/HatimeriaExtJS.git" >> deps
+  echo "  dev=git@github.com:hatimeria/HatimeriaExtJS.git" >> deps
+  echo "  target=/hatimeria/HatimeriaExtJS" >> deps
+  echo "Deps updated!"
+fi
+
