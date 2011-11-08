@@ -146,7 +146,7 @@ class Pager implements Response
         $this->limit = $this->params->getInt('limit', 10);
         $this->start = $this->params->getInt('start', 0);
 
-        if ($this->params->has('page')) {
+        if ($this->params->has('page') && $this->params->get('page') > 0) {
             $offset = ($this->params->get('page') - 1) * $this->limit;
         } else {
             $offset = 0;
