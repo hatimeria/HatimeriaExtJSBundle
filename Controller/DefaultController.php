@@ -4,6 +4,7 @@ namespace Hatimeria\ExtJSBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Hatimeria\ExtJSBundle\DependencyInjection\HatimeriaExtJSExtension;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Default Controller
@@ -53,4 +54,26 @@ class DefaultController extends Controller
     {
         return $this->container->getParameter(HatimeriaExtJSExtension::CONFIG_NAMESPACE.'.'.$key);
     }    
+    
+    /**
+     * Load default view which extends base layout 
+     * with javascript which creates provided from configuration extjs class 
+     */
+    public function initModuleAction($name)
+    {
+        $class = false;
+        
+        if($this->container->hasParameter("extjs_init_modules")) {
+            $modules = $this->container->getParameter("extjs_init_modules");
+            if(isset($modules[$name])) {
+                $class = $modules[$name];
+            }
+        } 
+        
+        if($class === false) {
+            throw new NotFoundHttpException(sprintf("No extjs module assigned to route %s", $name));
+        }
+        
+        return $this->render('HatimeriaExtJSBundle:Default:module.html.twig', array('class' => $class));
+    }
 }

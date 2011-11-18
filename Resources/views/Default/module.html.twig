@@ -1,0 +1,10 @@
+{% extends "::base.html.twig" %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    Ext.require("{{ class }}");
+    Ext.onReady(function(){
+        Ext.create("{{ class }}");
+    });
+</script>
+{% endblock %}

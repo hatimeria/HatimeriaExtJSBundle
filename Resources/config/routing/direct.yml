@@ -4,3 +4,7 @@ api:
 route:
     pattern: /route
     defaults: { _controller: HatimeriaExtJSBundle:Direct:route}
+    
+extjs_module_init:
+    pattern: /extjs/{name}
+    defaults: { _controller: HatimeriaExtJSBundle:Default:initModule}
