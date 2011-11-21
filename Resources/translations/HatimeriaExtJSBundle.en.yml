@@ -9,3 +9,14 @@ form:
   image:
     browse: Browser
     delete: Delete
+    
+  login: 
+    login: Login (Email)
+    password: Password
+    failed: Login or password is incorect
+    failureTitle: Login failed
+    submit: Log in
+  
+window:
+  login:
+    title: Zaloguj się
