@@ -44,7 +44,7 @@ EOT
 
         $filesystem = $this->getContainer()->get('filesystem');
 
-        $originDir = $this->getContainer()->getParameter('kernel.root_dir') . '/../vendor/hatimeria/HatimeriaExtJS/sc';
+        $originDir = $this->getContainer()->getParameter('kernel.root_dir') . '/../vendor/hatimeria/HatimeriaExtJS/src';
         $dir = realpath($originDir);
 
         if (false === $dir) {
