@@ -1,20 +1,5 @@
-Here mount data (symbolic link) from lib/hatimeria/HatimeriaExtJS/src named "extjs":
-
-YOUR_APP/vendor/hatimeria/HatimeriaExtJS/src/ -> YOUR_APP/vendor/bundles/Hatimeria/ExtJSBundle/Resources/public/js/extjs
-
-by:
-
-$ pwd
-YOUR_APP/vendor/bundles/Hatimeria/ExtJSBundle/Resources/public/js/
-
-$ ln -s ../../../../../../hatimeria/HatimeriaExtJS/src/ extjs
-
-DONE!
-
-
-
-
-
+Here mount data (symbolic link) from vendor/hatimeria/HatimeriaExtJS/src named "extjs".
+To symlink use php app/console hatimeria:extjs:install
 
 
 Hatimeria.com
