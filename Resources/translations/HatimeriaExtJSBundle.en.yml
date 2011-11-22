@@ -20,3 +20,8 @@ form:
 window:
   login:
     title: Login
+    
+switch: 
+  back: Back to Admin
+  action: Switch to
+  active: Is switched
