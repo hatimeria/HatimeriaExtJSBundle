@@ -1,0 +1,35 @@
+#!/bin/bash
+
+if [ ! -d ../../../../../bundles ]; then
+  echo "Are you sure that are you in Symfony2 ?"
+  exit 0
+fi
+
+if [ ! -d ../../../../../hatimeria ]; then
+  mkdir ../../../../../hatimeria
+fi
+
+if [ ! -d ../../../../../hatimeria/HatimeriaExtJS ]; then
+    echo "Retrieving package from repository..."
+    git clone git@github.com:hatimeria/HatimeriaExtJS ../../../../../hatimeria/HatimeriaExtJS
+fi
+
+cd ../public/js/
+
+if [ ! -L extjs ]; then
+    echo "Connect symlinks..."
+    ln -s ../../../../../../hatimeria/HatimeriaExtJS/src extjs
+fi
+
+cd ../../../../../../..
+
+if grep -q "target=/hatimeria/HatimeriaExtJS" "deps" ; then
+  echo "Deps already updated!"
+else
+  echo "[HatimeriaExtJS]" >> deps
+  echo "  git=git://github.com/hatimeria/HatimeriaExtJS.git" >> deps
+  echo "  dev=git@github.com:hatimeria/HatimeriaExtJS.git" >> deps
+  echo "  target=/hatimeria/HatimeriaExtJS" >> deps
+  echo "Deps updated!"
+fi
+
