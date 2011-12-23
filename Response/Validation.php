@@ -74,7 +74,7 @@ class Validation implements Response
      */
     public function getProperty($error)
     {
-        if(is_callable($error, 'getPropertyPath')) {
+        if(is_callable(array($error, 'getPropertyPath'))) {
             $property = $error->getPropertyPath();
             
             if ($property) {
@@ -114,7 +114,7 @@ class Validation implements Response
         if(!$isValid) {
             $msg = $this->getFormatted($this->errors);
         }
-        
+
     	return array('success' => $isValid, 'msg' => $msg);
     }
     
