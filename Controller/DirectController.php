@@ -25,7 +25,7 @@ class DirectController extends Controller
         $api = new Api($this->container, $this->get('request'));
         
         
-        $response = sprintf("Ext.require(['Ext.direct.Manager','Ext.direct.RemotingProvider'], function() { 
+        $response = sprintf("Ext.syncRequire(['Ext.direct.Manager','Ext.direct.RemotingProvider'], function() { 
                 Ext.direct.Manager.addProvider(%s); 
             }, window); ", $api);
         // @todo move aditional content to direct parameters class 
