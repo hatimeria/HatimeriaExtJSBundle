@@ -287,6 +287,7 @@ class Dumper
             if (is_object($value)) {
                 if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
+                    $value = str_replace(' 00:00:00', '', $value);
                 } else if ($value instanceof ArrayCollection || $value instanceof PersistentCollection) {
                     $records = array();
 
