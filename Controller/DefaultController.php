@@ -68,12 +68,18 @@ class DefaultController extends Controller
             if(isset($modules[$name])) {
                 $class = $modules[$name];
             }
-        } 
+        }
         
         if($class === false) {
             throw new NotFoundHttpException(sprintf("No extjs module assigned to route %s", $name));
         }
         
-        return $this->render('HatimeriaExtJSBundle:Default:module.html.twig', array('class' => $class));
+        if($this->getRequest()->query->has('test')) {
+            $testClass = $this->getRequest()->query->get('test');
+        } else {
+            $testClass = false;
+        }
+        
+        return $this->render('HatimeriaExtJSBundle:Default:module.html.twig', array('class' => $class, 'testClass' => $testClass));
     }
 }

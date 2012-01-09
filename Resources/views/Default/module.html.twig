@@ -3,8 +3,14 @@
 {% block javascripts %}
 <script type="text/javascript">
     Ext.require("{{ class }}");
-    Ext.onReady(function(){
-        Ext.create("{{ class }}");
+    Ext.onReady(function() {
+        {% if testClass %}
+            Ext.require('{{testClass}}', function() {
+                {{ testClass}}.testMe();
+                });
+        {% else %}
+            Ext.create("{{ class }}");
+        {% endif %}
     });
 </script>
 {% endblock %}
