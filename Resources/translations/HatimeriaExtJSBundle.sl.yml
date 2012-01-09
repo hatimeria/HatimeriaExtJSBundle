@@ -1,0 +1,27 @@
+direct:
+  title: Napaka ozadja
+  forbidden: Dostop zavrnjen
+  try_later: Napaka ozadja. Poskusite kasneje.
+  
+form: 
+  alert_title: Obrazec vsebuje napake
+
+  image:
+    browse: Brskalnik
+    delete: Izbriši
+    
+  login: 
+    login: Prijava (Email)
+    password: Geslo
+    failed: Prijava ali geslo ni pravilno
+    failureTitle: Prijava ni uspela
+    submit: Prijavi
+  
+window:
+  login:
+    title: Prijava
+    
+switch: 
+  back: Nazaj v administracijo
+  action: Preklopi
+  active: Je vklopljen
