@@ -1,29 +1,19 @@
+{% if compiled %}
+    <script type="text/javascript" src="{{ asset('compiled/js/ext-'~locale~'.js') }}"></script>
+{% else %}
 <script type="text/javascript" src="{{ asset(javascript_vendor_path~main_filename~'.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/core/overrides.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/translation/Translation.js') }}"></script>
 <script type="text/javascript">
-    // Used in static context in many places, fixes no class found if not in ext-all mode
-    // @todo include only if not in ext-all mode
-    Ext.require("Ext.ModelManager");
-    Ext.require("Ext.view.View");
-    Ext.require("Ext.grid.Panel");
-    Ext.Loader.setConfig({
-        enabled : true,
-        disableCaching: {{ disable_caching ? 'true': 'false' }},
-        paths: {
-            'Hatimeria' : '/bundles/hatimeriaextjs/js/extjs',
-            'Ext.ux': '/bundles/hatimeriaextjs/js/extjs/vendor/extjs-4.0.7/ux'
-        } 
-    });
-    
-    function __(key) {
-        return (typeof ExposeTranslation == 'object') ? ExposeTranslation.get(key) : key ;
-    }
+    {% render "HatimeriaExtJSBundle:Default:dynamic" %}
 </script>
 <script type="text/javascript" src="{{ asset(javascript_vendor_path~'locale/ext-lang-'~locale~'.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/routing/Routing.js') }}"></script>
 <script type="text/javascript" src="{{ path('fos_js_routing_js') }}"></script>
 <script type="text/javascript" src="{{ url('bazinga_exposetranslation_js', { 'domain_name': 'HatimeriaExtJSBundle'}) }}"></script>
+<script type="text/javascript" src="{{ url('bazinga_exposetranslation_js', { 'domain_name': 'HatimeriaAdminBundle'}) }}"></script>
 <script type="text/javascript" src="{{ url('bazinga_exposetranslation_js', { 'domain_name': 'validators' }) }}"></script>
+<script type="text/javascript" src="{{ url('bazinga_exposetranslation_js') }}"></script>
 <script type="text/javascript" src="{{ path('api') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/core/direct-api-handler.js') }}"></script>
+{% endif %}

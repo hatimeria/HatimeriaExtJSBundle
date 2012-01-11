@@ -22,11 +22,12 @@ class DirectController extends Controller
      */
     public function getApiAction()
     {
-        $api = new Api($this->container, $this->get('request'));
-        
+        $api = new Api($this->container);
         
         $response = sprintf("Ext.syncRequire(['Ext.direct.Manager','Ext.direct.RemotingProvider'], function() { 
                 Ext.direct.Manager.addProvider(%s); 
+                // fixes app_dev.php missing prefix
+                Ext.direct.Manager.getProvider(0).url = Routing.prefix + Ext.direct.Manager.getProvider(0).url;
             }, window); ", $api);
         // @todo move aditional content to direct parameters class 
         $response .= sprintf("

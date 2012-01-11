@@ -5,6 +5,8 @@ namespace Hatimeria\ExtJSBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Hatimeria\ExtJSBundle\DependencyInjection\HatimeriaExtJSExtension;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Assetic\Asset\FileAsset;
+use Assetic\Asset\AssetCollection;
 
 /**
  * Default Controller
@@ -20,12 +22,31 @@ class DefaultController extends Controller
      */
     public function headersAction()
     {
+        $allowedLocales = $this->getParameter('locales');
+        $locale = $this->container->getParameter("locale");
+        // take first allowed locales
+        if(!in_array($locale, $allowedLocales)) {
+            $locale = $allowedLocales[0];
+        }
         
-        return $this->render('HatimeriaExtJSBundle:Default:headers.html.twig', 
+        return $this->render('HatimeriaExtJSBundle:Default:headers.html.twig',   
                 array(
                     'main_filename' => $this->getParameter("js_filename"),
                     'javascript_vendor_path' => $this->getParameter("javascript_vendor_path"),
-                    'locale'      => $this->container->getParameter("locale"),
+                    'locale'      => $locale,
+                    'compiled'      => $this->getParameter("compiled"),
+                ));
+    }
+    
+    /**
+     * Dynamic javascript file
+     *
+     * @return string
+     */
+    public function dynamicAction()
+    {
+        return $this->render('HatimeriaExtJSBundle:Default:dynamic.js.twig', 
+                array(
                     'disable_caching' => $this->getParameter('loader_disable_caching')
                 ));
     }

@@ -72,6 +72,10 @@ In your app layout:
 ``` yaml
     // app/config/config.yml
     hatimeria_ext_js:
+      # optional setting for production optimization, first from list is used when user locale is not in this array
+      locales: ['pl','en']
+      # compile all javascripts into one file - use it only in config_prod.yml
+      compile: true
       # If direct request got 403 response code it will redirect user to login page
       signin_route: fos_user_security_login
       # optionally your extjs library web path directory (if you use different version than this bundle provides)
@@ -277,6 +281,13 @@ Make sure method comment looks exactly like above example, no extra lines, space
 When ajax request got symfony exception output JS Direct Api Handler will render it to Developer in nice popup window.
 Same goes with fatal, notices and warnings.
 If this happens in non dev environment popup window contains only simple error message suitable for normal user.
+
+## Production optimization
+
+This bundle provides easy way to combine all javascripts into one.
+Specify locales under extjs config.
+Run console command: hatimeria:extjs:compile.
+Enable compilation for prod environment.
 
 ## Backend application
 
