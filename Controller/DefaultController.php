@@ -22,18 +22,22 @@ class DefaultController extends Controller
      */
     public function headersAction()
     {
-        $allowedLocales = $this->getParameter('locales');
-        $locale = $this->container->getParameter("locale");
-        // take first allowed locales
-        if(!in_array($locale, $allowedLocales)) {
-            $locale = $allowedLocales[0];
+        $sufix = 'default';
+        if($this->getParameter("compiled")) {
+            $allowedLocales = $this->getParameter('locales');
+            $sufix = $this->container->getParameter("locale");
+            // take first allowed locales
+            if(!in_array($sufix, $allowedLocales)) {
+                $sufix = $allowedLocales[0];
+            }
         }
         
         return $this->render('HatimeriaExtJSBundle:Default:headers.html.twig',   
                 array(
                     'main_filename' => $this->getParameter("js_filename"),
                     'javascript_vendor_path' => $this->getParameter("javascript_vendor_path"),
-                    'locale'      => $locale,
+                    'sufix'      => $sufix,
+                    'locale'        => $this->container->getParameter("locale"),
                     'compiled'      => $this->getParameter("compiled"),
                 ));
     }

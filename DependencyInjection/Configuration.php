@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('javascript_mode')->defaultValue("ext-all-debug")->end()
                 ->scalarNode('loader_disable_caching')->defaultTrue()->end()
                 ->scalarNode('compiled')->defaultFalse()->end()
-                ->arrayNode("locales")
+                ->arrayNode("locales")->defaultValue(array())
                     ->prototype("scalar")->end()
                 ->end()
                 ->scalarNode('javascript_vendor_path')->defaultValue("bundles/hatimeriaextjs/js/extjs/vendor/extjs-4.0.7/")->end()
