@@ -273,7 +273,7 @@ You can just configure this behaviour in yml. Related objects are automatically 
 
 ## Common errors
 
-Annotation not imported or method is not available remotely:
+"Annotation not imported or method is not available remotely" or Action is not visible in javascript
 Make sure method comment looks exactly like above example, no extra lines, spaces etc.
 
 ## Error handling
@@ -285,10 +285,12 @@ If this happens in non dev environment popup window contains only simple error m
 ## Extjs controller for easily running extjs classes
 
 In your defaults.yml (file used instead of parameters.ini, see hatimeria project app/config directory) (
+
 ``` yml
   extjs_init_modules:
     module_name: name.of.your.class
 ```
+
 When you type http://yourhost/extjs/module_name in browser configured extjs class is created.
 You don't need another empty action to add new interface
 
