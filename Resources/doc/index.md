@@ -3,8 +3,6 @@
 HatimeriaExtJSBundle is an implementation of Ext Direct (part of ExtJS framework from Sencha) specification for Symfony2
 framework.
 
-[ExtJS 4 documentation](http://docs.sencha.com/ext-js/4-0/)
-
 ## Installing
 
 Follow symfony instructions to add bundle source code from github (use deps)
@@ -13,11 +11,15 @@ Follow symfony instructions to add bundle source code from github (use deps)
 
 * [BazingaExposeTranslationBundle](https://github.com/bazinga/BazingaExposeTranslationBundle)
 * [FOSJsRoutingBundle](https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git)
+* [HatimeriaExtJs](https://github.com/hatimeria/HatimeriaExtJS)
 
 Optional:
 
 Pager needs [StofDoctrineExtensionsBundle](https://github.com/stof/StofDoctrineExtensionsBundle) with enabled Paginate extension to work.
 
+### Extjs and hatimeria components documentation offline on your desktop
+
+Run from console hatimeria:extjs:install --symlink --docs
 
 ### Configure autoloader
 

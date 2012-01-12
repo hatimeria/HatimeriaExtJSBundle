@@ -23,6 +23,7 @@ class AssetsInstallCommand extends ContainerAwareCommand
     {
         $this
             ->addOption('symlink', null, InputOption::VALUE_NONE, 'Symlinks the assets instead of copying it')
+            ->addOption('docs', null, InputOption::VALUE_NONE, 'Generate docs in web directory - /compiled/js/docs')
             ->setDescription('Install bundles web assets under a public web directory')
             ->setHelp(<<<EOT
 Adding extjs libraries to extjs bundle
@@ -68,7 +69,16 @@ EOT;
             $filesystem->mkdir($targetDir, 0777);
             $filesystem->mirror($originDir, $targetDir);
         }
-
+        
         $output->writeln('ExtJS lib installed');
+        
+        if($input->getOption("docs")) {
+            $originDir = realpath($originDir.'/../docs');
+            $targetDir = $this->getContainer()->getParameter('kernel.root_dir').'/../web/compiled/js/docs';
+            $output->writeln($targetDir.' => '.$originDir);
+            $output->writeln('ExtJS docs installed go to http://yourhost/compiled/js/docs');
+            $filesystem->symlink($originDir, $targetDir);
+        }
+
     }
 }
