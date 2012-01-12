@@ -79,7 +79,7 @@ In your app layout:
       # If direct request got 403 response code it will redirect user to login page
       signin_route: fos_user_security_login
       # optionally your extjs library web path directory (if you use different version than this bundle provides)
-      javascript_vendor_path: "bundles/hatimeriaextjs/js/vendor/ext-4.0.0/" # default
+      javascript_vendor_path: "bundles/hatimeriaextjs/js/vendor/ext-4.0.7/" # default
       # one of extjs main filenames, [options listed here](http://www.sencha.com/blog/using-ext-loader-for-your-application/)
       javascript_mode:  ext-all-debug # default
       mappings:   
@@ -281,6 +281,30 @@ Make sure method comment looks exactly like above example, no extra lines, space
 When ajax request got symfony exception output JS Direct Api Handler will render it to Developer in nice popup window.
 Same goes with fatal, notices and warnings.
 If this happens in non dev environment popup window contains only simple error message suitable for normal user.
+
+## Extjs controller for easily running extjs classes
+
+In your defaults.yml (file used instead of parameters.ini, see hatimeria project app/config directory) (
+``` yml
+  extjs_init_modules:
+    module_name: name.of.your.class
+```
+When you type http://yourhost/extjs/module_name in browser configured extjs class is created.
+You don't need another empty action to add new interface
+
+This controller can also test extjs class, just go to http://yourhost/extjs/module_name?test="name.of.your.class".
+
+``` javascript
+Ext.define("name.of.your.class", {
+    extend: 'Ext.window.Window'
+    statistics: {
+        testMe: function() {
+                    var me = Ext.create(this.prototype.$className);                
+                    me.show();
+        }
+    }
+})
+```
 
 ## Production optimization
 

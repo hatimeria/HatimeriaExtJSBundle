@@ -16,3 +16,18 @@
 11.08.2011
 
 * Configurable signin_route, for FosUserBundle set it to fos_user_security_login
+
+11.08.2011 - 12.12.2012
+
+* Compiled javascripts for production
+* Test extjs class (dedicated controller action)
+* Run extjs class (dedicated controller action)
+* Overrides (fixes for extjs core classes)
+* Ability to easily add fields to models on fly
+* Annotation classes
+* Fixes in dumper for datetime object
+* Ajax login
+* Response Handler (wrapper for calling Actions)
+* Handling form errors in BaseForm class
+* Security response handling (redirect to login page)
+* Much more ;-)
