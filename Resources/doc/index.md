@@ -296,12 +296,12 @@ In your defaults.yml (file used instead of parameters.ini, see hatimeria project
 When you type http://yourhost/extjs/module_name in browser configured extjs class is created.
 You don't need another empty action to add new interface
 
-This controller can also test extjs class, just go to http://yourhost/extjs/module_name?test="name.of.your.class".
+This controller can also test extjs class, just go to http://yourhost/extjs/test?test="name.of.your.class".
 
 ``` javascript
 Ext.define("name.of.your.class", {
     extend: 'Ext.window.Window'
-    statistics: {
+    statics: {
         testMe: function() {
                     var me = Ext.create(this.prototype.$className);                
                     me.show();
