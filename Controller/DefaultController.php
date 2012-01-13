@@ -95,6 +95,10 @@ class DefaultController extends Controller
             }
         }
         
+        if($name == 'test') {
+            $class = null;
+        }
+        
         if($class === false) {
             throw new NotFoundHttpException(sprintf("No extjs module assigned to route %s", $name));
         }
