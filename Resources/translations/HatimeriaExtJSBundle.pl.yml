@@ -23,5 +23,5 @@ window:
     
 switch: 
   back: Wróć do administratora
-  action: Przełącz na
+  action: Użytkownik
   active: przełączony
