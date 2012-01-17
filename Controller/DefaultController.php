@@ -109,6 +109,8 @@ class DefaultController extends Controller
             $testClass = false;
         }
         
-        return $this->render('HatimeriaExtJSBundle:Default:module.html.twig', array('class' => $class, 'testClass' => $testClass));
+        $adminLayout = $this->getRequest()->query->has('admin');
+        
+        return $this->render('HatimeriaExtJSBundle:Default:module.html.twig', array('class' => $class, 'testClass' => $testClass, 'adminLayout' => $adminLayout));
     }
 }
