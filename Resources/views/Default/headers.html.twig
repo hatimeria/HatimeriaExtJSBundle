@@ -1,5 +1,5 @@
 {% if compiled %}
-    <script type="text/javascript" src="{{ asset('compiled/js/ext-'~sufix~'.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('compiled/js/ext-'~locale~'.js') }}"></script>
 {% else %}
 <script type="text/javascript" src="{{ asset(javascript_vendor_path~main_filename~'.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/core/overrides.js') }}"></script>

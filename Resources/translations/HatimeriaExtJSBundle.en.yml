@@ -5,7 +5,7 @@ direct:
   
 form: 
   alert_title: Form contains errors
-
+  save: Save
   image:
     browse: Browser
     delete: Delete
@@ -25,3 +25,15 @@ switch:
   back: Back to Admin
   action: Switch to
   active: Is switched
+  
+grid:
+  yes: Yes
+  no: No
+  pager:
+    records: Records {0} - {1} of {2}
+    empty: No records
+  actions:
+    add: Add
+    edit: Edit
+    clone: Clone
+    remove: Remove

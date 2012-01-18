@@ -5,7 +5,7 @@ direct:
   
 form: 
   alert_title: Formularz zawiera błędy
-
+  save: Zapisz
   image:
     browse: Przeglądaj
     delete: Usuń
@@ -25,3 +25,15 @@ switch:
   back: Wróć do administratora
   action: Użytkownik
   active: przełączony
+  
+grid:
+  yes: Tak
+  no: Nie
+  pager:
+    records: Rekordy {0} - {1} z {2}
+    empty: Brak rekordów
+  actions:
+    add: Dodaj
+    edit: Edytuj
+    clone: Klonuj
+    remove: Usuń
