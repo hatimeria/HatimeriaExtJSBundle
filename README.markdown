@@ -10,7 +10,7 @@ This bundle is ready for use but still under heavy development.
 
 ## Full application
 
-This bundle is part of hatimeria CMF.
+This bundle is part of hatimeria symfony distribution.
 [hatimeria - Symfony2 and ExtJS CMF](https://github.com/hatimeria/hatimeria)
 
 ## Credits
