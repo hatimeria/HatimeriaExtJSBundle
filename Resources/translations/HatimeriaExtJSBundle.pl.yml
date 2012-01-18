@@ -27,9 +27,10 @@ switch:
   active: przełączony
   
 grid:
+  options: Opcje
   remove:
     confirm:
-      text: Nastąpi usunięcie rekordu z bazy danych.<br/>Czy kontynuować?
+      text: Nastąpi usunięcie rekordu z bazy danych. Kontynuować?
       title: Potwierdzenie usunięcia
   yes: Tak
   no: Nie
