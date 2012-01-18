@@ -27,6 +27,10 @@ switch:
   active: Is switched
   
 grid:
+  remove:
+    confirm:
+      text: Record will be removed from database.<br/>Continue ?
+      title: Removal confirmation
   yes: Yes
   no: No
   pager:
