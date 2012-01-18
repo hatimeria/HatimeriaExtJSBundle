@@ -4,6 +4,7 @@ direct:
   try_later: Backend error. Try again later.
   
 form: 
+  wait: Wait...
   alert_title: Form contains errors
   save: Save
   image:

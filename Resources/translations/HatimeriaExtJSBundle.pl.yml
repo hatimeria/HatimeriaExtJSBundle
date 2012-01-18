@@ -4,6 +4,7 @@ direct:
   try_later: Nastąpił błąd po stronie serwera. Spróbuj ponownie później.
   
 form: 
+  wait: Zapisywanie danych
   alert_title: Formularz zawiera błędy
   save: Zapisz
   image:
