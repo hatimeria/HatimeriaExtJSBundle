@@ -7,4 +7,8 @@ route:
     
 extjs_module_init:
     pattern: /extjs/{name}
-    defaults: { _controller: HatimeriaExtJSBundle:Default:initModule}
+    defaults: { _controller: HatimeriaExtJSBundle:Javascript:initModule}
+    
+extjs_class_test:
+    pattern: /extjs_test/{class}
+    defaults: { _controller: HatimeriaExtJSBundle:Javascript:testClass}

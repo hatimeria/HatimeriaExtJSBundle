@@ -13,7 +13,7 @@ use Assetic\Asset\AssetCollection;
 use Assetic\Asset\FileAsset;
 use Assetic\Asset\GlobAsset;
 use Assetic\Asset\StringAsset;
-use Hatimeria\ExtJSBundle\Controller\DefaultController;
+use Hatimeria\ExtJSBundle\Controller\JavascriptController;
 use Hatimeria\ExtJSBundle\Controller\DirectController;
 use Bazinga\ExposeTranslationBundle\Controller\Controller as ExposeTranslationController;
 use Assetic\Filter\Yui\JsCompressorFilter;
@@ -47,8 +47,10 @@ EOT
         $container = $this->getContainer();
         $filesystem = $container->get('filesystem');
         $languages = $container->getParameter('hatimeria_ext_js.locales');
+        $domains = $container->getParameter("hatimeria_ext_js.translation_domains");
+        $vendorPath = $container->getParameter("hatimeria_ext_js.javascript_vendor_path");
         
-        $hdefault = new DefaultController();
+        $hdefault = new JavascriptController();
         $hdefault->setContainer($container);
         $dynamic = $hdefault->dynamicAction()->getContent();
         
@@ -60,25 +62,29 @@ EOT
         $routing = $container->get('fos_js_routing.controller');
         $compressor = new JsCompressorFilter('vendor/bundles/Hatimeria/ExtJSBundle/Resources/jar/yuicompressor.jar');
         
+        $extjs = "web/bundles/hatimeriaextjs/js/extjs/";
+        
         // @todo recursive glob
         foreach($languages as $lang) {
             $ac = new AssetCollection;
-            $ac->add(new FileAsset("web/bundles/hatimeriaextjs/js/extjs/vendor/extjs-4.0.7/ext-all.js"));
-            $ac->add(new FileAsset("web/bundles/hatimeriaextjs/js/extjs/core/overrides.js"));
+            $ac->add(new FileAsset("web/".$vendorPath."/ext-all.js"));
+            $ac->add(new FileAsset($extjs."/core/overrides.js"));
             $ac->add(new StringAsset($dynamic));
-            $ac->add(new FileAsset("web/bundles/hatimeriaextjs/js/extjs/translation/Translation.js"));
-            $ac->add(new StringAsset($expose->exposeTranslationAction('HatimeriaExtJSBundle', $lang, 'js')->getContent()));
-            $ac->add(new StringAsset($expose->exposeTranslationAction('validators', $lang, 'js')->getContent()));
-            $ac->add(new StringAsset($expose->exposeTranslationAction('messages', $lang, 'js')->getContent()));
-            $ac->add(new StringAsset($expose->exposeTranslationAction('HatimeriaAdminBundle', $lang, 'js')->getContent()));
-            $ac->add(new FileAsset("web/bundles/hatimeriaextjs/js/extjs/vendor/extjs-4.0.7/locale/ext-lang-".$lang.".js"));
-            $ac->add(new FileAsset("web/bundles/hatimeriaextjs/js/extjs/routing/Routing.js"));
-            $ac->add(new GlobAsset("web/bundles/hatimeriaextjs/js/extjs/core/store/*"));
-            $ac->add(new GlobAsset("web/bundles/hatimeriaextjs/js/extjs/core/model/*"));
-            $ac->add(new GlobAsset("web/bundles/hatimeriaextjs/js/extjs/core/grid/*"));
-            $ac->add(new GlobAsset("web/bundles/hatimeriaextjs/js/extjs/core/response/*"));
-            $ac->add(new GlobAsset("web/bundles/hatimeriaextjs/js/extjs/core/window/*"));
-            $ac->add(new GlobAsset("web/bundles/hatimeriaextjs/js/extjs/core/form/*"));
+            $ac->add(new FileAsset($extjs."/translation/Translation.js"));
+            foreach($domains as $domain) {
+                $ac->add(new StringAsset($expose->exposeTranslationAction($domain, $lang, 'js')->getContent()));
+            }
+            $ac->add(new FileAsset("web/".$vendorPath."locale/ext-lang-".$lang.".js"));
+            $ac->add(new FileAsset($extjs."/routing/Routing.js"));
+            $ac->add(new GlobAsset($extjs."/core/utils/*"));
+            $ac->add(new GlobAsset($extjs."/core/mixins/*"));
+            $ac->add(new GlobAsset($extjs."/core/store/*"));
+            $ac->add(new GlobAsset($extjs."/core/model/*"));
+            $ac->add(new GlobAsset($extjs."/core/grid/*"));
+            $ac->add(new GlobAsset($extjs."/core/response/*"));
+            $ac->add(new GlobAsset($extjs."/core/window/*"));
+            $ac->add(new FileAsset($extjs."/core/form/BaseForm.js"));
+            $ac->add(new GlobAsset($extjs."/core/form/*"));
             $ac->add(new StringAsset($api));
             $ac->add(new StringAsset($routing->indexAction('js')->getContent()));
             $ac->ensureFilter($compressor);

@@ -1,0 +1,18 @@
+{% extends adminLayout ? "HatimeriaAdminBundle::layout.html.twig":"::base.html.twig" %}
+
+{% block javascripts %}
+<script type="text/javascript">
+    Ext.onReady(function() {
+        
+    Ext.require('{{class}}', function() {
+            if(typeof {{ class }}.testMe == 'function') { 
+                    {{ class }}.testMe();
+            } else {
+                    Ext.create('{{ class }}', {
+                        renderTo: Ext.getBody()
+                    })
+            }
+        });
+    });
+</script>
+{% endblock %}

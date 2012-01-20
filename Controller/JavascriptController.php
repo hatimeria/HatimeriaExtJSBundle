@@ -13,7 +13,7 @@ use Assetic\Asset\AssetCollection;
  *
  * @author Michal Wujas
  */
-class DefaultController extends Controller
+class JavascriptController extends Controller
 {
     /**
      * All bundle html headers
@@ -29,13 +29,27 @@ class DefaultController extends Controller
             $locale = $allowedLocales[0];
         }
         
-        return $this->render('HatimeriaExtJSBundle:Default:headers.html.twig',   
+        if($this->getParameter("compiled")) {
+            return $this->compiledHeaders($locale);
+        } else {
+            return $this->allHeaders($locale);
+        }
+    }
+    
+    private function allHeaders($locale)
+    {
+        return $this->render('HatimeriaExtJSBundle:Javascript:headers/all.html.twig',   
                 array(
                     'main_filename' => $this->getParameter("js_filename"),
                     'javascript_vendor_path' => $this->getParameter("javascript_vendor_path"),
                     'locale'        => $locale,
-                    'compiled'      => $this->getParameter("compiled"),
-                ));
+                    'domains'       => $this->getParameter('translation_domains'),
+                ));        
+    }
+    
+    private function compiledHeaders($locale)
+    {
+        return $this->render('HatimeriaExtJSBundle:Javascript:headers/compiled.html.twig', array('locale' => $locale));
     }
     
     /**
@@ -45,9 +59,10 @@ class DefaultController extends Controller
      */
     public function dynamicAction()
     {
-        return $this->render('HatimeriaExtJSBundle:Default:dynamic.js.twig', 
+        return $this->render('HatimeriaExtJSBundle:Javascript:dynamic.js.twig', 
                 array(
-                    'disable_caching' => $this->getParameter('loader_disable_caching')
+                    'disable_caching' => $this->getParameter('loader_disable_caching'),
+                    'paths' => $this->getParameter('loader')
                 ));
     }
     
@@ -58,7 +73,7 @@ class DefaultController extends Controller
      */
     public function variablesAction()
     {
-        return $this->render('HatimeriaExtJSBundle:Default:variables.html.twig', 
+        return $this->render('HatimeriaExtJSBundle:Javascript:variables.html.twig', 
                 array(
                     'dev_mode' => $this->container->getParameter("kernel.debug")
                 ));
@@ -74,10 +89,23 @@ class DefaultController extends Controller
     private function getParameter($key)
     {
         return $this->container->getParameter(HatimeriaExtJSExtension::CONFIG_NAMESPACE.'.'.$key);
-    }    
+    }
     
     /**
-     * Load default view which extends base layout 
+     * Load default view which extends base or admin layout 
+     * with javascript which creates provided class
+     */    
+    public function testClassAction($class)
+    {
+        $adminLayout = $this->getRequest()->query->has('admin');
+        
+        return $this->render('HatimeriaExtJSBundle:Javascript:test.html.twig', 
+                array('class' => $class, 'adminLayout' => $this->getRequest()->query->has('admin'))
+            );
+    }
+    
+    /**
+     * Load default view which extends base or admin layout 
      * with javascript which creates provided from configuration extjs class 
      */
     public function initModuleAction($name)
@@ -91,22 +119,13 @@ class DefaultController extends Controller
             }
         }
         
-        if($name == 'test') {
-            $class = null;
-        }
-        
         if($class === false) {
             throw new NotFoundHttpException(sprintf("No extjs module assigned to route %s", $name));
         }
         
-        if($this->getRequest()->query->has('test')) {
-            $testClass = $this->getRequest()->query->get('test');
-        } else {
-            $testClass = false;
-        }
-        
         $adminLayout = $this->getRequest()->query->has('admin');
         
-        return $this->render('HatimeriaExtJSBundle:Default:module.html.twig', array('class' => $class, 'testClass' => $testClass, 'adminLayout' => $adminLayout));
+        return $this->render('HatimeriaExtJSBundle:Javascript:module.html.twig', array(
+            'class' => $class, 'adminLayout' => $adminLayout));
     }
 }

@@ -28,20 +28,30 @@ class HatimeriaExtJSExtension extends Extension
         $configuration = new Configuration();
         
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('direct.xml');
+        $loader->load('services.xml');
         
         foreach ($configs as $config) {
             $this->registerApiConfiguration($config, $container);
         }
 
         $config = $processor->processConfiguration($configuration, $configs);
+        $config['translation_domains'] = array_merge($config['translation_domains'], array(
+            'validators',
+            'HatimeriaExtJSBundle',
+            'HatimeriaAdminBundle',
+            'messages'
+        ));
+        
+        $config['loader'] = array_merge($config['loader'], array(
+            'Hatimeria' => '/bundles/hatimeriaextjs/js/extjs',
+            'HatimeriaAdmin' => '/bundles/hatimeriaadmin/js'
+        ));
         $this->updateParameters($config, $container);
         $this->setMainFilename($container, $config);
     }
     
     private function setMainFilename($container, $config)
     {
-        // @todo validation
         $filenames = array('ext-all-debug-w-comments','ext-all-debug','ext-all','ext-debug','ext');
         $this->setParameter($container, 'js_filename', $config['javascript_mode']);
     }

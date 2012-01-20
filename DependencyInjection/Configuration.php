@@ -16,13 +16,19 @@ class Configuration implements ConfigurationInterface
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('hatimeria_ext_js');
-
         $rootNode
             ->children()
-                ->scalarNode('javascript_mode')->defaultValue("ext-all-debug")->end()
+                ->scalarNode('javascript_mode')->defaultValue("ext-all-dev")->end()
                 ->scalarNode('loader_disable_caching')->defaultTrue()->end()
                 ->scalarNode('compiled')->defaultFalse()->end()
                 ->arrayNode("locales")->defaultValue(array())
+                    ->prototype("scalar")->end()
+                ->end()
+                ->arrayNode("loader")->defaultValue(array())
+                ->useAttributeAsKey('id')
+                    ->prototype("scalar")->end()
+                ->end()
+                ->arrayNode("translation_domains")->defaultValue(array())
                     ->prototype("scalar")->end()
                 ->end()
                 ->scalarNode('javascript_vendor_path')->defaultValue("bundles/hatimeriaextjs/js/extjs/vendor/extjs-4.0.7/")->end()

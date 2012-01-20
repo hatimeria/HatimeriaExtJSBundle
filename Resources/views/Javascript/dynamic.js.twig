@@ -6,9 +6,10 @@ Ext.Loader.setConfig({
     enabled : true,
     disableCaching: {{ disable_caching ? 'true': 'false' }},
     paths: {
-        'Hatimeria' : '/bundles/hatimeriaextjs/js/extjs',
-        'Ext.ux': '/bundles/hatimeriaextjs/js/extjs/vendor/extjs-4.0.7/ux',
-        'HatimeriaAdmin': '/bundles/hatimeriaadmin/js'
+        {% for key, path in paths %}
+        '{{ key }}' : '{{ path }}',
+        {% endfor %}
+        'Ext.ux': '/bundles/hatimeriaextjs/js/extjs/vendor/extjs-4.0.7/ux'
     } 
 });
 

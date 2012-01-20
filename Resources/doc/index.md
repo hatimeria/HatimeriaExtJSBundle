@@ -76,6 +76,11 @@ In your app layout:
     hatimeria_ext_js:
       # optional setting for production optimization, first from list is used when user locale is not in this array
       locales: ['pl','en']
+      # translation domains to be exposed to javascript
+      translation_domains: [HatimeriaBank]
+      # additonal paths for Ext.Loader
+      loader:
+        HatimeriaBank: /bundles/hatimeriabank/js
       # compile all javascripts into one file - use it only in config_prod.yml
       compile: true
       # If direct request got 403 response code it will redirect user to login page
@@ -296,19 +301,21 @@ In your defaults.yml (file used instead of parameters.ini, see hatimeria project
 When you type http://yourhost/extjs/module_name in browser configured extjs class is created.
 You don't need another empty action to add new interface
 
-This controller can also test extjs class, just go to http://yourhost/extjs/test?test="name.of.your.class".
+This controller can also test extjs class, just go to http://yourhost/extjs_test/"name.of.your.class".
 
 ``` javascript
 Ext.define("name.of.your.class", {
     extend: 'Ext.window.Window'
     statics: {
         testMe: function() {
-                    var me = Ext.create(this.prototype.$className);                
+                    var me = Ext.create(this.prototype.$className);
                     me.show();
         }
     }
 })
 ```
+
+testMe method is optional, if it isn't here just Ext.create with renderTo body is called
 
 ## Production optimization
 

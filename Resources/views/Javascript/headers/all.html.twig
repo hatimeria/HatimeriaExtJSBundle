@@ -1,0 +1,14 @@
+<script type="text/javascript" src="{{ asset(javascript_vendor_path~main_filename~'.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/core/overrides.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/translation/Translation.js') }}"></script>
+<script type="text/javascript">
+    {% render "HatimeriaExtJSBundle:Javascript:dynamic" %}
+</script>
+<script type="text/javascript" src="{{ asset(javascript_vendor_path~'locale/ext-lang-'~locale~'.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/routing/Routing.js') }}"></script>
+<script type="text/javascript" src="{{ path('fos_js_routing_js') }}"></script>
+{% for domain in domains %}
+    <script type="text/javascript" src="{{ url('bazinga_exposetranslation_js', { 'domain_name': domain }) }}"></script>
+{% endfor %}
+<script type="text/javascript" src="{{ path('api') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/core/direct-api-handler.js') }}"></script>
