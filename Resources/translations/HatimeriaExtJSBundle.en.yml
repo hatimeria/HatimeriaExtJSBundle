@@ -12,6 +12,7 @@ form:
     delete: Delete
     
   login: 
+    wait: Wait for login process to finish
     login: Login (Email)
     password: Password
     failed: Login or password is incorect

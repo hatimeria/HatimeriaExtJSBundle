@@ -12,6 +12,7 @@ form:
     delete: Usuń
     
   login: 
+    wait: Trwa logowanie. Proszę czekać.
     login: Login (Email)
     password: Hasło
     failed: Nieprawidłowy login lub hasło
