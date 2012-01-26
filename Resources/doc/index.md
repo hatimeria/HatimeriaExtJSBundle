@@ -82,7 +82,7 @@ In your app layout:
       loader:
         HatimeriaBank: /bundles/hatimeriabank/js
       # compile all javascripts into one file - use it only in config_prod.yml
-      compile: true
+      compiled: true
       # add custom javascripts to compile-in:
       compiled_files:
         - /bundles/hatimeriaextjs/js/jquery.js
