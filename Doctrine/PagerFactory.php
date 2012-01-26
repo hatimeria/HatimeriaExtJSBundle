@@ -17,11 +17,11 @@ use Doctrine\ORM\EntityManager;
 class PagerFactory
 {
     /**
-     * Entity Manager
+     * Doctrine
      *
-     * @var EntityManager
+     * @var Doctrine
      */
-    private $em;
+    private $doctrine;
     /**
      * Dumper
      *
@@ -42,9 +42,9 @@ class PagerFactory
      * @param Dumper $dumper
      * @param Camelizer $camelizer
      */
-    public function __construct(EntityManager $em, $dumper, $camelizer)
+    public function __construct($doctrine, $dumper, $camelizer)
     {
-        $this->em        = $em;
+        $this->doctrine  = $doctrine;
         $this->dumper    = $dumper;
         $this->camelizer = $camelizer;
     }
@@ -56,9 +56,9 @@ class PagerFactory
      * 
      * @return Pager 
      */
-    private function getNewPager(ParameterBag $params)
+    private function getNewPager(ParameterBag $params, $em)
     {
-        return new Pager($this->em, $params, $this->dumper, $this->camelizer);
+        return new Pager($em, $params, $this->dumper, $this->camelizer);
     }
 
     /**
@@ -71,11 +71,11 @@ class PagerFactory
      */
     public function fromEntity($entityClass, ParameterBag $params)
     {
-        return $this->getNewPager($params)->setEntityClass($entityClass);
+        return $this->getNewPager($params, $this->doctrine->getEntityManagerForClass($entityClass))->setEntityClass($entityClass);
     }
     
     /**
-     * Creates pager from query builder
+     * Creates pager from query builder or query
      *
      * @param QueryBuilder $qb
      * @param ParameterBag $params
@@ -84,6 +84,6 @@ class PagerFactory
      */
     public function fromQuery(QueryBuilder $qb, ParameterBag $params)
     {
-        return $this->getNewPager($params)->setQueryBuilder($qb);
+        return $this->getNewPager($params, $this->doctrine->getEntityManager())->setQueryBuilder($qb);
     }
 }

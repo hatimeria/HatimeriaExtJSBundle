@@ -62,7 +62,8 @@ class JavascriptController extends Controller
         return $this->render('HatimeriaExtJSBundle:Javascript:dynamic.js.twig', 
                 array(
                     'disable_caching' => $this->getParameter('loader_disable_caching'),
-                    'paths' => $this->getParameter('loader')
+                    'paths' => $this->getParameter('loader'),
+                    'compiled' => $this->getParameter('compiled')
                 ));
     }
     
