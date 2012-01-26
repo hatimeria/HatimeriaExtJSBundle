@@ -12,3 +12,6 @@
 {% endfor %}
 <script type="text/javascript" src="{{ path('api') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/hatimeriaextjs/js/extjs/core/direct-api-handler.js') }}"></script>
+{% for file in files %}
+    <script type="text/javascript" src="{{ file }}"></script>
+{% endfor %}

@@ -22,7 +22,7 @@
             <argument>%hatimeria_ext_js.mappings%</argument>
         </service>
         <service id="hatimeria_extjs.pager" class="Hatimeria\ExtJSBundle\Doctrine\PagerFactory">
-            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="doctrine" />
             <argument type="service" id="hatimeria_extjs.dumper" />
             <argument type="service" id="hatimeria_extjs.camelizer" />
         </service>

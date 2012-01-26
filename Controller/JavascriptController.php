@@ -44,6 +44,7 @@ class JavascriptController extends Controller
                     'javascript_vendor_path' => $this->getParameter("javascript_vendor_path"),
                     'locale'        => $locale,
                     'domains'       => $this->getParameter('translation_domains'),
+                    'files'         => $this->getParameter('compiled_files'),
                 ));        
     }
     
@@ -62,7 +63,8 @@ class JavascriptController extends Controller
         return $this->render('HatimeriaExtJSBundle:Javascript:dynamic.js.twig', 
                 array(
                     'disable_caching' => $this->getParameter('loader_disable_caching'),
-                    'paths' => $this->getParameter('loader')
+                    'paths' => $this->getParameter('loader'),
+                    'compiled' => $this->getParameter('compiled')
                 ));
     }
     

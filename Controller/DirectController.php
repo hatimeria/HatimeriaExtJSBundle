@@ -4,6 +4,9 @@ namespace Hatimeria\ExtJSBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Hatimeria\ExtJSBundle\Response\Failure;
+use Hatimeria\ExtJSBundle\Annotation\Remote;
+use JMS\SecurityExtraBundle\Annotation\Secure;
 
 use Hatimeria\ExtJSBundle\Api\Api;
 use Hatimeria\ExtJSBundle\Router\Router;
@@ -52,6 +55,27 @@ class DirectController extends Controller
             $response.= sprintf("App.Direct.signinUrl = '%s'", $signinUrl);
         }
     }
+    
+    /**
+     * Quick entity pager based on configured name
+     * 
+     * @remote
+     * @Secure("ROLE_ADMIN")
+     *
+     * @param ParameterBag $params 
+     */
+    public function listAction($params)
+    {
+        $lists = $this->container->getParameter('hatimeria_ext_js.exposed_lists');
+        
+        if(isset($lists[$params->get('name')])) {
+            $class = $lists[$params->get('name')]['class'];
+        } else {
+            return new Failure("No exposed lists with name: ".$params->get('name'));
+        }
+        
+        return $this->get('hatimeria_extjs.pager')->fromEntity($class, $params);
+    }    
 
     /**
      * Route the ExtDirect calls.

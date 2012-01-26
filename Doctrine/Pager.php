@@ -105,7 +105,7 @@ class Pager implements Response
     private function addSort()
     {
         $sort = $this->params['sort'][0];
-
+        
         $column = $this->camelizer->camelize($sort['property']);
 
         if (isset($this->sortFunctions[$column])) {

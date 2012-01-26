@@ -30,6 +30,10 @@ switch:
   
 grid:
   options: Opcje
+  summary:
+    title: Podsumowanie
+  filters:
+    title: Filtry
   remove:
     confirm:
       text: Nastąpi usunięcie rekordu z bazy danych. Kontynuować?

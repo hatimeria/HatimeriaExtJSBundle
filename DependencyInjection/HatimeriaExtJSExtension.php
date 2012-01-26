@@ -46,6 +46,17 @@ class HatimeriaExtJSExtension extends Extension
             'Hatimeria' => '/bundles/hatimeriaextjs/js/extjs',
             'HatimeriaAdmin' => '/bundles/hatimeriaadmin/js'
         ));
+        
+        $exposedLists = array();
+        
+        foreach($config['mappings'] as $class => $mapping) {
+            if($mapping['list']) {
+                $exposedLists[$mapping['list']] = array('class' => $class);
+            }
+        }
+        
+        $this->setParameter($container, 'exposed_lists', $exposedLists);
+        
         $this->updateParameters($config, $container);
         $this->setMainFilename($container, $config);
     }

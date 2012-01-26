@@ -131,7 +131,9 @@ class Dumper
             
             if (!empty($entities)) {
                 foreach ($entities as $entity) {
-                    if (null === $toStoreFunction) {
+                    if (!is_object($entity)) {
+                        $records[] = $entity;
+                    } else if (null === $toStoreFunction) {
                         $records[] = $this->dumpObject($entity);
                     } else {
                         $records[] = $toStoreFunction($entity);

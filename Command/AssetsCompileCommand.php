@@ -47,6 +47,7 @@ EOT
         $container = $this->getContainer();
         $filesystem = $container->get('filesystem');
         $languages = $container->getParameter('hatimeria_ext_js.locales');
+        $files = $container->getParameter('hatimeria_ext_js.compiled_files');
         $domains = $container->getParameter("hatimeria_ext_js.translation_domains");
         $vendorPath = $container->getParameter("hatimeria_ext_js.javascript_vendor_path");
         
@@ -88,6 +89,10 @@ EOT
             $ac->add(new GlobAsset($extjs."/core/form/*"));
             $ac->add(new StringAsset($api));
             $ac->add(new StringAsset($routing->indexAction('js')->getContent()));
+            foreach($files as $file) {
+                $ac->add(new FileAsset('web/' . $file));
+            }
+
             $ac->ensureFilter($compressor);
             
             $compiled = $ac->dump();

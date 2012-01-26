@@ -1,6 +1,14 @@
+{% if not compiled %}
 // Used in static context in many places, fixes no class found if not in ext-all mode
-// @todo include only if not in ext-all mode
-Ext.require(["Ext.ModelManager","Ext.view.View","Ext.grid.Panel","Ext.picker.Date", 'Ext.window.MessageBox']);
+Ext.require([
+    "Ext.ModelManager",
+    "Ext.view.View",
+    "Ext.grid.Panel",
+    "Ext.picker.Date", 
+    "Ext.window.MessageBox",
+    ]
+ );
+ {% endif %}
 
 Ext.Loader.setConfig({
     enabled : true,
@@ -12,6 +20,12 @@ Ext.Loader.setConfig({
         'Ext.ux': '/bundles/hatimeriaextjs/js/extjs/vendor/extjs-4.0.7/ux'
     } 
 });
+
+{% if not compiled %}
+Ext.require([
+    "Hatimeria.core.field.ComboBox"
+]);
+{% endif %}
 
 function __(key) {
     return (typeof ExposeTranslation == 'object') ? ExposeTranslation.get(key) : key ;
