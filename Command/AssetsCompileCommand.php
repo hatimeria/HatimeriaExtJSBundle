@@ -75,6 +75,7 @@ EOT
                 $ac->add(new StringAsset($expose->exposeTranslationAction($domain, $lang, 'js')->getContent()));
             }
             $ac->add(new FileAsset("web/".$vendorPath."locale/ext-lang-".$lang.".js"));
+            $ac->add(new FileAsset($extjs."/core/direct-api-handler.js"));
             $ac->add(new FileAsset($extjs."/routing/Routing.js"));
             $ac->add(new GlobAsset($extjs."/core/utils/*"));
             $ac->add(new GlobAsset($extjs."/core/mixins/*"));
