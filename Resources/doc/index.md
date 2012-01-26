@@ -96,6 +96,8 @@ In your app layout:
       mappings:   
         Example\Example\Entity\User:
             fields: 
+              # optional, @see QuickStore.js 
+              list: user
               # profile is object of class Profile, account is object which have getBalance method, 
               # createdAt is a DateTime member of user class
               default: [id, username, profile, account.balance, created_at] 
