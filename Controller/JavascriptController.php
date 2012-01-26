@@ -44,6 +44,7 @@ class JavascriptController extends Controller
                     'javascript_vendor_path' => $this->getParameter("javascript_vendor_path"),
                     'locale'        => $locale,
                     'domains'       => $this->getParameter('translation_domains'),
+                    'files'         => $this->getParameter('compiled_files'),
                 ));        
     }
     

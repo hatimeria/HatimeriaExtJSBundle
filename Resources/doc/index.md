@@ -83,6 +83,10 @@ In your app layout:
         HatimeriaBank: /bundles/hatimeriabank/js
       # compile all javascripts into one file - use it only in config_prod.yml
       compile: true
+      # add custom javascripts to compile-in:
+      compiled_files:
+        - /bundles/hatimeriaextjs/js/jquery.js
+        - /bundles/hatimeriaextjs/js/fancybox.js
       # If direct request got 403 response code it will redirect user to login page
       signin_route: fos_user_security_login
       # optionally your extjs library web path directory (if you use different version than this bundle provides)
