@@ -74,7 +74,10 @@ EOT;
         
         if($input->getOption("docs")) {
             $originDir = realpath($originDir.'/../docs');
-            $targetDir = $this->getContainer()->getParameter('kernel.root_dir').'/../web/compiled/js/docs';
+            $jsDir = $this->getContainer()->getParameter('kernel.root_dir').'/../web/compiled/js/';
+            $filesystem->mkdir($targetDir, 0777);
+            $filesystem->mkdir($jsDir, 0777);
+            $targetDir = $jsDir.'docs';
             $output->writeln($targetDir.' => '.$originDir);
             $output->writeln('ExtJS docs installed go to http://yourhost/compiled/js/docs');
             $filesystem->symlink($originDir, $targetDir);
