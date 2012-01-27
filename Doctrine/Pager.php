@@ -153,9 +153,14 @@ class Pager implements Response
         }
 
         $query = $this->qb->getQuery();
-        $this->count = Paginate::getTotalQueryResults($query);
-        $paginateQuery = Paginate::getPaginateQuery($query, $offset, $this->limit);
-        $this->entities = $paginateQuery->getResult();
+        if($this->limit != 0) {
+            $this->count = Paginate::getTotalQueryResults($query);
+            $paginateQuery = Paginate::getPaginateQuery($query, $offset, $this->limit);
+            $this->entities = $paginateQuery->getResult();
+        } else {
+            $this->entities = $query->getResult();
+            $this->count = count($this->entities);
+        }
 
         return $this->dumper->dump($this)->toArray();
     }
