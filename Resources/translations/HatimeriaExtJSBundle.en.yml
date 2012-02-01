@@ -30,6 +30,8 @@ switch:
   
 grid:
   options: Options
+  filters:
+    title: Filters
   remove:
     confirm:
       text: Record will be removed from database. Continue ?
