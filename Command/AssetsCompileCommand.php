@@ -87,6 +87,10 @@ EOT
             $ac->add(new GlobAsset($extjs."/core/window/*"));
             $ac->add(new FileAsset($extjs."/core/form/BaseForm.js"));
             $ac->add(new GlobAsset($extjs."/core/form/*"));
+            $ac->add(new GlobAsset($extjs."/core/field/*"));
+            $ac->add(new GlobAsset($extjs."/treeselect/store/*"));
+            $ac->add(new GlobAsset($extjs."/treeselect/panel/*"));
+            $ac->add(new GlobAsset($extjs."/treeselect/field/*"));
             $ac->add(new StringAsset($api));
             $ac->add(new StringAsset($routing->indexAction('js')->getContent()));
             foreach($files as $file) {
