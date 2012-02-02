@@ -98,9 +98,7 @@ class JavascriptController extends Controller
      * with javascript which creates provided class
      */    
     public function testClassAction($class)
-    {
-        $adminLayout = $this->getRequest()->query->has('admin');
-        
+    {        
         return $this->render('HatimeriaExtJSBundle:Javascript:test.html.twig', 
                 array('class' => $class, 'adminLayout' => $this->getRequest()->query->has('admin'))
             );
@@ -123,11 +121,9 @@ class JavascriptController extends Controller
         
         if($class === false) {
             throw new NotFoundHttpException(sprintf("No extjs module assigned to route %s", $name));
-        }
-        
-        $adminLayout = $this->getRequest()->query->has('admin');
+        }       
         
         return $this->render('HatimeriaExtJSBundle:Javascript:module.html.twig', array(
-            'class' => $class, 'adminLayout' => $adminLayout));
+            'class' => $class));
     }
 }

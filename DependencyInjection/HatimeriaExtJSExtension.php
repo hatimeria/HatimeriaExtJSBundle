@@ -47,6 +47,10 @@ class HatimeriaExtJSExtension extends Extension
             'HatimeriaAdmin' => '/bundles/hatimeriaadmin/js'
         ));
         
+        if (!isset($config['locales']) || empty($config['locales'])) {
+            $config['locales'] = array($container->getParameter('locale'));
+        }
+        
         $exposedLists = array();
         
         foreach($config['mappings'] as $class => $mapping) {
