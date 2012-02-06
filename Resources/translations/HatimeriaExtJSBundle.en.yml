@@ -18,6 +18,7 @@ form:
     failed: Login or password is incorect
     failureTitle: Login failed
     submit: Log in
+    copyright: '<img src="/bundles/hatimeriaadmin/images/hatimeria.ico"/><p>Powered by Hatimeria</p> <a href="http://www.hatimeria.com">www.hatimeria.com</a>'
   
 window:
   login:
