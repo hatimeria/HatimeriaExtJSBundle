@@ -23,6 +23,7 @@ form:
     failed: Nieprawidłowy login lub hasło
     failureTitle: Logogowanie nieudane
     submit: Zaloguj się
+    copyright: '<img src="/bundles/hatimeriaadmin/images/hatimeria.ico"/><p>Aplikacja stworzona przez Hatimerię</p> <a href="http://www.hatimeria.pl">www.hatimeria.pl</a>'
   
 window:
   login:

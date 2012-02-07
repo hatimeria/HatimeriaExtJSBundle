@@ -31,3 +31,18 @@ Ext.require([
 function __(key) {
     return (typeof ExposeTranslation == 'object') ? ExposeTranslation.get(key) : key ;
 }
+
+Ext.onReady(function() {
+    if(_user.isSwitched) {
+        Ext.create("HatimeriaAdmin.core.component.BackToAdminButton",{
+            renderTo: Ext.getBody(),
+            minWidth : 200,
+            style: {
+                position: 'absolute',
+                top: '0',
+                right: '0',
+                margin: '10px',
+            },
+        })
+    }
+})
