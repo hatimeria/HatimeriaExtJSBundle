@@ -43,6 +43,16 @@ class SecurityController extends Controller
         return array();
     }
     
+    /**
+     * Access denied page for error detected by javascript
+     * 
+     * @Template()
+     */
+    public function error403Action()
+    {
+        return array();
+    }
+    
     public function afterLoginAction()
     {
         $success = new Success();

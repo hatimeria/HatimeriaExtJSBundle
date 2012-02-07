@@ -9,7 +9,7 @@ use Assetic\Asset\FileAsset;
 use Assetic\Asset\AssetCollection;
 
 /**
- * Default Controller
+ * Javascript controller
  *
  * @author Michal Wujas
  */
@@ -24,7 +24,7 @@ class JavascriptController extends Controller
     {
         $allowedLocales = $this->getParameter('locales');
         $locale = $this->get('session')->getLocale();
-        // take first allowed locales
+        // take first allowed locales if current is not in allowed ones
         if(!in_array($locale, $allowedLocales)) {
             $locale = $allowedLocales[0];
         }
@@ -36,6 +36,12 @@ class JavascriptController extends Controller
         }
     }
     
+    /**
+     * Get all headers - not compiled version
+     *
+     * @param string $locale Locale
+     * @return string
+     */
     private function allHeaders($locale)
     {
         return $this->render('HatimeriaExtJSBundle:Javascript:headers/all.html.twig',   
@@ -48,6 +54,12 @@ class JavascriptController extends Controller
                 ));        
     }
     
+    /**
+     * Compiled headers
+     *
+     * @param string $locale Locale
+     * @return string
+     */
     private function compiledHeaders($locale)
     {
         return $this->render('HatimeriaExtJSBundle:Javascript:headers/compiled.html.twig', array('locale' => $locale));
@@ -75,9 +87,21 @@ class JavascriptController extends Controller
      */
     public function variablesAction()
     {
+        $userData = array('roles' => array());
+        $user = null;
+        $sc = $this->get("security.context");
+        
+        if($sc->getToken() && is_object($sc->getToken()->getUser())) {
+            $user = $sc->getToken()->getUser();
+            $userData['roles'] = $user->getRoles();
+            $userData['username'] = $user->getUsername();
+            $userData['is_switched'] = $sc->isGranted("ROLE_PREVIOUS_ADMIN");
+        }
+        
         return $this->render('HatimeriaExtJSBundle:Javascript:variables.html.twig', 
                 array(
-                    'dev_mode' => $this->container->getParameter("kernel.debug")
+                    'dev_mode' => $this->container->getParameter("kernel.debug"),
+                    'user' => $userData
                 ));
     }
     

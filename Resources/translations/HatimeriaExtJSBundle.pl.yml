@@ -3,6 +3,11 @@ direct:
   forbidden: Brak dostępu
   try_later: Nastąpił błąd po stronie serwera. Spróbuj ponownie później.
   
+  
+error403:
+  title: Brak uprawnień
+  content: Nie masz uprawnień do wykonania tej operacji
+  
 form: 
   wait: Zapisywanie danych
   alert_title: Formularz zawiera błędy

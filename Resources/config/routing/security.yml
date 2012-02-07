@@ -4,3 +4,6 @@ hatimeria_login:
 hatimeria_after_login:
     pattern:  /after-login
     defaults: { _controller: HatimeriaExtJSBundle:Security:afterLogin }
+hatimeria_error_403:
+    pattern:  /access-denied
+    defaults: { _controller: HatimeriaExtJSBundle:Security:error403 }
