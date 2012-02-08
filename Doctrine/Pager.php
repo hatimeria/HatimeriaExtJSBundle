@@ -104,18 +104,22 @@ class Pager implements Response
 
     private function addSort()
     {
-        $sort = $this->params['sort'][0];
+        $sortConfig = $this->params['sort'];
         
-        $column = $this->camelizer->camelize($sort['property']);
+        foreach ($sortConfig as $sort)
+        {
+            $column = $this->camelizer->camelize($sort['property']);
 
-        if (isset($this->sortFunctions[$column])) {
-            return $this->sortFunctions[$column]($this->qb, $sort['direction']);
-        }
-        if (isset($this->mapping[$column])) {
-            $column = $this->mapping[$column];
-        }
+            if (isset($this->sortFunctions[$column])) {
+                $this->sortFunctions[$column]($this->qb, $sort['direction']);
+                continue;
+            }
+            if (isset($this->mapping[$column])) {
+                $column = $this->mapping[$column];
+            }
 
-        $this->qb->add('orderBy', 'e.' . $column . ' ' . $sort['direction']);
+            $this->qb->addOrderBy('e.' . $column,  $sort['direction']);
+        }
     }
 
     public function setSortFunction($column, $function)
