@@ -87,6 +87,13 @@ class Dumper
         return $this->mappings->get($class, $this->isAdmin);
     }        
     
+    private function hasMappings($object)
+    {
+        $class = $this->getClass($object);
+
+        return $this->mappings->has($class);
+    }        
+    
     private function dumpObject($object, $fields = array())
     {
         $class = $this->getClass($object);
@@ -288,7 +295,7 @@ class Dumper
                 if ($value instanceof DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                     $value = str_replace(' 00:00:00', '', $value);
-                } else if ($value instanceof ArrayCollection || $value instanceof PersistentCollection) {
+                } elseif ($value instanceof ArrayCollection || $value instanceof PersistentCollection) {
                     $records = array();
 
                     foreach ($value as $entity) {
@@ -296,6 +303,8 @@ class Dumper
                     }
 
                     $value = $records;
+                } elseif (!$this->hasMappings($value) && is_callable(array($value, '__toString'))) {
+                    $value = (string)$value;
                 } else {    
                     $value = $this->getValues($value);
                 }
