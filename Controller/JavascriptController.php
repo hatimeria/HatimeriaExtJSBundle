@@ -147,7 +147,25 @@ class JavascriptController extends Controller
             throw new NotFoundHttpException(sprintf("No extjs module assigned to route %s", $name));
         }       
         
-        return $this->render('HatimeriaExtJSBundle:Javascript:module.html.twig', array(
-            'class' => $class));
+        return $this->render('HatimeriaExtJSBundle:Javascript:module.html.twig', array('class' => $class));
+    }
+    
+    /**
+     * Testing forms
+     */
+    public function formsTestAction()
+    {
+        return $this->render('HatimeriaExtJSBundle:Javascript:formsTest.html.twig');
+    }
+    
+    /**
+     * Receive data
+     * @remote
+     * @form
+     * @param \Symfony\Component\HttpFoundation\ParameterBag $params
+     */
+    public function receiveTestDataAction($params)
+    {
+        return new \Hatimeria\ExtJSBundle\Response\Success();
     }
 }

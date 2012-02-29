@@ -12,3 +12,7 @@ extjs_module_init:
 extjs_class_test:
     pattern: /extjs_test/{class}
     defaults: { _controller: HatimeriaExtJSBundle:Javascript:testClass}
+
+extjs_formstest:
+    pattern: /extjs_formstest
+    defaults: { _controller: HatimeriaExtJSBundle:Javascript:formsTest }
