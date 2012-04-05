@@ -24,7 +24,11 @@ Ext.Loader.setConfig({
 {% if not compiled %}
 Ext.require([
     "Hatimeria.core.field.ComboBox",
-    "Hatimeria.core.user.User"
+    "Hatimeria.core.user.User",
+    "Hatimeria.core.model.DirectModel",
+    "Hatimeria.core.mixins.ConfigurableExternal",
+    "Hatimeria.core.store.BaseStore",
+    "Hatimeria.core.utils.ConfigManager"
 ]);
 {% endif %}
 
