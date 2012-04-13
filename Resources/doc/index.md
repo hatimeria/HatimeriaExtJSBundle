@@ -9,7 +9,7 @@ Follow symfony instructions to add bundle source code from github (use deps)
 
 ### Requirements
 
-* [BazingaExposeTranslationBundle](https://github.com/bazinga/BazingaExposeTranslationBundle)
+* [BazingaExposeTranslationBundle](https://github.com/willdurand/BazingaExposeTranslationBundle)
 * [FOSJsRoutingBundle](https://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git)
 * [HatimeriaExtJs](https://github.com/hatimeria/HatimeriaExtJS)
 
