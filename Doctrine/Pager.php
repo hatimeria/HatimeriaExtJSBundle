@@ -194,4 +194,31 @@ class Pager implements Response
         return $this->start;
     }
 
+    public function addFiltersOnFields(array $fields)
+    {
+        $qb = $this->qb;
+        $params = $this->params;
+        
+        foreach($fields as $field) {
+            if(!$params->has($field)) continue;
+            
+            // entity field;
+            $eField = "e.".$this->camelizer->camelize($field);
+            $value = $params->get($field);
+            
+            if(!$value) continue;
+
+            if(is_array($value)) {
+                if (isset($value['from'])) {
+                    $qb->andWhere("$eField >= " . $qb->expr()->literal($value['from']));
+                }
+
+                if (isset($value['to'])) {
+                    $qb->andWhere("$eField <= " . $qb->expr()->literal($value['to']));
+                }                    
+            } else {
+                $qb->andWhere("$eField = ".$qb->expr()->literal($value));
+            }
+        }
+    }
 }
