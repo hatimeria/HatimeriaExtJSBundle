@@ -61,7 +61,7 @@ class Request
     {        
         // store the symfony request object
         $this->request = $request;
-        $this->rawPost = isset($GLOBALS['HTTP_RAW_POST_DATA']) ?  $GLOBALS['HTTP_RAW_POST_DATA'] : array();
+        $this->rawPost = isset($GLOBALS['HTTP_RAW_POST_DATA']) ?  $GLOBALS['HTTP_RAW_POST_DATA'] : null;
         $this->post = $_POST;
         $this->files = $_FILES;
         $this->callType = !empty ($_POST) ? 'form' : 'batch';
@@ -138,6 +138,10 @@ class Request
         if ('form' == $this->callType) {
             $calls[] = new Call($this->post, 'form');
         } else {
+            if(null == $this->rawPost) {
+                throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException("Missing raw post");
+            }
+            
             $decoded = json_decode($this->rawPost);
             $decoded = !is_array($decoded) ? array($decoded) : $decoded;
             
