@@ -51,12 +51,19 @@ class Dumper
      * @var Mappings
      */
     private $mappings;
+    /**
+     * Convert datetime objects to timestamp ?
+     *
+     * @var bool
+     */
+    private $dateTimeAsTimestamp;
 
-    public function __construct($security, $camelizer, $mappings)
+    public function __construct($security, $camelizer, $mappings, $dateTimeAsTimestamp)
     {
         $this->isAdmin   = is_object($security->getToken()) ? $security->isGranted('ROLE_ADMIN') : false;
         $this->camelizer = $camelizer;
         $this->mappings  = $mappings;
+        $this->dateTimeAsTimestamp = $dateTimeAsTimestamp;
     }
 
     /**
@@ -293,8 +300,12 @@ class Dumper
 
             if (is_object($value)) {
                 if ($value instanceof DateTime) {
-                    $value = $value->format('Y-m-d H:i:s');
-                    $value = str_replace(' 00:00:00', '', $value);
+                    if($this->dateTimeAsTimestamp) {
+                        $value = $value->getTimestamp();
+                    } else {
+                        $value = $value->format('Y-m-d H:i:s');
+                        $value = str_replace(' 00:00:00', '', $value);
+                    }
                 } elseif ($value instanceof ArrayCollection || $value instanceof PersistentCollection) {
                     $records = array();
 

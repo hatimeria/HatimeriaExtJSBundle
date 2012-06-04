@@ -17,6 +17,7 @@
             <argument type="service" id="security.context" />
             <argument type="service" id="hatimeria_extjs.camelizer" />
             <argument type="service" id="hatimeria_extjs.mappings" />
+            <argument type="string">%hatimeria_ext_js.datetime_as_timestamp%</argument>
         </service>
         <service id="hatimeria_extjs.mappings" class="Hatimeria\ExtJSBundle\Dumper\Mappings">
             <argument>%hatimeria_ext_js.mappings%</argument>

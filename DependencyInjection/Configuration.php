@@ -21,6 +21,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('javascript_mode')->defaultValue("ext-all-dev")->end()
                 ->scalarNode('loader_disable_caching')->defaultTrue()->end()
                 ->scalarNode('compiled')->defaultFalse()->end()
+                ->scalarNode('datetime_as_timestamp')->defaultFalse()->end()
                 ->arrayNode("compiled_files")->defaultValue(array())
                     ->prototype("scalar")->end()
                 ->end()
