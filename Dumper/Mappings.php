@@ -50,7 +50,7 @@ class Mappings
      * @param type $entityName
      * @return type 
      */
-    public function get($class, $isAdmin)
+    public function get($class, $isAdmin, $mapping)
     {
         $this->init();
 
@@ -63,6 +63,10 @@ class Mappings
            }
         }
         
+        if($mapping != self::DEFAULT_FIELD_GROUP) {
+            $fields = array_merge($fields, $this->getGroup($class, $mapping));
+        }
+        
         $fields = array_merge($fields, $this->getGroup($class, self::DEFAULT_FIELD_GROUP));
         
         return $fields;
@@ -70,7 +74,16 @@ class Mappings
     
     private function getGroup($class, $group) 
     {
-        return $this->config[$class]['fields'][$group];
+        if($this->hasGroup($class, $group)) {
+            return $this->config[$class]['fields'][$group];
+        }
+        
+        return array();
+    }
+    
+    public function hasGroup($class, $group) 
+    {
+        return isset($this->config[$class]['fields'][$group]);
     }
 
     /**

@@ -83,7 +83,7 @@ class Dumper
         }
     }    
     
-    private function getMappings($object)
+    private function getMappings($object, $mapping = 'default')
     {
         $class = $this->getClass($object);
 
@@ -91,8 +91,8 @@ class Dumper
             throw new ExtJSException(sprintf("No dumper method for: %s", $class));
         }
 
-        return $this->mappings->get($class, $this->isAdmin);
-    }        
+        return $this->mappings->get($class, $this->isAdmin, $mapping);
+    }
     
     private function hasMappings($object)
     {
@@ -101,12 +101,12 @@ class Dumper
         return $this->mappings->has($class);
     }        
     
-    private function dumpObject($object, $fields = array())
+    private function dumpObject($object, $fields = array(), $mapping = 'default')
     {
         $class = $this->getClass($object);
         
         if($this->mappings->has($class)) {
-            return $this->getValues($object, $fields);
+            return $this->getValues($object, $fields, $mapping);
         } else {
             if(is_callable(array($object, 'toArray'))) {
                 return $object->toArray();
@@ -174,7 +174,7 @@ class Dumper
             $r->set("record", $records);
         } elseif (is_object($resource)) {
             $r = new Success();
-            $r->set("record", $this->dumpObject($resource));
+            $r->set("record", $this->dumpObject($resource, array(), 'single'));
         } else {
             $r = new Success();
             $r->set("record", $resource);
@@ -287,12 +287,12 @@ class Dumper
      * 
      * @return array
      */
-    public function getValues($object, $paths = array())
+    public function getValues($object, $paths = array(), $mapping = 'default')
     {
         $values = array();
 
         if (count($paths) == 0) {
-            $paths = $this->getMappings($object);
+            $paths = $this->getMappings($object, $mapping);
         }
 
         foreach ($paths as $path) {
