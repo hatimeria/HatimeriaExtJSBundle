@@ -22,12 +22,6 @@ use \DateTime;
 class Dumper
 {
     /**
-     * Signed user is an admin ?
-     *
-     * @var bool
-     */
-    private $isAdmin;
-    /**
      * Camelizer
      *
      * @var Camelizer
@@ -58,9 +52,8 @@ class Dumper
      */
     private $dateTimeAsTimestamp;
 
-    public function __construct($security, $camelizer, $mappings, $dateTimeAsTimestamp)
+    public function __construct($camelizer, $mappings, $dateTimeAsTimestamp)
     {
-        $this->isAdmin   = is_object($security->getToken()) ? $security->isGranted('ROLE_ADMIN') : false;
         $this->camelizer = $camelizer;
         $this->mappings  = $mappings;
         $this->dateTimeAsTimestamp = $dateTimeAsTimestamp;
@@ -91,7 +84,7 @@ class Dumper
             throw new ExtJSException(sprintf("No dumper method for: %s", $class));
         }
 
-        return $this->mappings->get($class, $this->isAdmin, $mapping);
+        return $this->mappings->get($class, $mapping);
     }
     
     private function hasMappings($object)

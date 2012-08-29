@@ -22,6 +22,18 @@ class Mappings
      * @var array
      */
     protected $providers = array();
+    /**
+     * SecurityContext
+     *
+     * @var SecurityContext
+     */
+    protected $security;
+    /**
+     * Roles granted, cached for performance
+     *
+     * @var array
+     */
+    protected $roles;
 
     protected $inited = false;
     /**
@@ -33,9 +45,10 @@ class Mappings
      */
     const DEFAULT_FIELD_GROUP = 'default';
     
-    public function __construct($config)
+    public function __construct($security, $config)
     {
         $this->config = $config;
+        $this->security = $security;
     }
     
     public function has($class, $group = self::DEFAULT_FIELD_GROUP)
@@ -50,17 +63,30 @@ class Mappings
      * @param type $entityName
      * @return type 
      */
-    public function get($class, $isAdmin, $mapping)
+    public function get($class, $mapping)
     {
         $this->init();
 
         $fields = array();
         
-        if ($isAdmin) {
-            // add admin fields if configuration has them
-           if ($this->has($class, self::ADMIN_FIELD_GROUP)) {
-               $fields = array_merge($fields, $this->getGroup($class, self::ADMIN_FIELD_GROUP));
-           }
+        foreach($this->config[$class]['fields'] as $group => $roleFields) {
+            if($group == 'default') {
+                continue;
+            }
+            
+            // backward compability
+            if($group == 'admin') {
+                $group = 'role_admin';
+            }
+            
+            if(strpos($group, "role") === false) {
+                continue;
+            }
+            
+            if($this->security->isGranted(strtoupper($group))) {
+                // add role fields if configuration has them
+                $fields = array_merge($fields, $roleFields);
+            }
         }
         
         if($mapping != self::DEFAULT_FIELD_GROUP) {
