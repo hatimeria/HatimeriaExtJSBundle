@@ -11,6 +11,7 @@ use Hatimeria\ExtJSBundle\Exception\ExtJSException;
 use Hatimeria\ExtJSBundle\Response\Success;
 use Hatimeria\ExtJSBundle\Response\Failure;
 use Hatimeria\ExtJSBundle\Response\Response as ResponseInterface;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
 
 /**
  * Router is the ExtDirect Router class.
@@ -135,7 +136,13 @@ class Router
         }
         catch (AccessDeniedException $e)
         {
-            $result = $call->getResponse(array('success' => false, 'exception' => true, 'code' => $e->getCode(), 'msg' => $e->getMessage()));
+            $result = $call->getResponse(array(
+                'success' => false,
+                'exception' => true,
+                'code' => $e->getCode(),
+                'msg' => $e->getMessage(),
+                'anonymous' => $this->container->get('security.context')->getToken() instanceof AnonymousToken
+            ));
         }
 
         return $result;
