@@ -7,6 +7,8 @@ use Hatimeria\ExtJSBundle\DependencyInjection\HatimeriaExtJSExtension;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Assetic\Asset\FileAsset;
 use Assetic\Asset\AssetCollection;
+use Hatimeria\ExtJSBundle\Annotation\Remote;
+use Hatimeria\ExtJSBundle\Annotation\Form;
 
 /**
  * Javascript controller

@@ -58,8 +58,10 @@ Run from console hatimeria:extjs:install --symlink --docs
 ``` yaml
     # app/config/routing.yml
     # ... your other routes here
-    HatimeriaExtJSBundle:
-        resource: "@HatimeriaExtJSBundle/Resources/config/routing.yml"
+    HatimeriaExtJSBundle_direct:
+        resource: "@HatimeriaExtJSBundle/Resources/config/routing/direct.yml"
+    HatimeriaExtJSBundle_security:
+        resource: "@HatimeriaExtJSBundle/Resources/config/routing/security.yml"
 ```
 
 ### Add bundle headers to your layout
