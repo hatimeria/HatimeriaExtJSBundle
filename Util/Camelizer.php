@@ -11,6 +11,6 @@ class Camelizer
 {
     public function camelize($key)
     {
-        return lcfirst(preg_replace('/(^|_|-)+(.)/e', "strtoupper('\\2')", $key));
+        return lcfirst(preg_replace_callback('/(^|_|-)+(.)/', function($m) { return strtoupper($m[2]); }, $key));
     }
 }
