@@ -1,5 +1,7 @@
 ![Hatimeria logo](http://hatimeria.pl/assets/img/hatimeria_v_220.png)
 
+# This is a legacy code, it's way outdated and shouldn't be used anymore.
+
 # HatimeriaExtJSBundle
 
 Symfony and ExtJS RAD Environment for fun and profit.
